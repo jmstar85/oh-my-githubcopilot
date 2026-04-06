@@ -117,7 +117,7 @@ OMG includes **20 specialized agents**, each with defined roles and access level
 | **@writer** | Technical documentation — README, API docs, architecture docs | Full |
 | **@tracer** | Evidence-driven causal tracing with competing hypotheses | Full |
 | **@scientist** | Data analysis, statistical analysis, visualization | Read-only |
-| **@qa-tester** | Interactive CLI testing via tmux, E2E verification | Full |
+| **@qa-tester** | Interactive CLI testing via VS Code terminal, E2E verification | Full |
 | **@git-master** | Atomic commits, rebasing, history management | Git only |
 | **@code-simplifier** | Code clarity, reducing complexity, removing redundancy | Full |
 | **@explore** | Codebase search, file finding, structure mapping | Read-only |

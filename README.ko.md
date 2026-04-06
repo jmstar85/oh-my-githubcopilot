@@ -117,7 +117,7 @@ OMG는 **20개의 전문 에이전트**를 포함하며, 각 에이전트는 역
 | **@writer** | README, API 문서, 아키텍처 문서 작성 | Full |
 | **@tracer** | 증거 기반 인과 추적과 가설 검증 | Full |
 | **@scientist** | 데이터 분석, 통계, 시각화 | Read-only |
-| **@qa-tester** | tmux 기반 CLI 테스트, 통합/E2E 검증 | Full |
+| **@qa-tester** | VS Code 터미널 기반 CLI 테스트, 통합/E2E 검증 | Full |
 | **@git-master** | 커밋 분리, 리베이스, 히스토리 관리 | Git only |
 | **@code-simplifier** | 코드 단순화, 복잡도 축소, 중복 제거 | Full |
 | **@explore** | 코드베이스 탐색, 파일 검색, 구조 파악 | Read-only |
