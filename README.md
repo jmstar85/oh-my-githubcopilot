@@ -1,6 +1,10 @@
 <h1 align="center">oh-my-githubcopilot</h1>
 
 <p align="center">
+  English | <a href="README.ko.md">한국어</a> | <a href="README.zh.md">中文</a> | <a href="README.ja.md">日本語</a> | <a href="README.es.md">Español</a>
+</p>
+
+<p align="center">
   <strong>Multi-agent orchestration for GitHub Copilot. Supercharged productivity.</strong>
 </p>
 
