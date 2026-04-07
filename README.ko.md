@@ -101,6 +101,52 @@ deep-interview "I want to build a task management app"
 
 OMG가 소크라테스식 질문을 통해 숨은 가정과 요구사항을 드러내고, 코드를 쓰기 전에 문제를 명확히 정리합니다.
 
+### 다른 VS Code 프로젝트에서도 OMG 사용하기
+
+OMG는 워크스페이스 단위로 동작하므로, 프로젝트별로 적용하는 방식을 권장합니다.
+
+이 저장소에는 다른 프로젝트 적용을 위한 스크립트가 포함되어 있습니다.
+
+```bash
+scripts/omg-adopt.sh --target <대상-프로젝트-경로> --mode <template|submodule|subtree>
+```
+
+#### 운영팁 1: 템플릿 방식 (신규 프로젝트)
+
+새 프로젝트에 OMG 구성을 바로 복사해 시작할 때 사용합니다.
+
+```bash
+scripts/omg-adopt.sh --target ~/work/my-new-app --mode template
+```
+
+#### 운영팁 2: submodule/subtree 방식 (업데이트 추적)
+
+OMG 변경사항을 주기적으로 추적해 동기화하려면 아래 중 하나를 사용하세요.
+
+```bash
+# Submodule 방식
+scripts/omg-adopt.sh --target ~/work/my-app --mode submodule
+
+# Subtree 방식
+scripts/omg-adopt.sh --target ~/work/my-app --mode subtree
+```
+
+스크립트가 대상 프로젝트에 적용하는 항목:
+
+- `.github/copilot-instructions.md`
+- `.github/agents/`
+- `.github/skills/`
+- `.github/hooks/`
+- `.github/prompts/`
+- `.vscode/mcp.json`
+- `mcp-server/` (`--skip-build` 미사용 시 `npm install && npm run build` 자동 실행)
+
+적용 후에는 대상 프로젝트를 신뢰된 워크스페이스로 열고 Copilot Chat(agent mode)에서 아래로 동작을 확인하세요.
+
+```text
+/status
+```
+
 ---
 
 ## 에이전트

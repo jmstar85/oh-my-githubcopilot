@@ -101,6 +101,52 @@ deep-interview "I want to build a task management app"
 
 OMG uses Socratic questioning to surface hidden assumptions and clarify requirements before any code is written.
 
+### Use OMG in Other VS Code Projects
+
+OMG is workspace-scoped, so the recommended way is to apply it per project.
+
+This repository now includes an adoption script:
+
+```bash
+scripts/omg-adopt.sh --target <your-project-path> --mode <template|submodule|subtree>
+```
+
+#### Tip 1: Template-style for new projects
+
+Use this for greenfield projects where you want OMG files copied directly into the project.
+
+```bash
+scripts/omg-adopt.sh --target ~/work/my-new-app --mode template
+```
+
+#### Tip 2: Track updates with submodule or subtree
+
+Use one of these when you want a sync strategy for future OMG updates.
+
+```bash
+# Submodule strategy
+scripts/omg-adopt.sh --target ~/work/my-app --mode submodule
+
+# Subtree strategy
+scripts/omg-adopt.sh --target ~/work/my-app --mode subtree
+```
+
+What the script applies to the target project:
+
+- `.github/copilot-instructions.md`
+- `.github/agents/`
+- `.github/skills/`
+- `.github/hooks/`
+- `.github/prompts/`
+- `.vscode/mcp.json`
+- `mcp-server/` (with `npm install && npm run build`, unless `--skip-build`)
+
+After applying, open the target project as a trusted workspace and validate in Copilot Chat (agent mode):
+
+```text
+/status
+```
+
 ---
 
 ## Agents
