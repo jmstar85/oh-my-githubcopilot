@@ -22,7 +22,7 @@
 
 ---
 
-<h1 align="center">Now, you can also use this amazing features such as OMC for GitHub Copilot!</h1>
+<h1 align="center">Now, you can also use this amazing features such as OMC + ECC (Everything Claude Code) for GitHub Copilot!</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Copilot-Orchestrated-blue?style=for-the-badge&logo=github" alt="GitHub Copilot Orchestrated" />
@@ -32,11 +32,11 @@
 
 ## OMG とは？
 
-**oh-my-githubcopilot (OMG)** は、[oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) が Claude Code 上で実現したマルチエージェントオーケストレーションの考え方を **GitHub Copilot** に持ち込むプロジェクトです。
+**oh-my-githubcopilot (OMG)** は、[oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) が Claude Code 上で実現したマルチエージェントオーケストレーションの考え方を **GitHub Copilot** に持ち込むプロジェクトです。さらに **[Everything Claude Code (ECC)](https://github.com/GreatScottyMac/everything-claude-code)** の優れた機能を統合し、より強力になりました。
 
-OMC が専門エージェントとワークフロー自動化によって Claude Code を拡張したように、OMG は VS Code の Copilot agent mode 上で同じ発想を実装します。1つのアシスタントにすべてを任せるのではなく、**28 の専門エージェント** と **22 の再利用可能なスキル** を MCP サーバー経由で連携させ、計画、実装、レビュー、検証を構造化して進めます。
+OMC が専門エージェントとワークフロー自動化によって Claude Code を拡張したように、OMG は VS Code の Copilot agent mode 上で同じ発想を実装します。ECC 統合（v1.1.0）により、OMG は ECC の実証済みパターンも取り込んでいます: 8つの言語特化レビュアーエージェント、TDD 強制、高速セキュリティスキャン、標準コーディング規約など。1つのアシスタントにすべてを任せるのではなく、**28 の専門エージェント** と **22 の再利用可能なスキル** を MCP サーバー経由で連携させ、計画、実装、レビュー、検証を構造化して進めます。
 
-> **これは OMC のフォークやコピーではありません。** GitHub Copilot のエージェントカスタマイズ機能（`.agent.md`、`.prompt.md`、`SKILL.md`、MCP ツール）に合わせてゼロから独立実装されたもので、OMC のマルチエージェント設計思想から着想を得ています。
+> **これは OMC や ECC のフォークやコピーではありません。** GitHub Copilot のエージェントカスタマイズ機能（`.agent.md`、`.prompt.md`、`SKILL.md`、MCP ツール）に合わせてゼロから独立実装されたもので、OMC のマルチエージェント設計思想から着想を得て、ECC の実証済みパターンを選択的に統合しています。
 
 ---
 

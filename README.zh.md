@@ -22,7 +22,7 @@
 
 ---
 
-<h1 align="center">Now, you can also use this amazing features such as OMC for GitHub Copilot!</h1>
+<h1 align="center">Now, you can also use this amazing features such as OMC + ECC (Everything Claude Code) for GitHub Copilot!</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Copilot-Orchestrated-blue?style=for-the-badge&logo=github" alt="GitHub Copilot Orchestrated" />
@@ -32,11 +32,11 @@
 
 ## OMG 是什么？
 
-**oh-my-githubcopilot (OMG)** 将 [oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) 在 Claude Code 上实现的多代理编排理念带到了 **GitHub Copilot**。
+**oh-my-githubcopilot (OMG)** 将 [oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) 在 Claude Code 上实现的多代理编排理念带到了 **GitHub Copilot**，同时融入了 **[Everything Claude Code (ECC)](https://github.com/GreatScottyMac/everything-claude-code)** 的精华特性，变得更加强大。
 
-如果说 OMC 通过专业代理和工作流自动化增强了 Claude Code，那么 OMG 则在 VS Code 的 Copilot agent mode 中实现了类似能力。它不再依赖单个助手处理所有事情，而是通过 MCP 服务器协调 **28 个专业代理** 和 **22 个可复用技能**，以结构化方式完成规划、实现、审查与验证。
+如果说 OMC 通过专业代理和工作流自动化增强了 Claude Code，那么 OMG 则在 VS Code 的 Copilot agent mode 中实现了类似能力。借助 ECC 集成（v1.1.0），OMG 还引入了 ECC 的经过验证的模式：8 个语言专家审查代理、TDD 强制执行、快速安全扫描、规范编码标准等。它不再依赖单个助手处理所有事情，而是通过 MCP 服务器协调 **28 个专业代理** 和 **22 个可复用技能**，以结构化方式完成规划、实现、审查与验证。
 
-> **这不是 OMC 的 fork 或复制品。** 它是一个面向 GitHub Copilot 的独立实现，基于 Copilot 的代理定制能力（`.agent.md`、`.prompt.md`、`SKILL.md`、MCP 工具）从零构建，同时参考了 OMC 的多代理架构思路。
+> **这不是 OMC 或 ECC 的 fork 或复制品。** 它是一个面向 GitHub Copilot 的独立实现，基于 Copilot 的代理定制能力（`.agent.md`、`.prompt.md`、`SKILL.md`、MCP 工具）从零构建，参考了 OMC 的多代理架构思路，并选择性地集成了 ECC 的经过验证的模式。
 
 ---
 

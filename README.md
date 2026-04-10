@@ -22,7 +22,7 @@
 
 ---
 
-<h1 align="center">Now, you can also use this amazing features such as OMC for GitHub Copilot!</h1>
+<h1 align="center">Now, you can also use this amazing features such as OMC + ECC (Everything Claude Code) for GitHub Copilot!</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Copilot-Orchestrated-blue?style=for-the-badge&logo=github" alt="GitHub Copilot Orchestrated" />
@@ -32,11 +32,11 @@
 
 ## What is OMG?
 
-**oh-my-githubcopilot (OMG)** brings the multi-agent orchestration paradigm — pioneered by [oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) for Claude Code — to **GitHub Copilot**.
+**oh-my-githubcopilot (OMG)** brings the multi-agent orchestration paradigm — pioneered by [oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) for Claude Code — to **GitHub Copilot**, now further supercharged with the best features of **[Everything Claude Code (ECC)](https://github.com/GreatScottyMac/everything-claude-code)**.
 
-Where OMC supercharges Claude Code with specialized agents and workflow automation, OMG does the same for Copilot's agent mode in VS Code. Instead of a single assistant doing everything, OMG coordinates **28 specialized agents** and **22 reusable skills** through an MCP server, giving you structured workflows for planning, execution, review, and verification — all within your existing Copilot setup.
+Where OMC supercharges Claude Code with specialized agents and workflow automation, OMG does the same for Copilot's agent mode in VS Code. And with the ECC integration (v1.1.0), OMG now includes ECC's battle-tested patterns: 8 language-specialist reviewer agents, TDD enforcement, rapid security scanning, canonical coding standards, and more. Instead of a single assistant doing everything, OMG coordinates **28 specialized agents** and **22 reusable skills** through an MCP server, giving you structured workflows for planning, execution, review, and verification — all within your existing Copilot setup.
 
-> **This is not a fork or copy of OMC.** It is an independent implementation built from scratch to leverage GitHub Copilot's agent customization features (`.agent.md`, `.prompt.md`, `SKILL.md`, MCP tools) while drawing architectural inspiration from OMC's multi-agent approach.
+> **This is not a fork or copy of OMC or ECC.** It is an independent implementation built from scratch to leverage GitHub Copilot's agent customization features (`.agent.md`, `.prompt.md`, `SKILL.md`, MCP tools), drawing architectural inspiration from OMC's multi-agent approach and selectively integrating ECC's proven patterns.
 
 ---
 
