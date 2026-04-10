@@ -22,7 +22,7 @@
 
 ---
 
-<h1 align="center">Now, you can also use this amazing features such as OMC + ECC (Everything Claude Code) for GitHub Copilot!</h1>
+<h1 align="center">Now, you can enjoy OMG's amazing features integrating OMC + ECC!</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Copilot-Orchestrated-blue?style=for-the-badge&logo=github" alt="GitHub Copilot Orchestrated" />
@@ -60,6 +60,27 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 - Copilot 環境で agent mode または agent customization が利用可能であること
 - MCP サーバーをローカルでビルドするための Node.js と npm
 - MCP、prompts、カスタマイズ用ファイルを正しく読み込むため、信頼済みワークスペースとして開くこと
+
+### 方法 A: VS Code Extension（推奨）
+
+1. `.vsix` ファイルから拡張機能をインストール:
+   ```
+   code --install-extension oh-my-githubcopilot-1.1.0.vsix
+   ```
+2. VS Code でプロジェクトを開きます
+
+3. **⚡ `OMG: Initialize Workspace` を実行（必須）**
+   ```
+   Cmd+Shift+P (macOS) / Ctrl+Shift+P (Windows/Linux) → "OMG: Initialize Workspace"
+   ```
+
+> [!IMPORTANT]
+> **拡張機能のインストールだけでは不十分です。** インストール後、必ず Command Palette から `OMG: Initialize Workspace` を実行してください。このコマンドが `.github/` 配下のすべてのコンベンションファイル（エージェント、スキル、hooks、prompts、copilot-instructions.md）を生成し、MCP サーバーをビルドします。このステップなしでは Copilot は OMG のエージェントやスキルを利用できません。
+
+4. プロンプトが表示されたら **「ウィンドウの再読み込み (Reload Window)」** をクリックして全エージェント・スキルを有効化します
+5. Copilot Chat（agent mode）で OMG の利用を開始
+
+### 方法 B: 手動クローン
 
 ### 1. クローン
 

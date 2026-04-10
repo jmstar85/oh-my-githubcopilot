@@ -22,7 +22,7 @@
 
 ---
 
-<h1 align="center">Now, you can also use this amazing features such as OMC + ECC (Everything Claude Code) for GitHub Copilot!</h1>
+<h1 align="center">Now, you can enjoy OMG's amazing features integrating OMC + ECC!</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Copilot-Orchestrated-blue?style=for-the-badge&logo=github" alt="GitHub Copilot Orchestrated" />
@@ -60,6 +60,27 @@
 - 你的 Copilot 环境支持 agent mode 或 agent customization
 - 已安装 Node.js 和 npm，以便在本地构建 MCP 服务器
 - 以受信任工作区方式打开项目，确保 MCP、prompts 和自定义文件正常加载
+
+### 方法 A: VS Code Extension（推荐）
+
+1. 通过 `.vsix` 文件安装扩展:
+   ```
+   code --install-extension oh-my-githubcopilot-1.1.0.vsix
+   ```
+2. 在 VS Code 中打开你的项目
+
+3. **⚡ 运行 `OMG: Initialize Workspace`（必须）**
+   ```
+   Cmd+Shift+P (macOS) / Ctrl+Shift+P (Windows/Linux) → "OMG: Initialize Workspace"
+   ```
+
+> [!IMPORTANT]
+> **仅安装扩展是不够的。** 安装后必须通过 Command Palette 运行 `OMG: Initialize Workspace`。此命令会在工作区中生成所有 `.github/` 下的约定文件（代理、技能、hooks、prompts、copilot-instructions.md）并构建 MCP 服务器。没有此步骤，Copilot 将无法使用任何 OMG 代理或技能。
+
+4. 出现提示时点击 **“重新加载窗口 (Reload Window)”** 激活所有代理和技能
+5. 在 Copilot Chat（agent mode）中开始使用 OMG
+
+### 方法 B: 手动克隆
 
 ### 1. 克隆仓库
 

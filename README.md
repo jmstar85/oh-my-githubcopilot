@@ -22,7 +22,7 @@
 
 ---
 
-<h1 align="center">Now, you can also use this amazing features such as OMC + ECC (Everything Claude Code) for GitHub Copilot!</h1>
+<h1 align="center">Now, you can enjoy OMG's amazing features integrating OMC + ECC!</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Copilot-Orchestrated-blue?style=for-the-badge&logo=github" alt="GitHub Copilot Orchestrated" />
@@ -60,6 +60,27 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 - Agent mode / agent customization support available in your Copilot setup
 - Node.js and npm installed so the MCP server can be built locally
 - Workspace opened as a trusted folder so MCP, prompts, and customization files can load normally
+
+### Option A: VS Code Extension (Recommended)
+
+1. Install the extension from `.vsix`:
+   ```
+   code --install-extension oh-my-githubcopilot-1.1.0.vsix
+   ```
+2. Open your project in VS Code
+
+3. **⚡ Run `OMG: Initialize Workspace` (REQUIRED)**
+   ```
+   Cmd+Shift+P (macOS) / Ctrl+Shift+P (Windows/Linux) → "OMG: Initialize Workspace"
+   ```
+
+> [!IMPORTANT]
+> **Installing the extension alone is NOT enough.** You must run `OMG: Initialize Workspace` from the Command Palette after installation. This command scaffolds all `.github/` convention files (agents, skills, hooks, prompts, copilot-instructions.md) and builds the MCP server in your workspace. Without this step, Copilot will not have access to any OMG agents or skills.
+
+4. When prompted, click **"Reload Window"** to activate all agents and skills
+5. Start using OMG in Copilot Chat (agent mode)
+
+### Option B: Manual Clone
 
 ### Step 1: Clone
 

@@ -22,7 +22,7 @@
 
 ---
 
-<h1 align="center">Now, you can also use this amazing features such as OMC + ECC (Everything Claude Code) for GitHub Copilot!</h1>
+<h1 align="center">Now, you can enjoy OMG's amazing features integrating OMC + ECC!</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Copilot-Orchestrated-blue?style=for-the-badge&logo=github" alt="GitHub Copilot Orchestrated" />
@@ -60,6 +60,27 @@ OMC가 Claude Code를 특화된 에이전트와 워크플로 자동화로 확장
 - Copilot 환경에서 agent mode 또는 agent customization 지원 가능 상태
 - MCP 서버를 로컬에서 빌드할 수 있도록 Node.js와 npm 설치
 - MCP, 프롬프트, 커스터마이징 파일이 정상 로드되도록 신뢰된 워크스페이스로 열기
+
+### 방법 A: VS Code Extension (권장)
+
+1. `.vsix` 파일로 익스텐션 설치:
+   ```
+   code --install-extension oh-my-githubcopilot-1.1.0.vsix
+   ```
+2. VS Code에서 프로젝트를 엽니다
+
+3. **⚡ `OMG: Initialize Workspace` 실행 (필수)**
+   ```
+   Cmd+Shift+P (macOS) / Ctrl+Shift+P (Windows/Linux) → "OMG: Initialize Workspace"
+   ```
+
+> [!IMPORTANT]
+> **익스텐션 설치만으로는 충분하지 않습니다.** 설치 후 반드시 Command Palette에서 `OMG: Initialize Workspace`를 실행해야 합니다. 이 명령이 `.github/` 하위의 모든 컨벤션 파일(에이전트, 스킬, 훅, 프롬프트, copilot-instructions.md)을 생성하고 MCP 서버를 빌드합니다. 이 단계 없이는 Copilot이 OMG 에이전트나 스킬을 사용할 수 없습니다.
+
+4. 프롬프트가 나타나면 **"창 다시 로드(Reload Window)"** 를 클릭하여 모든 에이전트와 스킬을 활성화합니다
+5. Copilot Chat(agent mode)에서 OMG 사용 시작
+
+### 방법 B: 수동 클론
 
 ### 1. 클론
 
