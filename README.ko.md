@@ -65,7 +65,7 @@ OMC가 Claude Code를 특화된 에이전트와 워크플로 자동화로 확장
 
 1. `.vsix` 파일로 익스텐션 설치:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.0.vsix
+   code --install-extension oh-my-githubcopilot-1.1.1.vsix
    ```
 2. VS Code에서 프로젝트를 엽니다
 
