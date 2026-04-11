@@ -29,13 +29,13 @@
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/PoOEpo8O-b0">
-    <img src="https://img.youtube.com/vi/PoOEpo8O-b0/maxresdefault.jpg" alt="Ver la demo de OMG en YouTube" width="720" />
+  <a href="https://youtu.be/3Zyf4a7LAH8">
+    <img src="https://img.youtube.com/vi/3Zyf4a7LAH8/maxresdefault.jpg" alt="Ver la demo de OMG en YouTube" width="720" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/PoOEpo8O-b0">▶ Ver la demo de OMG en YouTube</a>
+  <a href="https://youtu.be/3Zyf4a7LAH8">▶ Ver la demo de OMG en YouTube</a>
 </p>
 
 ---
@@ -75,7 +75,7 @@ Si OMC potencia Claude Code mediante agentes especializados y automatización de
 
 1. Instalar la extensión desde `.vsix`:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.3.vsix
+   code --install-extension oh-my-githubcopilot-1.1.4.vsix
    ```
 2. Abre tu proyecto en VS Code
 

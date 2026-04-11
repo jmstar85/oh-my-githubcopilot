@@ -29,13 +29,13 @@
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/PoOEpo8O-b0">
-    <img src="https://img.youtube.com/vi/PoOEpo8O-b0/maxresdefault.jpg" alt="YouTube에서 OMG 시연 보기" width="720" />
+  <a href="https://youtu.be/3Zyf4a7LAH8">
+    <img src="https://img.youtube.com/vi/3Zyf4a7LAH8/maxresdefault.jpg" alt="YouTube에서 OMG 시연 보기" width="720" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/PoOEpo8O-b0">▶ YouTube에서 OMG 시연 보기</a>
+  <a href="https://youtu.be/3Zyf4a7LAH8">▶ YouTube에서 OMG 시연 보기</a>
 </p>
 
 ---
@@ -75,7 +75,7 @@ OMC가 Claude Code를 특화된 에이전트와 워크플로 자동화로 확장
 
 1. `.vsix` 파일로 익스텐션 설치:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.3.vsix
+   code --install-extension oh-my-githubcopilot-1.1.4.vsix
    ```
 2. VS Code에서 프로젝트를 엽니다
 
