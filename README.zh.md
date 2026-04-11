@@ -65,7 +65,7 @@
 
 1. 通过 `.vsix` 文件安装扩展:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.1.vsix
+   code --install-extension oh-my-githubcopilot-1.1.2.vsix
    ```
 2. 在 VS Code 中打开你的项目
 

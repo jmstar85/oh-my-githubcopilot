@@ -65,7 +65,7 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 
 1. `.vsix` ファイルから拡張機能をインストール:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.1.vsix
+   code --install-extension oh-my-githubcopilot-1.1.2.vsix
    ```
 2. VS Code でプロジェクトを開きます
 

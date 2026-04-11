@@ -65,7 +65,7 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 
 1. Install the extension from `.vsix`:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.1.vsix
+   code --install-extension oh-my-githubcopilot-1.1.2.vsix
    ```
 2. Open your project in VS Code
 
