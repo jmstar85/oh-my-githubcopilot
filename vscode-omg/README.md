@@ -1,7 +1,7 @@
 <h1 align="center">oh-my-githubcopilot</h1>
 
 <p align="center">
-  English | <a href="README.ko.md">한국어</a> | <a href="README.zh.md">中文</a> | <a href="README.ja.md">日本語</a> | <a href="README.es.md">Español</a>
+  English | <a href="https://github.com/jmstar85/oh-my-githubcopilot/blob/main/README.ko.md">한국어</a> | <a href="https://github.com/jmstar85/oh-my-githubcopilot/blob/main/README.zh.md">中文</a> | <a href="https://github.com/jmstar85/oh-my-githubcopilot/blob/main/README.ja.md">日本語</a> | <a href="https://github.com/jmstar85/oh-my-githubcopilot/blob/main/README.es.md">Español</a>
 </p>
 
 <p align="center">
