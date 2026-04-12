@@ -75,7 +75,7 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 
 1. Install the extension from `.vsix`:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.5.vsix
+   code --install-extension oh-my-githubcopilot-1.1.6.vsix
    ```
 2. Open your project in VS Code
 
@@ -450,6 +450,31 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 ---
 
 ## What's New
+
+### v1.1.6 (2026-04-11) — Interactive Hook System
+
+**OMC-parity: mid-workflow user decisions via `vscode_askQuestions`**
+
+Five core skills now fire structured multiple-choice prompts at decision gates, mirroring OMC's gateway-level interrupt hooks — natively inside VS Code Copilot.
+
+#### Skills with Hooks
+
+| Skill | Hook Points |
+|-------|-------------|
+| `/deep-interview` | Every interview round (with ambiguity %) · Spec approval · Execution bridge |
+| `/plan` | Interview questions · Readiness gate · Trade-off selection · Critic rejection · Plan approval |
+| `/ralplan` | Options selection · Architect concerns · Critic rejection · Final approval |
+| `/self-improve` | Repo target · Trust confirmation · Goal interview · Harness rules (setup only — loop runs autonomously) |
+| `/omg-autopilot` | Vague input redirect · Spec confirmation · QA stuck recovery · Validation rejection |
+
+#### How It Works
+
+- At each decision gate the skill calls `vscode_askQuestions` with 3–5 labelled options, a `recommended` default, and `allowFreeformInput: true`
+- User selects an option (or types a custom answer) — the workflow continues based on the response
+- All hook calls use a unique `header` (e.g. `"interview-round-3"`, `"ralplan-approval"`) for traceability
+- Global hook protocol documented in `copilot-instructions.md → Interactive Hook System`
+
+---
 
 ### v1.1.0 (2026-04-10) — ECC Integration
 
