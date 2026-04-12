@@ -75,7 +75,7 @@ OMC가 Claude Code를 특화된 에이전트와 워크플로 자동화로 확장
 
 1. `.vsix` 파일로 익스텐션 설치:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.5.vsix
+   code --install-extension oh-my-githubcopilot-1.1.7.vsix
    ```
 2. VS Code에서 프로젝트를 엽니다
 
@@ -454,7 +454,7 @@ Scope-risk: narrow
 
 ## What's New
 
-### v1.1.6 (2026-04-11) — 인터랙티브 Hook 시스템
+### v1.1.7 (2026-04-12) — 인터랙티브 Hook 시스템
 
 **OMC 동등 기능: `vscode_askQuestions`를 통한 워크플로 중간 사용자 의사결정**
 

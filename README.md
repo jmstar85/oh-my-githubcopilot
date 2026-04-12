@@ -75,7 +75,7 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 
 1. Install the extension from `.vsix`:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.6.vsix
+   code --install-extension oh-my-githubcopilot-1.1.7.vsix
    ```
 2. Open your project in VS Code
 
@@ -451,7 +451,7 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 
 ## What's New
 
-### v1.1.6 (2026-04-11) — Interactive Hook System
+### v1.1.7 (2026-04-12) — Interactive Hook System
 
 **OMC-parity: mid-workflow user decisions via `vscode_askQuestions`**
 

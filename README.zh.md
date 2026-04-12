@@ -75,7 +75,7 @@
 
 1. 通过 `.vsix` 文件安装扩展:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.5.vsix
+   code --install-extension oh-my-githubcopilot-1.1.7.vsix
    ```
 2. 在 VS Code 中打开你的项目
 
@@ -406,7 +406,7 @@ Scope-risk: narrow
 
 ## What's New
 
-### v1.1.6 (2026-04-11) — 交互式 Hook 系统
+### v1.1.7 (2026-04-12) — 交互式 Hook 系统
 
 **OMC 同等功能：通过 `vscode_askQuestions` 实现工作流中途用户决策**
 

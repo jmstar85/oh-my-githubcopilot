@@ -75,7 +75,7 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 
 1. `.vsix` ファイルから拡張機能をインストール:
    ```
-   code --install-extension oh-my-githubcopilot-1.1.5.vsix
+   code --install-extension oh-my-githubcopilot-1.1.7.vsix
    ```
 2. VS Code でプロジェクトを開きます
 
@@ -410,7 +410,7 @@ Scope-risk: narrow
 
 ## What's New
 
-### v1.1.6 (2026-04-11) — インタラクティブ Hook システム
+### v1.1.7 (2026-04-12) — インタラクティブ Hook システム
 
 **OMC 同等機能: `vscode_askQuestions` によるワークフロー中間ユーザー意思決定**
 
