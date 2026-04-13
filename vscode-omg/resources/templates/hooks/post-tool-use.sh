@@ -20,6 +20,31 @@ OMC_STATE_DIR="$WORKSPACE/.omc/state"
 # Ensure state directory exists
 mkdir -p "$OMC_STATE_DIR" 2>/dev/null
 
+# --- Context byte accumulation for pre-compaction checkpoint ---
+# Tracks cumulative TOOL_INPUT + TOOL_OUTPUT bytes to estimate context window usage.
+# When threshold is reached (default 400KB ≈ 100K tokens), creates a checkpoint trigger.
+# Threshold is configurable via OMG_CONTEXT_THRESHOLD (bytes, default 400000).
+CONTEXT_BYTES_FILE="$OMC_STATE_DIR/context-bytes.txt"
+CHECKPOINT_TRIGGER="$OMC_STATE_DIR/checkpoint-trigger.json"
+OMG_CONTEXT_THRESHOLD="${OMG_CONTEXT_THRESHOLD:-400000}"
+
+# Measure bytes of this tool call's I/O
+INPUT_BYTES=$(printf '%s' "$TOOL_INPUT" | wc -c | tr -d ' ')
+OUTPUT_BYTES=$(printf '%s' "$TOOL_OUTPUT" | wc -c | tr -d ' ')
+CALL_BYTES=$((INPUT_BYTES + OUTPUT_BYTES))
+
+# Read current accumulation
+ACCUMULATED=$(cat "$CONTEXT_BYTES_FILE" 2>/dev/null || echo 0)
+ACCUMULATED=$((ACCUMULATED + CALL_BYTES))
+echo "$ACCUMULATED" > "$CONTEXT_BYTES_FILE" 2>/dev/null
+
+# Check if threshold reached — create checkpoint trigger
+if [ "$ACCUMULATED" -ge "$OMG_CONTEXT_THRESHOLD" ] && [ ! -f "$CHECKPOINT_TRIGGER" ]; then
+  ESTIMATED_TOKENS=$((ACCUMULATED / 4))
+  echo "{\"checkpoint_due\": true, \"context_bytes\": $ACCUMULATED, \"estimated_tokens\": $ESTIMATED_TOKENS, \"threshold\": $OMG_CONTEXT_THRESHOLD, \"timestamp\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"}" \
+    > "$CHECKPOINT_TRIGGER" 2>/dev/null
+fi
+
 # Log tool usage for debugging (optional, enable by setting OMG_DEBUG=1)
 if [ "${OMG_DEBUG:-0}" = "1" ]; then
   LOG_FILE="$OMC_STATE_DIR/tool-usage.log"

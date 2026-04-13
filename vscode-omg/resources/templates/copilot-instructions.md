@@ -108,6 +108,39 @@ These keywords automatically activate the corresponding skill:
 - 2+ independent tasks should run in parallel when possible.
 - Run builds/tests in background when appropriate.
 
+## Interactive Hook System
+
+OMG uses `vscode_askQuestions` as its hook mechanism to pause workflows and collect structured user decisions at critical points. This replaces OMC's gateway-level interrupt hooks with VS Code-native structured input.
+
+### Global Rules
+- **ALWAYS use `vscode_askQuestions`** for user-facing decisions during skill workflows — never ask via plain chat text
+- Provide 3-5 contextual **options** with clear labels and descriptions
+- Mark the most likely option as `recommended: true`
+- Set `allowFreeformInput: true` unless the question is strictly binary (e.g., trust confirmation)
+- Use a unique `header` per hook point (e.g., `"interview-round-3"`, `"plan-approval"`)
+- Include progress context in the question text (ambiguity %, cycle count, etc.)
+
+### Skills with Hooks
+| Skill | Hook Points | Purpose |
+|-------|-------------|---------|
+| `/deep-interview` | Every interview round, challenges, spec approval, execution bridge | Structured Socratic questioning |
+| `/plan` | Interview questions, readiness gate, trade-offs, critic rejection, plan approval | Planning decisions |
+| `/ralplan` | Options selection, architect concerns, critic rejection, final approval | Consensus gates |
+| `/self-improve` | Repo selection, trust confirmation, goal interview, harness rules | Setup phase gates (loop runs autonomously) |
+| `/omg-autopilot` | Vague input redirect, spec confirmation, QA stuck, validation rejection | Critical decision points |
+
+### Hook Firing Principle
+Fire hooks when:
+1. **Ambiguity** — input is vague or multiple valid interpretations exist
+2. **Trade-offs** — competing options with significant consequences
+3. **Failure recovery** — repeated errors or reviewer rejections need user direction
+4. **Gate transitions** — moving between major phases (spec → plan → execution)
+
+Do NOT fire hooks for:
+- Routine agent delegation (let agents work autonomously)
+- Internal consensus loops (architect/critic can iterate without user)
+- Diagnostic steps (explore, search, analyze — just do it)
+
 ## Commit Protocol
 Use git trailers to preserve decision context in commit messages.
 Format: conventional commit subject line, optional body, then structured trailers.
@@ -147,7 +180,26 @@ When the OMG MCP server is available, use these tools:
 - `omg_check_completion` - Verify all tasks complete before stopping
 - `omg_next_phase` / `omg_get_phase_info` - Transition and inspect omg-autopilot phases
 - `omg_select_model` - Get model recommendation based on complexity
-- `omg_read_memory` / `omg_write_memory` / `omg_delete_memory` - Project memory access
+- `omg_read_memory` / `omg_write_memory` / `omg_search_memory` / `omg_delete_memory` - Project memory access (search supports keyword match across keys, values, tags)
+- `omg_checkpoint` / `omg_restore_checkpoint` / `omg_context_status` - Session checkpoint and context pressure management
+
+## Context Pressure & Checkpoint Protocol
+The post-tool-use hook tracks cumulative tool I/O bytes as a proxy for context window usage.
+
+### Automatic Checkpoint
+- When accumulated bytes exceed `OMG_CONTEXT_THRESHOLD` (default 400KB ≈ 100K tokens), the pre-tool-use hook injects a checkpoint advisory
+- **When you see a checkpoint advisory**: immediately call `omg_checkpoint` with a summary of current progress and key decisions, then continue working
+- After checkpoint, the byte counter resets and tracking continues
+
+### Session Recovery
+- At the start of any session, if `.omc/state/session-checkpoint.json` exists, call `omg_restore_checkpoint` to load previous session context
+- Use the restored checkpoint to orient yourself: active modes, recent decisions, modified files
+- This is especially important after context compaction — the checkpoint survives compaction
+
+### Manual Checkpoint
+- Before major phase transitions (spec → plan → execution → validation), call `omg_checkpoint`
+- Before delegating to a new subagent for complex work, checkpoint current state
+- Use `omg_context_status` to check current context pressure percentage
 
 ## Cancellation
 `/cancel` ends active execution modes. Cancel when done+verified or blocked. Don't cancel if work is incomplete.

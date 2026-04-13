@@ -180,7 +180,26 @@ When the OMG MCP server is available, use these tools:
 - `omg_check_completion` - Verify all tasks complete before stopping
 - `omg_next_phase` / `omg_get_phase_info` - Transition and inspect omg-autopilot phases
 - `omg_select_model` - Get model recommendation based on complexity
-- `omg_read_memory` / `omg_write_memory` / `omg_delete_memory` - Project memory access
+- `omg_read_memory` / `omg_write_memory` / `omg_search_memory` / `omg_delete_memory` - Project memory access (search supports keyword match across keys, values, tags)
+- `omg_checkpoint` / `omg_restore_checkpoint` / `omg_context_status` - Session checkpoint and context pressure management
+
+## Context Pressure & Checkpoint Protocol
+The post-tool-use hook tracks cumulative tool I/O bytes as a proxy for context window usage.
+
+### Automatic Checkpoint
+- When accumulated bytes exceed `OMG_CONTEXT_THRESHOLD` (default 400KB ≈ 100K tokens), the pre-tool-use hook injects a checkpoint advisory
+- **When you see a checkpoint advisory**: immediately call `omg_checkpoint` with a summary of current progress and key decisions, then continue working
+- After checkpoint, the byte counter resets and tracking continues
+
+### Session Recovery
+- At the start of any session, if `.omc/state/session-checkpoint.json` exists, call `omg_restore_checkpoint` to load previous session context
+- Use the restored checkpoint to orient yourself: active modes, recent decisions, modified files
+- This is especially important after context compaction — the checkpoint survives compaction
+
+### Manual Checkpoint
+- Before major phase transitions (spec → plan → execution → validation), call `omg_checkpoint`
+- Before delegating to a new subagent for complex work, checkpoint current state
+- Use `omg_context_status` to check current context pressure percentage
 
 ## Cancellation
 `/cancel` ends active execution modes. Cancel when done+verified or blocked. Don't cancel if work is incomplete.

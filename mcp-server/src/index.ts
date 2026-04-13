@@ -6,6 +6,7 @@ import { registerStateTools } from "./state-tools.js";
 import { registerPrdTools } from "./prd-tools.js";
 import { registerWorkflowTools } from "./workflow-tools.js";
 import { registerMemoryTools } from "./memory-tools.js";
+import { registerCheckpointTools } from "./checkpoint-tools.js";
 import { registerModelRouter } from "./model-router.js";
 
 const server = new McpServer({
@@ -18,6 +19,7 @@ registerStateTools(server);
 registerPrdTools(server);
 registerWorkflowTools(server);
 registerMemoryTools(server);
+registerCheckpointTools(server);
 registerModelRouter(server);
 
 // Start server

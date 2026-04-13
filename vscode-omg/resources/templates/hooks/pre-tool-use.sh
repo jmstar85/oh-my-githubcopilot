@@ -52,5 +52,12 @@ if [ "$TOOL_NAME" = "runInTerminal" ]; then
   fi
 fi
 
-# Default: approve
-echo '{"decision": "approve"}'
+# Default: approve (with optional checkpoint advisory)
+WORKSPACE="${WORKSPACE:-$(pwd)}"
+CHECKPOINT_TRIGGER="$WORKSPACE/.omc/state/checkpoint-trigger.json"
+
+if [ -f "$CHECKPOINT_TRIGGER" ]; then
+  echo '{"decision": "approve", "advisory": "⚠️ Context threshold reached. Call omg_checkpoint to save session state before continuing."}'
+else
+  echo '{"decision": "approve"}'
+fi
