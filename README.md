@@ -13,6 +13,28 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/jmstar85/oh-my-githubcopilot/releases"><img src="https://img.shields.io/github/v/release/jmstar85/oh-my-githubcopilot?label=release&color=blue" alt="Latest Release"></a>
+  <a href="https://github.com/jmstar85/oh-my-githubcopilot/stargazers"><img src="https://img.shields.io/github/stars/jmstar85/oh-my-githubcopilot?style=social" alt="GitHub Stars"></a>
+  <img src="https://img.shields.io/badge/Agents-28-blueviolet" alt="28 Agents">
+  <img src="https://img.shields.io/badge/Skills-22-orange" alt="22 Skills">
+  <img src="https://img.shields.io/badge/MCP-Stateful%20Workflow-0A66C2" alt="MCP Stateful Workflow">
+  <img src="https://img.shields.io/badge/Hooks-pre%20%2F%20post%20tool--use-6f42c1" alt="Pre/Post Hooks">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Works%20with-GitHub%20Copilot-181717?logo=github" alt="Works with GitHub Copilot">
+  <img src="https://img.shields.io/badge/IDE-VS%20Code-007ACC?logo=visualstudiocode" alt="VS Code">
+  <img src="https://img.shields.io/badge/Workflow-omg--autopilot-00b894" alt="omg-autopilot">
+  <img src="https://img.shields.io/badge/Workflow-ralph-0984e3" alt="ralph">
+  <img src="https://img.shields.io/badge/Workflow-ultrawork-f39c12" alt="ultrawork">
+  <img src="https://img.shields.io/badge/Quality-ultraqa-e74c3c" alt="ultraqa">
+</p>
+
+<p align="center">
+  <code>#multi-agent</code> <code>#mcp</code> <code>#workflow-automation</code> <code>#context-preservation</code> <code>#agentic-ai</code>
+</p>
+
+<p align="center">
   <a href="#quick-start">Get Started</a> •
   <a href="#agents">Agents</a> •
   <a href="#skills">Skills</a> •
