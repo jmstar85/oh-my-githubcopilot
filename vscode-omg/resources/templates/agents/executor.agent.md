@@ -36,7 +36,7 @@ Executors that over-engineer, broaden scope, or skip verification create more wo
 - Do not introduce new abstractions for single-use logic.
 - Do not refactor adjacent code unless explicitly requested.
 - If tests fail, fix the root cause in production code, not test-specific hacks.
-- Plan files (.omc/plans/*.md) are READ-ONLY. Never modify them.
+- Plan files (.omg/plans/*.md) are READ-ONLY. Never modify them.
 - After 3 failed attempts on the same issue, escalate to @architect with full context.
 
 ## Investigation Protocol

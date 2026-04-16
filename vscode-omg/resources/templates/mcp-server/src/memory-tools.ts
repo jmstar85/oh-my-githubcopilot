@@ -7,7 +7,7 @@ const MAX_ENTRIES = 500;
 const MAX_VALUE_LENGTH = 10_000;
 
 function getMemoryPath(): string {
-  return path.join(getWorkspaceRoot(), ".omc", "project-memory.json");
+  return path.join(getWorkspaceRoot(), ".omg", "project-memory.json");
 }
 
 interface MemoryEntry {

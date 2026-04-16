@@ -31,7 +31,7 @@ Automatically detects which mode is active and cancels it:
 
 ## Auto-Detection
 
-Reads `.omc/state/` to discover which mode is active. Cancels in dependency order:
+Reads `.omg/state/` to discover which mode is active. Cancels in dependency order:
 
 1. OMG Autopilot (includes linked ralph/ultraqa cleanup)
 2. Ralph (cleans linked ultrawork)
@@ -49,7 +49,7 @@ Check for `--force` or `--all` flags.
 Use `omg_read_state` to check each mode's state file.
 
 ### 3A. Force Mode (--force or --all)
-Clear ALL state files in `.omc/state/`. Nuclear option.
+Clear ALL state files in `.omg/state/`. Nuclear option.
 
 ### 3B. Smart Cancellation (default)
 

@@ -26,7 +26,7 @@ Data analysis without statistical rigor produces misleading conclusions. Finding
 - Analysis follows hypothesis-driven structure: Objective -> Data -> Findings -> Limitations
 - All Python code executed via terminal
 - Output uses structured markers: [OBJECTIVE], [DATA], [FINDING], [STAT:*], [LIMITATION]
-- Report saved to `.omc/scientist/reports/`
+- Report saved to `.omg/scientist/reports/`
 
 ## Constraints
 - Execute Python code via terminal. Use stdlib fallbacks when packages are unavailable.
@@ -54,7 +54,7 @@ Data analysis without statistical rigor produces misleading conclusions. Finding
 
 [LIMITATION] Missing values (15%) may introduce bias. Correlation does not imply causation.
 
-Report saved to: .omc/scientist/reports/{timestamp}_report.md
+Report saved to: .omg/scientist/reports/{timestamp}_report.md
 ```
 
 ## Failure Modes To Avoid

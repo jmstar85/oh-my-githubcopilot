@@ -97,7 +97,7 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 
 1. Install the extension from `.vsix`:
    ```
-  code --install-extension oh-my-githubcopilot-1.1.8.vsix
+  code --install-extension oh-my-githubcopilot-1.1.9.vsix
    ```
 2. Open your project in VS Code
 
@@ -299,10 +299,10 @@ OMG includes a TypeScript MCP (Model Context Protocol) server that provides pers
 | **Memory** | `omg_read_memory`, `omg_write_memory`, `omg_delete_memory` | Project-scoped knowledge persistence |
 | **Model Router** | `omg_select_model` | Model recommendation based on task complexity |
 
-State is stored under `.omc/` in the workspace:
+State is stored under `.omg/` in the workspace:
 
 ```
-.omc/
+.omg/
 ├── state/              # Workflow state files per mode
 ├── plans/              # Work plans for execution
 ├── prd.json            # Product Requirements Document
@@ -414,7 +414,7 @@ oh-my-githubcopilot/
 │       ├── memory-tools.ts        # Project memory persistence
 │       └── model-router.ts        # Task complexity-based model routing
 ├── .vscode/mcp.json               # MCP server registration for VS Code
-└── .omc/                          # Runtime state directory (gitignored)
+└── .omg/                          # Runtime state directory (gitignored)
 ```
 
 ### How It Works
@@ -455,7 +455,7 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 | Installation | npm package / plugin marketplace | Clone + build MCP server |
 | Agent Count | 19+ (with tier variants) | 28 agents (20 core + 8 language reviewers) |
 | Skills | 10+ workflow skills | 22 skills with keyword triggers |
-| State Management | `.omc/` directory | `.omc/` via MCP server (same path for OMC compatibility) |
+| State Management | `.omc/` directory | `.omg/` via MCP server |
 | Multi-model | Codex/Gemini via tmux CLI | ccg skill (advisory) |
 | Configuration | `~/.claude/settings.json` | `.github/` + `.vscode/mcp.json` |
 | Tool Safety | Plugin-level hooks | Pre/post shell hooks |
@@ -472,6 +472,15 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 ---
 
 ## What's New
+
+### v1.1.9 (2026-04-16) — `.omc` → `.omg` State Path Migration
+
+**State path consistency update across source + templates**
+
+- Renamed remaining state path references from `.omc/` to `.omg/` across skills, agents, MCP templates, and extension templates.
+- Updated hook state variable naming from `OMC_STATE_DIR` to `OMG_STATE_DIR` where applicable.
+- Verified MCP server build and tests after migration (**18/18 passing**).
+- Kept intentional `.omc/` mentions only in OMC-vs-OMG comparison table rows.
 
 ### v1.1.8 (2026-04-13) — Context Preservation & Memory Upgrade
 

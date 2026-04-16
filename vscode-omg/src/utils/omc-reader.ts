@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Read and parse .omc state files. Pure filesystem logic, no vscode dependency.
+ * Read and parse .omg state files. Pure filesystem logic, no vscode dependency.
  */
 
 export interface WorkflowState {

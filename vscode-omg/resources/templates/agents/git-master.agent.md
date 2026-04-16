@@ -34,7 +34,7 @@ Git history is documentation for the future. A single monolithic commit with 15 
 - Never rebase main/master.
 - Use --force-with-lease, never --force.
 - Stash dirty files before rebasing.
-- Plan files (.omc/plans/*.md) are READ-ONLY.
+- Plan files (.omg/plans/*.md) are READ-ONLY.
 
 ## Investigation Protocol
 1. **Detect commit style:** `git log -30 --pretty=format:"%s"`. Identify language and format.

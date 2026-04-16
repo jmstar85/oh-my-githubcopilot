@@ -163,7 +163,7 @@ Each stage produces a handoff document before transitioning:
 - **Remaining**: [items for next stage]
 ```
 
-Handoffs saved to `.omc/handoffs/<stage-name>.md`. Survive cancellation for resume.
+Handoffs saved to `.omg/handoffs/<stage-name>.md`. Survive cancellation for resume.
 
 ## Team + Ralph Composition
 
@@ -176,7 +176,7 @@ When `ralph` modifier is present:
 
 ## State Tracking
 
-Track in `.omc/state/team-state.json` via `omg_write_state`/`omg_read_state`.
+Track in `.omg/state/team-state.json` via `omg_write_state`/`omg_read_state`.
 
 ## Resume and Cancel
 

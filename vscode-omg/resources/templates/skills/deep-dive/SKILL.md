@@ -37,7 +37,7 @@ Run 3 parallel tracer lanes using @tracer agents:
 - Each lane: evidence for, evidence against, critical unknown, discriminating probe
 - Rebuttal round between top hypotheses
 - Convergence detection
-- Save to `.omc/specs/deep-dive-trace-{slug}.md`
+- Save to `.omg/specs/deep-dive-trace-{slug}.md`
 
 ### Phase 4: Interview with Trace Injection
 Follow deep-interview protocol with 3 overrides:
@@ -51,4 +51,4 @@ Low-confidence trace: don't inject uncertain conclusion, use ALL unknowns as que
 Same options as deep-interview: ralplan → omg-autopilot (recommended), omg-autopilot, ralph, team, or refine further.
 
 ## Output
-Spec saved to `.omc/specs/deep-dive-{slug}.md` with additional "Trace Findings" section.
+Spec saved to `.omg/specs/deep-dive-{slug}.md` with additional "Trace Findings" section.

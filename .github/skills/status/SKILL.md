@@ -19,7 +19,7 @@ Show the current state of all OMG modes, active agents, and progress.
 ## Workflow
 
 ### 1. Scan State Files
-Read `.omc/state/` directory for active mode state files:
+Read `.omg/state/` directory for active mode state files:
 - `omg-autopilot-state.json`
 - `ralph-state.json`
 - `ultrawork-state.json`
@@ -81,4 +81,4 @@ Tasks: 2/5 completed
 With `--verbose`, also show:
 - Full state JSON for each active mode
 - Recent git log (last 5 commits)
-- `.omc/` directory listing
+- `.omg/` directory listing

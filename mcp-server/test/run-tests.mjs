@@ -143,7 +143,7 @@ describe("getStatePath", () => {
   it("returns a path ending with mode-state.json for valid modes", () => {
     const p = getStatePath("omg-autopilot");
     assert.ok(p.endsWith("omg-autopilot-state.json"));
-    assert.ok(p.includes(".omc"));
+    assert.ok(p.includes(".omg"));
   });
 
   it("throws for invalid mode names", () => {

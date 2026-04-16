@@ -5,7 +5,7 @@ import * as path from "node:path";
 import { getWorkspaceRoot, ensureDir, validateMode, safeReadFile, safeWriteFile, safeJsonParse, errorResponse } from "./utils.js";
 
 export function getStateDir(): string {
-  return path.join(getWorkspaceRoot(), ".omc", "state");
+  return path.join(getWorkspaceRoot(), ".omg", "state");
 }
 
 export function getStatePath(mode: string): string {

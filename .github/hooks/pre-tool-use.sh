@@ -54,7 +54,7 @@ fi
 
 # Default: approve (with optional checkpoint advisory)
 WORKSPACE="${WORKSPACE:-$(pwd)}"
-CHECKPOINT_TRIGGER="$WORKSPACE/.omc/state/checkpoint-trigger.json"
+CHECKPOINT_TRIGGER="$WORKSPACE/.omg/state/checkpoint-trigger.json"
 
 if [ -f "$CHECKPOINT_TRIGGER" ]; then
   echo '{"decision": "approve", "advisory": "⚠️ Context threshold reached. Call omg_checkpoint to save session state before continuing."}'

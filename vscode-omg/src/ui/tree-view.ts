@@ -26,7 +26,7 @@ export function registerTreeViews(context: vscode.ExtensionContext, ws: vscode.W
 
   // Watch for changes to refresh trees
   const stateWatcher = vscode.workspace.createFileSystemWatcher(
-    new vscode.RelativePattern(ws, '.omc/**/*.json'),
+    new vscode.RelativePattern(ws, '.omg/**/*.json'),
   );
   stateWatcher.onDidChange(() => {
     workflowProvider.refresh();
@@ -60,7 +60,7 @@ class WorkflowTreeProvider implements vscode.TreeDataProvider<WorkflowItem> {
   }
 
   getChildren(): WorkflowItem[] {
-    const stateDir = path.join(this.ws.uri.fsPath, '.omc', 'state');
+    const stateDir = path.join(this.ws.uri.fsPath, '.omg', 'state');
     if (!fs.existsSync(stateDir)) {
       return [new WorkflowItem('No active workflows', '', vscode.TreeItemCollapsibleState.None)];
     }
@@ -206,7 +206,7 @@ class PrdTreeProvider implements vscode.TreeDataProvider<PrdItem> {
   }
 
   getChildren(): PrdItem[] {
-    const prdPath = path.join(this.ws.uri.fsPath, '.omc', 'prd.json');
+    const prdPath = path.join(this.ws.uri.fsPath, '.omg', 'prd.json');
     if (!fs.existsSync(prdPath)) {
       return [new PrdItem('No PRD found', 'Start a ralph or omg-autopilot workflow', false)];
     }
@@ -228,7 +228,7 @@ class PrdTreeProvider implements vscode.TreeDataProvider<PrdItem> {
 
       return items.length > 0 ? items : [new PrdItem('PRD is empty', '', false)];
     } catch {
-      return [new PrdItem('Error reading PRD', 'Check .omc/prd.json', false)];
+      return [new PrdItem('Error reading PRD', 'Check .omg/prd.json', false)];
     }
   }
 }

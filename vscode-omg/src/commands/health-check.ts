@@ -73,7 +73,7 @@ async function showStatus(outputChannel: vscode.OutputChannel) {
     return;
   }
 
-  const stateDir = path.join(ws.uri.fsPath, '.omc', 'state');
+  const stateDir = path.join(ws.uri.fsPath, '.omg', 'state');
   const workflows = getActiveWorkflows(stateDir);
 
   if (workflows.length === 0) {

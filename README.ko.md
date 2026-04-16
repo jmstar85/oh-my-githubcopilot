@@ -75,7 +75,7 @@ OMC가 Claude Code를 특화된 에이전트와 워크플로 자동화로 확장
 
 1. `.vsix` 파일로 익스텐션 설치:
    ```
-  code --install-extension oh-my-githubcopilot-1.1.8.vsix
+  code --install-extension oh-my-githubcopilot-1.1.9.vsix
    ```
 2. VS Code에서 프로젝트를 엽니다
 
@@ -280,10 +280,10 @@ OMG에는 워크플로 상태를 지속적으로 관리하는 TypeScript 기반 
 | **Memory** | `omg_read_memory`, `omg_write_memory`, `omg_delete_memory` | 프로젝트 범위 지식 저장 |
 | **Model Router** | `omg_select_model` | 작업 복잡도에 따른 모델 추천 |
 
-상태 데이터는 워크스페이스 내 `.omc/` 아래에 저장됩니다.
+상태 데이터는 워크스페이스 내 `.omg/` 아래에 저장됩니다.
 
 ```text
-.omc/
+.omg/
 ├── state/              # 모드별 워크플로 상태 파일
 ├── plans/              # 실행 계획
 ├── prd.json            # 제품 요구사항 문서
@@ -395,7 +395,7 @@ oh-my-githubcopilot/
 │       ├── memory-tools.ts        # 프로젝트 메모리 관리
 │       └── model-router.ts        # 작업 복잡도 기반 모델 라우팅
 ├── .vscode/mcp.json               # VS Code용 MCP 서버 등록
-└── .omc/                          # 런타임 상태 디렉터리
+└── .omg/                          # 런타임 상태 디렉터리
 ```
 
 ### 동작 방식
@@ -436,7 +436,7 @@ Scope-risk: narrow
 | 설치 방식 | npm 패키지 / 플러그인 마켓플레이스 | 저장소 클론 + MCP 서버 빌드 |
 | 에이전트 수 | 19개 이상 | 20개 전문 에이전트 |
 | 스킬 | 10개 이상 워크플로 스킬 | 18개 스킬과 키워드 트리거 |
-| 상태 관리 | `.omc/` 디렉터리 | MCP 서버 기반 `.omc/` (OMC 호환을 위해 동일 경로 사용) |
+| 상태 관리 | `.omc/` 디렉터리 | MCP 서버 기반 `.omg/` |
 | 멀티 모델 | Codex/Gemini via tmux CLI | ccg 스킬 기반 보조 분석 |
 | 설정 위치 | `~/.claude/settings.json` | `.github/` + `.vscode/mcp.json` |
 | 안전장치 | 플러그인 레벨 훅 | 쉘 기반 pre/post 훅 |
@@ -453,6 +453,15 @@ Scope-risk: narrow
 ---
 
 ## What's New
+
+### v1.1.9 (2026-04-16) — `.omc` → `.omg` 상태 경로 마이그레이션
+
+**소스/템플릿 전반의 상태 경로 일관성 개선**
+
+- 남아 있던 `.omc/` 경로를 `.omg/`로 정리 (skills, agents, MCP/extension 템플릿 포함)
+- 훅 상태 변수명 `OMC_STATE_DIR` → `OMG_STATE_DIR` 반영
+- 마이그레이션 후 MCP 서버 빌드 및 테스트 검증 완료 (**18/18 통과**)
+- OMC 비교 표의 `.omc/` 표기는 의도적으로 유지
 
 ### v1.1.8 (2026-04-13) — 컨텍스트 보존 & 메모리 고도화
 

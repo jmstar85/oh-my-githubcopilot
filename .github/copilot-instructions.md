@@ -167,11 +167,11 @@ Scope-risk: narrow
 ```
 
 ## State Paths
-State files are stored in `.omc/` directory for OMC compatibility:
-- `.omc/state/` - Workflow state files
-- `.omc/plans/` - Work plans
-- `.omc/prd.json` - PRD for Ralph workflows
-- `.omc/project-memory.json` - Project memory
+State files are stored in `.omg/` directory:
+- `.omg/state/` - Workflow state files
+- `.omg/plans/` - Work plans
+- `.omg/prd.json` - PRD for Ralph workflows
+- `.omg/project-memory.json` - Project memory
 
 ## MCP Tools
 When the OMG MCP server is available, use these tools:
@@ -192,7 +192,7 @@ The post-tool-use hook tracks cumulative tool I/O bytes as a proxy for context w
 - After checkpoint, the byte counter resets and tracking continues
 
 ### Session Recovery
-- At the start of any session, if `.omc/state/session-checkpoint.json` exists, call `omg_restore_checkpoint` to load previous session context
+- At the start of any session, if `.omg/state/session-checkpoint.json` exists, call `omg_restore_checkpoint` to load previous session context
 - Use the restored checkpoint to orient yourself: active modes, recent decisions, modified files
 - This is especially important after context compaction — the checkpoint survives compaction
 

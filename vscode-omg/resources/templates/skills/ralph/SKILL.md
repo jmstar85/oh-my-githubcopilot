@@ -28,7 +28,7 @@ Ralph is a PRD-driven persistence loop that keeps working on a task until ALL us
 ## Steps
 
 ### 1. PRD Setup (first iteration)
-- Check if `.omc/prd.json` exists via `omg_read_prd`
+- Check if `.omg/prd.json` exists via `omg_read_prd`
 - If none exists, generate a PRD scaffold with task-specific acceptance criteria
 - **CRITICAL**: Replace generic criteria with specific, testable ones
 - Initialize progress tracking

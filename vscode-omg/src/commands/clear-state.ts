@@ -15,7 +15,7 @@ async function clearState(outputChannel: vscode.OutputChannel) {
     return;
   }
 
-  const stateDir = path.join(ws.uri.fsPath, '.omc', 'state');
+  const stateDir = path.join(ws.uri.fsPath, '.omg', 'state');
   if (!fs.existsSync(stateDir)) {
     vscode.window.showInformationMessage('OMG: No workflow state to clear.');
     return;

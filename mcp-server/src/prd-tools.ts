@@ -4,7 +4,7 @@ import * as path from "node:path";
 import { getWorkspaceRoot, ensureDir, safeReadFile, safeWriteFile, safeJsonParse, generateId, errorResponse } from "./utils.js";
 
 function getPrdPath(): string {
-  return path.join(getWorkspaceRoot(), ".omc", "prd.json");
+  return path.join(getWorkspaceRoot(), ".omg", "prd.json");
 }
 
 interface Story {

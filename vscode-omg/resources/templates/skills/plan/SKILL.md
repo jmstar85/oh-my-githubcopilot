@@ -40,12 +40,12 @@ Creates comprehensive, actionable work plans through intelligent interaction. Au
 6. Final plan includes ADR (Decision, Drivers, Alternatives, Why chosen, Consequences)
 
 ## Review Mode (`--review`)
-1. Read plan from `.omc/plans/`
+1. Read plan from `.omg/plans/`
 2. @critic evaluates
 3. Return verdict: APPROVED / REVISE / REJECT
 
 ## Output
-Plans saved to `.omc/plans/`. Include:
+Plans saved to `.omg/plans/`. Include:
 - Requirements Summary
 - Testable Acceptance Criteria
 - Implementation Steps (with file references)

@@ -37,7 +37,7 @@ Autonomous QA cycling workflow that runs until your quality goal is met.
 - **Environment Error**: Exit with error details
 
 ## State Tracking
-Track in `.omc/ultraqa-state.json`. Clean up state files on completion.
+Track in `.omg/ultraqa-state.json`. Clean up state files on completion.
 
 ## Output
 ```

@@ -95,7 +95,7 @@ Repeat until ambiguity <= 20% or user exits early:
 - Round 8+: **Ontologist** - find the essence (if ambiguity > 30%)
 
 ### Phase 4: Crystallize Spec
-When ambiguity <= threshold, generate spec to `.omc/specs/deep-interview-{slug}.md`:
+When ambiguity <= threshold, generate spec to `.omg/specs/deep-interview-{slug}.md`:
 - Goal, Constraints, Non-Goals, Acceptance Criteria
 - Assumptions Exposed & Resolved
 - Ontology (Key Entities) with convergence tracking

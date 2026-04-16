@@ -39,8 +39,8 @@ Autopilot is designed to be mostly autonomous, but hooks fire at ambiguity point
 
 ### Phase 0 - Expansion
 Turn the user's idea into a detailed spec.
-- If ralplan consensus plan exists (`.omc/plans/ralplan-*.md`): Skip Phase 0 AND Phase 1 → jump to Phase 2
-- If deep-interview spec exists (`.omc/specs/deep-interview-*.md`): Use pre-validated spec, skip to Phase 1
+- If ralplan consensus plan exists (`.omg/plans/ralplan-*.md`): Skip Phase 0 AND Phase 1 → jump to Phase 2
+- If deep-interview spec exists (`.omg/specs/deep-interview-*.md`): Use pre-validated spec, skip to Phase 1
 - If input is vague: **HOOK** via `vscode_askQuestions`:
   ```
   header: "autopilot-vague-input"
@@ -64,14 +64,14 @@ Turn the user's idea into a detailed spec.
   ]
   allowFreeformInput: true
   ```
-- Output: `.omc/autopilot/spec.md`
+- Output: `.omg/autopilot/spec.md`
 - Track phase: `omg_write_state(phase="expansion_done")`
 
 ### Phase 1 - Planning
 Create an implementation plan from the spec.
 - @architect creates plan (direct mode)
 - @critic validates plan
-- Output: `.omc/plans/autopilot-impl.md`
+- Output: `.omg/plans/autopilot-impl.md`
 - Track: `omg_write_state(phase="planning_done")`
 
 ### Phase 2 - Execution

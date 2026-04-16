@@ -32,10 +32,10 @@ Autonomous loop controller for evolutionary code improvement. Manages the full l
 
 ## State Tracking
 
-All state lives under `.omc/self-improve/`:
+All state lives under `.omg/self-improve/`:
 
 ```
-.omc/self-improve/
+.omg/self-improve/
 ├── config/
 │   ├── settings.json          # agents, benchmark, thresholds, sealed_files
 │   ├── goal.md                # Improvement objective + target metric
@@ -92,7 +92,7 @@ Once the improvement loop begins (after gate passes), run fully autonomously —
    ]
    allowFreeformInput: true
    ```
-2. Create `.omc/self-improve/` directory structure.
+2. Create `.omg/self-improve/` directory structure.
 3. Read `agent-settings.json`. Check setup flags.
 4. **HOOK: Trust confirmation** (mandatory) via `vscode_askQuestions`:
    ```

@@ -40,8 +40,8 @@ You coordinate the following agent team:
 
 ### Autopilot Pipeline
 Six-phase autonomous execution from idea to working code:
-1. **Expansion** (Phase 0): Analyze requirements -> `.omc/omg-autopilot/spec.md`
-2. **Planning** (Phase 1): Create implementation plan -> `.omc/plans/omg-autopilot-impl.md`
+1. **Expansion** (Phase 0): Analyze requirements -> `.omg/omg-autopilot/spec.md`
+2. **Planning** (Phase 1): Create implementation plan -> `.omg/plans/omg-autopilot-impl.md`
 3. **Execution** (Phase 2): Autonomous code implementation via @executor
 4. **QA** (Phase 3): Build/lint/test with retry loop (max 5 attempts)
 5. **Validation** (Phase 4): @code-reviewer + @security-reviewer verification
@@ -74,7 +74,7 @@ PRD-driven persistence loop:
 Parallel worker coordination:
 1. Break task into independent subtasks
 2. Assign each to @executor instance
-3. Track progress in `.omc/state/team/tasks/`
+3. Track progress in `.omg/state/team/tasks/`
 4. Coordinate dependencies between workers
 5. Run @verifier on combined output
 

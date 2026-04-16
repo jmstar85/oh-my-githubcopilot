@@ -75,7 +75,7 @@ Si OMC potencia Claude Code mediante agentes especializados y automatización de
 
 1. Instalar la extensión desde `.vsix`:
    ```
-  code --install-extension oh-my-githubcopilot-1.1.8.vsix
+  code --install-extension oh-my-githubcopilot-1.1.9.vsix
    ```
 2. Abre tu proyecto en VS Code
 
@@ -230,10 +230,10 @@ OMG incluye un servidor MCP en TypeScript para gestionar estado persistente del 
 | **Memory** | `omg_read_memory`, `omg_write_memory`, `omg_delete_memory` | Persistencia de conocimiento a nivel de proyecto |
 | **Model Router** | `omg_select_model` | Recomendación de modelo según complejidad |
 
-El estado se guarda en `.omc/` dentro del workspace.
+El estado se guarda en `.omg/` dentro del workspace.
 
 ```text
-.omc/
+.omg/
 ├── state/              # estado por modo
 ├── plans/              # planes de ejecución
 ├── prd.json            # Documento de Requisitos del Producto
@@ -345,7 +345,7 @@ oh-my-githubcopilot/
 │       ├── memory-tools.ts        # memoria del proyecto
 │       └── model-router.ts        # routing de modelos por complejidad
 ├── .vscode/mcp.json               # registro MCP para VS Code
-└── .omc/                          # directorio de estado en runtime
+└── .omg/                          # directorio de estado en runtime
 ```
 
 ### Cómo funciona
@@ -386,7 +386,7 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 | Instalación | paquete npm / marketplace de plugins | clonar repositorio + compilar MCP server |
 | Número de agentes | 19+ | 28 agentes (20 core + 8 revisores de lenguaje) |
 | Skills | 10+ skills de workflow | 22 skills con disparadores por palabra clave |
-| Gestión de estado | directorio `.omc/` | `.omc/` gestionado por MCP (misma ruta para compatibilidad con OMC) |
+| Gestión de estado | directorio `.omc/` | `.omg/` gestionado por MCP |
 | Multi-modelo | Codex/Gemini vía tmux CLI | análisis consultivo mediante `ccg` |
 | Configuración | `~/.claude/settings.json` | `.github/` + `.vscode/mcp.json` |
 | Seguridad | hooks a nivel plugin | hooks shell pre/post |
@@ -403,6 +403,15 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 ---
 
 ## What's New
+
+### v1.1.9 (2026-04-16) — Migración de rutas de estado `.omc` → `.omg`
+
+**Alineación de rutas de estado en código fuente + plantillas**
+
+- Se renombraron las referencias restantes de `.omc/` a `.omg/` en skills, agents y plantillas MCP/extension.
+- Se actualizó el nombre de variable de hooks `OMC_STATE_DIR` → `OMG_STATE_DIR`.
+- Verificación posterior a la migración: build + tests del MCP server (**18/18 OK**).
+- Se mantuvieron solo las menciones intencionales de `.omc/` en tablas comparativas con OMC.
 
 ### v1.1.8 (2026-04-13) — Preservación de contexto y mejora de memoria
 

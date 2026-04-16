@@ -15,17 +15,17 @@ TOOL_INPUT="${TOOL_INPUT:-}"
 TOOL_OUTPUT="${TOOL_OUTPUT:-}"
 WORKSPACE="${WORKSPACE:-$(pwd)}"
 
-OMC_STATE_DIR="$WORKSPACE/.omc/state"
+OMG_STATE_DIR="$WORKSPACE/.omg/state"
 
 # Ensure state directory exists
-mkdir -p "$OMC_STATE_DIR" 2>/dev/null
+mkdir -p "$OMG_STATE_DIR" 2>/dev/null
 
 # --- Context byte accumulation for pre-compaction checkpoint ---
 # Tracks cumulative TOOL_INPUT + TOOL_OUTPUT bytes to estimate context window usage.
 # When threshold is reached (default 400KB ≈ 100K tokens), creates a checkpoint trigger.
 # Threshold is configurable via OMG_CONTEXT_THRESHOLD (bytes, default 400000).
-CONTEXT_BYTES_FILE="$OMC_STATE_DIR/context-bytes.txt"
-CHECKPOINT_TRIGGER="$OMC_STATE_DIR/checkpoint-trigger.json"
+CONTEXT_BYTES_FILE="$OMG_STATE_DIR/context-bytes.txt"
+CHECKPOINT_TRIGGER="$OMG_STATE_DIR/checkpoint-trigger.json"
 OMG_CONTEXT_THRESHOLD="${OMG_CONTEXT_THRESHOLD:-400000}"
 
 # Measure bytes of this tool call's I/O
@@ -48,13 +48,13 @@ fi
 
 # Log tool usage for debugging (optional, enable by setting OMG_DEBUG=1)
 if [ "${OMG_DEBUG:-0}" = "1" ]; then
-  LOG_FILE="$OMC_STATE_DIR/tool-usage.log"
+  LOG_FILE="$OMG_STATE_DIR/tool-usage.log"
   echo "[$(date -u +"%Y-%m-%dT%H:%M:%SZ")] $TOOL_NAME" >> "$LOG_FILE"
 fi
 
 # Track file modifications for autopilot phase tracking
 if [ "$TOOL_NAME" = "editFiles" ] || [ "$TOOL_NAME" = "createFile" ]; then
-  MODIFIED_FILES="$OMC_STATE_DIR/modified-files.txt"
+  MODIFIED_FILES="$OMG_STATE_DIR/modified-files.txt"
   # Extract file path from tool input and append to tracking file
   FILE_PATH=$(echo "$TOOL_INPUT" | grep -oE '"filePath"\s*:\s*"[^"]*"' | head -1 | sed 's/.*"filePath"\s*:\s*"//;s/".*//')
   if [ -n "$FILE_PATH" ]; then
@@ -73,10 +73,10 @@ if [ "$TOOL_NAME" = "runInTerminal" ]; then
     if echo "$TOOL_OUTPUT" | grep -qiE '(FAIL|ERROR|failed|error)'; then
       # Write failure marker for ultraqa/autopilot to detect
       echo '{"last_test_run": "failed", "timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'"}' \
-        > "$OMC_STATE_DIR/last-test-result.json" 2>/dev/null
+        > "$OMG_STATE_DIR/last-test-result.json" 2>/dev/null
     else
       echo '{"last_test_run": "passed", "timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'"}' \
-        > "$OMC_STATE_DIR/last-test-result.json" 2>/dev/null
+        > "$OMG_STATE_DIR/last-test-result.json" 2>/dev/null
     fi
   fi
 fi
@@ -87,7 +87,7 @@ if [ "${OMG_LINT_ON_EDIT:-0}" = "1" ]; then
   if [ "$TOOL_NAME" = "editFiles" ] || [ "$TOOL_NAME" = "createFile" ]; then
     FILE_PATH=$(echo "$TOOL_INPUT" | grep -oE '"filePath"\s*:\s*"[^"]*"' | head -1 | sed 's/.*"filePath"\s*:\s*"//;s/".*//')
 
-    QUALITY_REPORT="$OMC_STATE_DIR/quality-gate.json"
+    QUALITY_REPORT="$OMG_STATE_DIR/quality-gate.json"
     QUALITY_STATUS="ok"
     QUALITY_DETAILS=""
 

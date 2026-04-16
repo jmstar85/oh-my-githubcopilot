@@ -12,7 +12,7 @@ export function createStatusBar(context: vscode.ExtensionContext, ws: vscode.Wor
   updateStatusBar(statusBar, ws);
 
   // Watch for state changes
-  const statePattern = new vscode.RelativePattern(ws, '.omc/state/*-state.json');
+  const statePattern = new vscode.RelativePattern(ws, '.omg/state/*-state.json');
   const watcher = vscode.workspace.createFileSystemWatcher(statePattern);
 
   const update = () => updateStatusBar(statusBar, ws);
@@ -24,7 +24,7 @@ export function createStatusBar(context: vscode.ExtensionContext, ws: vscode.Wor
 }
 
 function updateStatusBar(statusBar: vscode.StatusBarItem, ws: vscode.WorkspaceFolder) {
-  const stateDir = path.join(ws.uri.fsPath, '.omc', 'state');
+  const stateDir = path.join(ws.uri.fsPath, '.omg', 'state');
   const active = getActiveWorkflows(stateDir);
 
   if (active.length === 0) {
