@@ -332,22 +332,22 @@ OMG includes pre/post tool-use hooks (`.github/hooks/`) that act as safety nets:
 
 > All numbers are derived from the actual `oh-my-githubcopilot` git history, test suite, and `npm audit` results. No synthetic data.
 
-### Project Snapshot (as of v1.1.x)
+### Project Snapshot (as of v1.2.0)
 
 | Metric | Value |
 |--------|-------|
-| Total codebase | 28,907 lines |
-| Development span | 6 days (Apr 6–11, 2026) |
-| Total commits | 23 |
+| Total codebase | 25,964 lines |
+| Development span | 12 days (Apr 6–17, 2026) |
+| Total commits | 33 |
 | Agents | 28 (20 core + 8 language reviewers) |
 | Skills | 22 |
-| MCP tools | 15 |
+| MCP tools | 19 |
 
 ### Quality Metrics
 
-| Metric | v1.0 (initial) | v1.1.x (after OMG pipeline) |
+| Metric | v1.0 (initial) | v1.2.0 (after OMG pipeline) |
 |--------|:-:|:-:|
-| Test pass rate | N/A | **18 / 18 (100%)** |
+| Test pass rate | N/A | **46 / 46 (100%)** |
 | TypeScript errors | Not checked | **0** |
 | Known CVEs | 7 (2 prod + 5 dev) | **0** |
 | Pre-hook safety guards | 0 | **6** |

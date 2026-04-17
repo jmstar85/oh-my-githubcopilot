@@ -263,22 +263,22 @@ OMG incorpora hooks en `.github/hooks/` para actuar como red de seguridad.
 
 > Todos los números provienen del historial git real, la suite de tests y los resultados de `npm audit`. Sin datos sintéticos.
 
-### Instantánea del proyecto (v1.1.x)
+### Instantánea del proyecto (v1.2.0)
 
 | Métrica | Valor |
 |---------|-------|
-| Código total | 28.907 líneas |
-| Período de desarrollo | 6 días (6–11 de abril de 2026) |
-| Total de commits | 23 |
+| Código total | 25.964 líneas |
+| Período de desarrollo | 12 días (6–17 de abril de 2026) |
+| Total de commits | 33 |
 | Agentes | 28 (20 núcleo + 8 revisores de lenguaje) |
 | Skills | 22 |
-| Herramientas MCP | 15 |
+| Herramientas MCP | 19 |
 
 ### Métricas de calidad
 
-| Métrica | v1.0 (inicial) | v1.1.x (tras pipeline OMG) |
+| Métrica | v1.0 (inicial) | v1.2.0 (tras pipeline OMG) |
 |---------|:-:|:-:|
-| Tasa de tests pasados | N/A | **18 / 18 (100%)** |
+| Tasa de tests pasados | N/A | **46 / 46 (100%)** |
 | Errores TypeScript | Sin verificar | **0** |
 | CVEs conocidas | 7 (2 producción + 5 dev) | **0** |
 | Guardas pre-hook | 0 | **6** |
