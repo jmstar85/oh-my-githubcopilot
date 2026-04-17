@@ -73,11 +73,16 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 
 ### 方法 A: VS Code Extension（推奨）
 
-1. `.vsix` ファイルから拡張機能をインストール:
-   ```
-  code --install-extension oh-my-githubcopilot-1.2.0.vsix
-   ```
-2. VS Code でプロジェクトを開きます
+1. 拡張機能をインストール（以下のいずれか）:
+   - **方法 1 — VSIX (CLI)**
+     ```bash
+     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.2.vsix
+     ```
+     > VSIX を別の場所にダウンロードした場合は、ローカルパスに置き換えて実行してください。
+   - **方法 2 — VS Code の拡張機能タブ (UI)**
+     VS Code の **Extensions** (`⇧⌘X` / `Ctrl+Shift+X`) で **`oh-my-githubcopilot`** を検索してインストール。
+
+2. VS Code でプロジェクトを開きます。
 
 3. **⚡ `OMG: Initialize Workspace` を実行（必須）**
    ```

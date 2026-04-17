@@ -73,11 +73,16 @@
 
 ### 方法 A: VS Code Extension（推荐）
 
-1. 通过 `.vsix` 文件安装扩展:
-   ```
-  code --install-extension oh-my-githubcopilot-1.2.0.vsix
-   ```
-2. 在 VS Code 中打开你的项目
+1. 安装扩展（以下任选其一）:
+   - **方式 1 — VSIX (CLI)**
+     ```bash
+     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.2.vsix
+     ```
+     > 如果你把 VSIX 下载到了其他位置，请改为对应的本地路径。
+   - **方式 2 — VS Code 扩展面板 (UI)**
+     在 VS Code 左侧 **Extensions**（`⇧⌘X` / `Ctrl+Shift+X`）中搜索 **`oh-my-githubcopilot`** 并安装。
+
+2. 在 VS Code 中打开你的项目。
 
 3. **⚡ 运行 `OMG: Initialize Workspace`（必须）**
    ```

@@ -73,11 +73,16 @@ Si OMC potencia Claude Code mediante agentes especializados y automatización de
 
 ### Opción A: VS Code Extension (Recomendado)
 
-1. Instalar la extensión desde `.vsix`:
-   ```
-  code --install-extension oh-my-githubcopilot-1.2.0.vsix
-   ```
-2. Abre tu proyecto en VS Code
+1. Instalar la extensión (cualquiera de estos métodos):
+   - **Método 1 — VSIX (CLI)**
+     ```bash
+     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.2.vsix
+     ```
+     > Si descargaste el VSIX en otra ubicación, reemplaza la ruta por tu ruta local.
+   - **Método 2 — Pestaña Extensions de VS Code (UI)**
+     En VS Code, abre **Extensions** (`⇧⌘X` / `Ctrl+Shift+X`), busca **`oh-my-githubcopilot`** e instala.
+
+2. Abre tu proyecto en VS Code.
 
 3. **⚡ Ejecutar `OMG: Initialize Workspace` (OBLIGATORIO)**
    ```

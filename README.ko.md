@@ -73,11 +73,16 @@ OMC가 Claude Code를 특화된 에이전트와 워크플로 자동화로 확장
 
 ### 방법 A: VS Code Extension (권장)
 
-1. `.vsix` 파일로 익스텐션 설치:
-   ```
-  code --install-extension oh-my-githubcopilot-1.2.0.vsix
-   ```
-2. VS Code에서 프로젝트를 엽니다
+1. 익스텐션 설치 (아래 방법 중 하나):
+   - **방법 1 — VSIX (CLI)**
+     ```bash
+     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.2.vsix
+     ```
+     > VSIX 파일을 다른 위치에 다운로드했다면, 해당 로컬 경로로 바꿔서 실행하세요.
+   - **방법 2 — VS Code 확장 탭 (UI)**
+     VS Code 좌측 **Extensions**(`⇧⌘X` / `Ctrl+Shift+X`)에서 **`oh-my-githubcopilot`** 검색 후 설치.
+
+2. VS Code에서 프로젝트를 엽니다.
 
 3. **⚡ `OMG: Initialize Workspace` 실행 (필수)**
    ```
