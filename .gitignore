@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .omg/
+.omc/
 *.js.map
 .DS_Store
 .claude/

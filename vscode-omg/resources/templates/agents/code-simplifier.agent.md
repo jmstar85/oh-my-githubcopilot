@@ -4,7 +4,7 @@ description: >
   Simplifies and refines code for clarity, consistency, and maintainability.
   Use when: code simplification, reducing complexity, cleaning up code,
   improving readability, removing redundancy, refactoring for clarity.
-model: [claude-opus-4-6]
+model: [claude-opus-4-7]
 tools: [readFile, editFiles, search, codebase, problems, runInTerminal]
 user-invocable: true
 ---

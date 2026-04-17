@@ -75,7 +75,7 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 
 1. `.vsix` ファイルから拡張機能をインストール:
    ```
-  code --install-extension oh-my-githubcopilot-1.1.9.vsix
+  code --install-extension oh-my-githubcopilot-1.2.0.vsix
    ```
 2. VS Code でプロジェクトを開きます
 
@@ -409,6 +409,15 @@ Scope-risk: narrow
 ---
 
 ## What's New
+
+### v1.2.0 (2026-04-17) — エージェントモデル Claude Opus 4.7 へアップグレード
+
+**全エージェントのモデル参照を Claude Opus 4.6 から 4.7 にアップグレード**
+
+- `model: [claude-opus-4-6]` → `model: [claude-opus-4-7]`：Opus ルーティング対象の全 8 エージェントを更新
+- アクティブエージェント（`.github/agents/`）とエクステンションテンプレート（`vscode-omg/resources/templates/agents/`）の両方に適用
+- 対象: @architect, @code-reviewer, @planner, @security-reviewer, @analyst, @omg-coordinator, @code-simplifier, @critic
+- 検証完了: MCP サーバー build+test（**18/18**）、vscode-omg build+test（**28/28**）、TypeScript 型チェック — 全パス
 
 ### v1.1.9 (2026-04-16) — `.omc` → `.omg` 状態パスマイグレーション
 

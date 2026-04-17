@@ -4,7 +4,7 @@ description: >
   Main orchestrator agent for oh-my-githubcopilot (OMG).
   Use when: coordinating multi-agent workflows, managing complex tasks,
   omg-autopilot execution, ralph loops, team coordination, workflow orchestration.
-model: [claude-opus-4-6]
+model: [claude-opus-4-7]
 tools: [readFile, editFiles, search, codebase, problems, runInTerminal, findTestFiles, testFailures, usages, fetch]
 agents: [architect, executor, planner, analyst, debugger, verifier, code-reviewer, security-reviewer, test-engineer, designer, writer, qa-tester, scientist, tracer, git-master, code-simplifier, critic, document-specialist, explore]
 user-invocable: false

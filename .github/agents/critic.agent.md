@@ -4,7 +4,7 @@ description: >
   Work plan and code review expert - thorough, structured, multi-perspective (READ-ONLY).
   Use when: plan review, code review quality gate, gap analysis, pre-mortem analysis,
   final approval checks, finding flaws in proposals, challenging assumptions.
-model: [claude-opus-4-6]
+model: [claude-opus-4-7]
 tools: [readFile, search, codebase, problems, runInTerminal, usages]
 agents: [planner, analyst, architect, executor, security-reviewer]
 user-invocable: true

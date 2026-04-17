@@ -75,7 +75,7 @@ OMC가 Claude Code를 특화된 에이전트와 워크플로 자동화로 확장
 
 1. `.vsix` 파일로 익스텐션 설치:
    ```
-  code --install-extension oh-my-githubcopilot-1.1.9.vsix
+  code --install-extension oh-my-githubcopilot-1.2.0.vsix
    ```
 2. VS Code에서 프로젝트를 엽니다
 
@@ -453,6 +453,15 @@ Scope-risk: narrow
 ---
 
 ## What's New
+
+### v1.2.0 (2026-04-17) — 에이전트 모델 Claude Opus 4.7 업그레이드
+
+**모든 에이전트 모델 참조를 Claude Opus 4.6에서 4.7로 업그레이드**
+
+- `model: [claude-opus-4-6]` → `model: [claude-opus-4-7]` — Opus 라우팅 에이전트 8개 전체 변경
+- 활성 에이전트(`.github/agents/`)와 익스텐션 템플릿(`vscode-omg/resources/templates/agents/`) 모두 적용
+- 대상 에이전트: @architect, @code-reviewer, @planner, @security-reviewer, @analyst, @omg-coordinator, @code-simplifier, @critic
+- 검증 완료: MCP 서버 빌드+테스트(**18/18**), vscode-omg 빌드+테스트(**28/28**), TypeScript 타입 체크 — 전체 통과
 
 ### v1.1.9 (2026-04-16) — `.omc` → `.omg` 상태 경로 마이그레이션
 

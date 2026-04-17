@@ -5,7 +5,7 @@ description: >
   Use when: security review, OWASP Top 10 analysis, secrets detection,
   input validation review, auth/authz checks, dependency security audit,
   vulnerability assessment, penetration test guidance.
-model: [claude-opus-4-6]
+model: [claude-opus-4-7]
 tools: [readFile, search, codebase, problems, runInTerminal, usages]
 user-invocable: true
 ---

@@ -97,7 +97,7 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 
 1. Install the extension from `.vsix`:
    ```
-  code --install-extension oh-my-githubcopilot-1.1.9.vsix
+  code --install-extension oh-my-githubcopilot-1.2.0.vsix
    ```
 2. Open your project in VS Code
 
@@ -472,6 +472,15 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 ---
 
 ## What's New
+
+### v1.2.0 (2026-04-17) — Agent Model Upgrade to Claude Opus 4.7
+
+**Upgraded all agent model references from Claude Opus 4.6 to Claude Opus 4.7**
+
+- Updated `model: [claude-opus-4-6]` → `model: [claude-opus-4-7]` across all 8 Opus-routed agents.
+- Applied to both active agents (`.github/agents/`) and extension templates (`vscode-omg/resources/templates/agents/`).
+- Affected agents: @architect, @code-reviewer, @planner, @security-reviewer, @analyst, @omg-coordinator, @code-simplifier, @critic.
+- Verified: MCP server build + tests (**18/18**), vscode-omg build + tests (**28/28**), TypeScript type check — all passing.
 
 ### v1.1.9 (2026-04-16) — `.omc` → `.omg` State Path Migration
 

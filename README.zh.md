@@ -75,7 +75,7 @@
 
 1. 通过 `.vsix` 文件安装扩展:
    ```
-  code --install-extension oh-my-githubcopilot-1.1.9.vsix
+  code --install-extension oh-my-githubcopilot-1.2.0.vsix
    ```
 2. 在 VS Code 中打开你的项目
 
@@ -405,6 +405,15 @@ Scope-risk: narrow
 ---
 
 ## What's New
+
+### v1.2.0 (2026-04-17) — Agent 模型升级至 Claude Opus 4.7
+
+**所有 agent 模型引用从 Claude Opus 4.6 升级到 4.7**
+
+- `model: [claude-opus-4-6]` → `model: [claude-opus-4-7]`：覆盖全部 8 个 Opus 路由 agent
+- 同时更新活跃 agents（`.github/agents/`）和扩展模板（`vscode-omg/resources/templates/agents/`）
+- 涉及 agents: @architect, @code-reviewer, @planner, @security-reviewer, @analyst, @omg-coordinator, @code-simplifier, @critic
+- 验证通过: MCP server build+test（**18/18**）、vscode-omg build+test（**28/28**）、TypeScript 类型检查
 
 ### v1.1.9 (2026-04-16) — `.omc` → `.omg` 状态路径迁移
 
