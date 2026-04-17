@@ -95,54 +95,49 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 
 ### Option A: VS Code Extension (Recommended)
 
-1. Install the extension from `.vsix`:
-   ```
-  code --install-extension oh-my-githubcopilot-1.2.0.vsix
-   ```
-2. Open your project in VS Code
+1. Install the extension (either method below):
+  - **Method 1 — VSIX (CLI)**
+    ```bash
+    code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.2.vsix
+    ```
+    > If you downloaded the VSIX elsewhere, replace the path with your local file path.
+  - **Method 2 — VS Code Extensions tab (UI)**
+    Open VS Code → Extensions (`⇧⌘X` / `Ctrl+Shift+X`) → search **`oh-my-githubcopilot`** → Install.
+
+2. Open your project in VS Code.
 
 3. **⚡ Run `OMG: Initialize Workspace` (REQUIRED)**
-   ```
-   Cmd+Shift+P (macOS) / Ctrl+Shift+P (Windows/Linux) → "OMG: Initialize Workspace"
-   ```
+  ```text
+  Cmd+Shift+P (macOS) / Ctrl+Shift+P (Windows/Linux) → "OMG: Initialize Workspace"
+  ```
 
 > [!IMPORTANT]
 > **Installing the extension alone is NOT enough.** You must run `OMG: Initialize Workspace` from the Command Palette after installation. This command scaffolds all `.github/` convention files (agents, skills, hooks, prompts, copilot-instructions.md) and builds the MCP server in your workspace. Without this step, Copilot will not have access to any OMG agents or skills.
 
-4. When prompted, click **"Reload Window"** to activate all agents and skills
-5. Start using OMG in Copilot Chat (agent mode)
+4. When prompted, click **"Reload Window"** to activate all agents and skills.
+5. Start using OMG in Copilot Chat (agent mode).
 
 ### Option B: Manual Clone
 
-### Step 1: Clone
+1. Clone the repository:
+  ```bash
+  git clone https://github.com/jmstar85/oh-my-githubcopilot.git
+  cd oh-my-githubcopilot
+  ```
+2. Build the MCP server:
+  ```bash
+  cd mcp-server
+  npm install
+  npm run build
+  cd ..
+  ```
+3. Open the project in VS Code with GitHub Copilot Chat enabled.
 
-```bash
-git clone https://github.com/jmstar85/oh-my-githubcopilot.git
-cd oh-my-githubcopilot
-```
-
-### Step 2: Build the MCP Server
-
-```bash
-cd mcp-server
-npm install
-npm run build
-cd ..
-```
-
-### Step 3: Open in VS Code
-
-Open the project in VS Code with GitHub Copilot Chat enabled. The MCP server, agents, skills, and hooks are automatically detected from the workspace configuration.
-
-### Step 4: Start building
-
-In Copilot Chat (agent mode), just say:
-
-```
-omg-autopilot: build a REST API for managing tasks
-```
-
-That's it. OMG takes over — planning, implementing, reviewing, and verifying.
+4. In Copilot Chat (agent mode), say:
+  ```text
+  omg-autopilot: build a REST API for managing tasks
+  ```
+5. OMG takes over — planning, implementing, reviewing, and verifying.
 
 ### Not Sure Where to Start?
 
