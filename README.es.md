@@ -42,7 +42,7 @@
 
 ## ¿Qué es OMG?
 
-**oh-my-githubcopilot (OMG)** lleva a **GitHub Copilot** el enfoque de orquestación multiagente que [oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) desarrolló para Claude Code, ahora potenciado con las mejores funcionalidades de **[Everything Claude Code (ECC)](https://github.com/GreatScottyMac/everything-claude-code)**.
+**oh-my-githubcopilot (OMG)** lleva a **GitHub Copilot** el enfoque de orquestación multiagente que [oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) desarrolló para Claude Code, ahora potenciado con las mejores funcionalidades de **[Everything Claude Code (ECC)](https://github.com/affaan-m/everything-claude-code)**.
 
 Si OMC potencia Claude Code mediante agentes especializados y automatización de flujos, OMG hace lo mismo dentro del agent mode de Copilot en VS Code. Con la integración de ECC (v1.1.0), OMG ahora incorpora los patrones probados de ECC: 8 agentes revisores especializados por lenguaje, aplicación de TDD, escaneo de seguridad rápido, estándares de codificación canónicos y más. En lugar de depender de un único asistente para todo, OMG coordina **28 agentes especializados** y **22 habilidades reutilizables** a través de un servidor MCP para estructurar planificación, implementación, revisión y verificación.
 
@@ -76,7 +76,7 @@ Si OMC potencia Claude Code mediante agentes especializados y automatización de
 1. Instalar la extensión (cualquiera de estos métodos):
    - **Método 1 — VSIX (CLI)**
      ```bash
-     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.2.vsix
+     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.3.vsix
      ```
      > Si descargaste el VSIX en otra ubicación, reemplaza la ruta por tu ruta local.
    - **Método 2 — Pestaña Extensions de VS Code (UI)**

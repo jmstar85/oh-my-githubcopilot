@@ -42,7 +42,7 @@
 
 ## OMG とは？
 
-**oh-my-githubcopilot (OMG)** は、[oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) が Claude Code 上で実現したマルチエージェントオーケストレーションの考え方を **GitHub Copilot** に持ち込むプロジェクトです。さらに **[Everything Claude Code (ECC)](https://github.com/GreatScottyMac/everything-claude-code)** の優れた機能を統合し、より強力になりました。
+**oh-my-githubcopilot (OMG)** は、[oh-my-claudecode (OMC)](https://github.com/yeachan-heo/oh-my-claudecode) が Claude Code 上で実現したマルチエージェントオーケストレーションの考え方を **GitHub Copilot** に持ち込むプロジェクトです。さらに **[Everything Claude Code (ECC)](https://github.com/affaan-m/everything-claude-code)** の優れた機能を統合し、より強力になりました。
 
 OMC が専門エージェントとワークフロー自動化によって Claude Code を拡張したように、OMG は VS Code の Copilot agent mode 上で同じ発想を実装します。ECC 統合（v1.1.0）により、OMG は ECC の実証済みパターンも取り込んでいます: 8つの言語特化レビュアーエージェント、TDD 強制、高速セキュリティスキャン、標準コーディング規約など。1つのアシスタントにすべてを任せるのではなく、**28 の専門エージェント** と **22 の再利用可能なスキル** を MCP サーバー経由で連携させ、計画、実装、レビュー、検証を構造化して進めます。
 
@@ -76,7 +76,7 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 1. 拡張機能をインストール（以下のいずれか）:
    - **方法 1 — VSIX (CLI)**
      ```bash
-     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.2.vsix
+     code --install-extension ./vscode-omg/oh-my-githubcopilot-1.2.3.vsix
      ```
      > VSIX を別の場所にダウンロードした場合は、ローカルパスに置き換えて実行してください。
    - **方法 2 — VS Code の拡張機能タブ (UI)**
