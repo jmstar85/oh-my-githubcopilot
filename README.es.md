@@ -527,3 +527,25 @@ Cada agente incluye entre 13 y 21 reglas de estilo integradas:
 - **Corrección de frontmatter YAML**: eliminado el campo `allowed-tools` no soportado de todos los SKILL.md; `hint` renombrado a `argument-hint` según la especificación de VS Code
 - **Causa raíz**: el nombre `autopilot` activaba el cambio interno de modo de permisos de VS Code en lugar de cargar las instrucciones del skill de OMG
 - **Alcance**: directorios de skills, código del servidor MCP, definiciones de agentes, referencias cruzadas, tests y toda la documentación
+
+---
+
+## Licencia
+
+MIT
+
+---
+
+## Copyright
+
+Copyright (c) 2026 jmstar85. Distribuido bajo la [Licencia MIT](LICENSE).
+
+---
+
+<div align="center">
+
+**Inspirado por:** [oh-my-claudecode](https://github.com/yeachan-heo/oh-my-claudecode) por Yeachan Heo
+
+**El poder de la orquestación multi-agente, ahora para GitHub Copilot.**
+
+</div>

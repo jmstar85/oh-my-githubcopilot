@@ -534,9 +534,7 @@ Scope-risk: narrow
 
 MIT
 
-Copyright © 2026 jmstar85. All rights reserved.
-
-本仓库的所有内容——包括但不限于源代码、文档、代理定义、技能定义、MCP 服务器实现、提示模板和配置文件——均为 **jmstar85**（仓库所有者）的知识产权。未经 MIT 许可证条款授权，严禁擅自复制、分发或商业使用。
+Copyright (c) 2026 jmstar85. 根据 [MIT 许可证](LICENSE) 分发。
 
 ---
 

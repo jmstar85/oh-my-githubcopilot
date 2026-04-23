@@ -597,9 +597,7 @@ MIT
 
 ## Copyright
 
-Copyright © 2026 jmstar85. All rights reserved.
-
-This repository and all of its contents — including but not limited to source code, documentation, agent definitions, skill definitions, MCP server implementation, prompt templates, and configuration files — are the intellectual property of **jmstar85** (the repository owner). Unauthorized reproduction, distribution, or commercial use of any part of this work outside the terms of the MIT license is strictly prohibited.
+Copyright (c) 2026 jmstar85. Licensed under the [MIT License](../LICENSE).
 
 ---
 

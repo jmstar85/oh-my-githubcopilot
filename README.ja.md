@@ -538,9 +538,7 @@ Scope-risk: narrow
 
 MIT
 
-Copyright © 2026 jmstar85. All rights reserved.
-
-本リポジトリのすべてのコンテンツ——ソースコード、ドキュメント、エージェント定義、スキル定義、MCP サーバー実装、プロンプトテンプレート、設定ファイルを含むがこれらに限定されない——は **jmstar85**（リポジトリ所有者）の知的財産です。MIT ライセンスの条件外での無断複製、配布、商用利用は固く禁じます。
+Copyright (c) 2026 jmstar85. [MIT License](LICENSE) に基づいて配布されています。
 
 ---
 
