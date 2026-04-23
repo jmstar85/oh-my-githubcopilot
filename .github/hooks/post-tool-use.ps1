@@ -1,18 +1,46 @@
 # OMG Post-Tool-Use Hook (PowerShell)
-# Runs after tool execution in VS Code Copilot Agent Mode
+# Runs after tool execution in VS Code Copilot Agent Mode or Copilot CLI
 #
-# Environment variables available:
-#   TOOL_NAME    - Name of the tool that was invoked
-#   TOOL_INPUT   - JSON string of tool input parameters
-#   TOOL_OUTPUT  - JSON string of tool output/result
-#   WORKSPACE    - Workspace root path
+# Input sources (auto-detected):
+#   VS Code:  TOOL_NAME / TOOL_INPUT / TOOL_OUTPUT / WORKSPACE environment variables
+#   CLI:      JSON via stdin with toolName / toolInput / toolOutput / workspace fields
 #
 # Use for: logging, state updates, completion checks
 
-$ToolName = if ($env:TOOL_NAME) { $env:TOOL_NAME } else { '' }
-$ToolInput = if ($env:TOOL_INPUT) { $env:TOOL_INPUT } else { '' }
-$ToolOutput = if ($env:TOOL_OUTPUT) { $env:TOOL_OUTPUT } else { '' }
-$Workspace = if ($env:WORKSPACE) { $env:WORKSPACE } else { (Get-Location).Path }
+# --- Dual-mode input detection ---
+$ToolName = ''
+$ToolInput = ''
+$ToolOutput = ''
+$Workspace = ''
+
+if ([Console]::IsInputRedirected) {
+    $stdinData = [Console]::In.ReadToEnd()
+    if ($stdinData) {
+        try {
+            $parsed = $stdinData | ConvertFrom-Json -ErrorAction Stop
+            if ($parsed.toolName) { $ToolName = $parsed.toolName }
+            if ($parsed.toolInput) { $ToolInput = $parsed.toolInput | ConvertTo-Json -Compress }
+            if ($parsed.toolOutput) { $ToolOutput = $parsed.toolOutput | ConvertTo-Json -Compress }
+            if ($parsed.workspace) { $Workspace = $parsed.workspace }
+        } catch {
+            # Not valid JSON, fall through to env vars
+        }
+    }
+}
+
+if (-not $ToolName) { $ToolName = if ($env:TOOL_NAME) { $env:TOOL_NAME } else { '' } }
+if (-not $ToolInput) { $ToolInput = if ($env:TOOL_INPUT) { $env:TOOL_INPUT } else { '' } }
+if (-not $ToolOutput) { $ToolOutput = if ($env:TOOL_OUTPUT) { $env:TOOL_OUTPUT } else { '' } }
+if (-not $Workspace) { $Workspace = if ($env:WORKSPACE) { $env:WORKSPACE } else { (Get-Location).Path } }
+
+# --- Tool name normalization ---
+switch ($ToolName) {
+    'edit'   { $ToolName = 'editFiles' }
+    'read'   { $ToolName = 'readFile' }
+    'shell'  { $ToolName = 'runInTerminal' }
+    'create' { $ToolName = 'createFile' }
+    'delete' { $ToolName = 'deleteFile' }
+}
 
 $OmgStateDir = Join-Path $Workspace '.omg' 'state'
 

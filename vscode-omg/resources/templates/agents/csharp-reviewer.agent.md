@@ -4,8 +4,8 @@ description: >
   C# code review specialist with embedded style and safety rules.
   Use when: reviewing C# code, C# best practices, type safety,
   C#-specific patterns, idiomatic C#, async/await review, nullable analysis.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, codebase, problems, usages]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, codebase, problems, usages]
 user-invocable: true
 ---
 

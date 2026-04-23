@@ -13,6 +13,11 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/IDE-VS%20Code-007ACC?logo=visualstudiocode" alt="VS Code">
+  <img src="https://img.shields.io/badge/CLI-Copilot%20CLI-181717?logo=github" alt="Copilot CLI">
+</p>
+
+<p align="center">
   <a href="#quick-start">快速开始</a> •
   <a href="#agents">代理</a> •
   <a href="#skills">技能</a> •
@@ -52,7 +57,7 @@
 
 ## 为什么选择 OMG？
 
-- **直接工作在 VS Code 内部**，不需要额外 CLI 或外部运行时
+- **在 VS Code 和 Copilot CLI 中直接工作** — 无需额外外部进程，支持 VS Code agent mode 或独立的 `copilot` CLI
 - **专业分工的代理体系**，从只读分析型代理到可执行变更的实现型代理，包含 8 个语言审查代理
 - **自动化工作流**，支持自驱执行的 `omg-autopilot`、持续推进的 `ralph`、并行处理的 `ultrawork`
 - **安全护栏**，通过 pre/post tool-use hooks 阻止危险操作
@@ -127,6 +132,27 @@ omg-autopilot: build a REST API for managing tasks
 
 接下来 OMG 会接管规划、实现、审查和验证流程。
 
+### 方法 C: Copilot CLI
+
+OMG 也可以在独立的 [Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)（`copilot` 二进制文件）中使用。CLI 读取相同的 `.github/` 约定文件（代理、技能、hooks、prompts）。
+
+1. 安装 Copilot CLI 二进制文件。
+2. 克隆 OMG 并构建 MCP 服务器：
+   ```bash
+   git clone https://github.com/jmstar85/oh-my-githubcopilot.git
+   cd oh-my-githubcopilot
+   cd mcp-server && npm install && npm run build && cd ..
+   ```
+3. 创建项目本地的 `.copilot/mcp-config.json`（或使用 `--global-mcp` 全局安装到 `~/.copilot/`）：
+   ```bash
+   scripts/omg-adopt.sh --target . --mode template --target-env cli
+   ```
+4. 在项目目录中运行 `copilot`：
+   ```bash
+   copilot
+   ```
+5. 使用 `/status` 或 `@omg-coordinator` 验证 OMG 已加载。
+
 ### 不知道从哪里开始？
 
 如果需求还比较模糊，或者你想先理清思路：
@@ -136,6 +162,33 @@ deep-interview "I want to build a task management app"
 ```
 
 OMG 会通过苏格拉底式提问找出隐藏假设，在写代码前先澄清问题。
+
+### 在其他 VS Code 项目中使用 OMG
+
+OMG 以工作区为单位运行，因此建议按项目单独应用。
+
+本仓库包含一个用于应用到其他项目的脚本：
+
+**macOS / Linux (Bash):**
+```bash
+scripts/omg-adopt.sh --target <目标项目路径> --mode <template|submodule|subtree> [--target-env vscode|cli|both]
+```
+
+**Windows (PowerShell):**
+```powershell
+scripts/omg-adopt.ps1 -Target <目标项目路径> -Mode <template|submodule|subtree> [-TargetEnv vscode|cli|both]
+```
+
+`--target-env` 参数（默认值：`both`）控制要设置的环境：
+- `vscode` — 仅 VS Code（`.vscode/mcp.json`）
+- `cli` — 仅 Copilot CLI（`.copilot/mcp-config.json` + `hooks.json`）
+- `both` — 两种环境都设置（默认）
+
+应用后，以受信任工作区方式打开目标项目，并在 Copilot Chat（agent mode）中运行以下命令验证：
+
+```text
+/status
+```
 
 ---
 

@@ -113,7 +113,8 @@ These keywords automatically activate the corresponding skill:
 OMG uses `vscode_askQuestions` as its hook mechanism to pause workflows and collect structured user decisions at critical points. This replaces OMC's gateway-level interrupt hooks with VS Code-native structured input.
 
 ### Global Rules
-- **ALWAYS use `vscode_askQuestions`** for user-facing decisions during skill workflows — never ask via plain chat text
+- **If `vscode_askQuestions` is available, use it** for user-facing decisions during skill workflows.
+- **If `vscode_askQuestions` is NOT available** (e.g., Copilot CLI), present numbered options in markdown and ask the user to respond with a number or freeform text.
 - Provide 3-5 contextual **options** with clear labels and descriptions
 - Mark the most likely option as `recommended: true`
 - Set `allowFreeformInput: true` unless the question is strictly binary (e.g., trust confirmation)

@@ -5,8 +5,8 @@ description: >
   Use when: looking up external documentation, API references, framework docs,
   package evaluation, version compatibility, academic papers, standards lookup,
   external literature research.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, codebase, fetch, runInTerminal]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, codebase, fetch, runInTerminal, shell]
 agents: [explore]
 user-invocable: true
 ---

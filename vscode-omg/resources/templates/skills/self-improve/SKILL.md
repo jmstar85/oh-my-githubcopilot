@@ -68,16 +68,61 @@ All state lives under `.omg/self-improve/`:
 
 ## Setup Phase
 
-1. Check if target repo path exists. If not configured, ask user.
+### Interactive Hook Protocol (Setup Only)
+
+**MANDATORY**: Use `vscode_askQuestions` for all user decisions during setup.
+Once the improvement loop begins (after gate passes), run fully autonomously — no hooks.
+
+### When to Fire Hooks
+| Trigger Point | Question Type |
+|---------------|---------------|
+| Step 1: Repo path | Confirm or select target repo |
+| Step 4: Trust confirmation | Confirm benchmark execution consent |
+| Step 5: Goal interview | Socratic goal-setting questions (Objective, Metric, Target, Scope) |
+| Step 7: Harness rules | Confirm/customize harness rules |
+
+1. Check if target repo path exists. If not configured:
+   **HOOK**: Ask user for target repo path via `vscode_askQuestions`:
+   ```
+   header: "self-improve-target"
+   question: "Which repository should be improved?"
+   options: [
+     { label: "[current workspace path]", recommended: true },
+     { label: "Other — I'll specify the path" }
+   ]
+   allowFreeformInput: true
+   ```
 2. Create `.omg/self-improve/` directory structure.
 3. Read `agent-settings.json`. Check setup flags.
-4. **Trust confirmation** (mandatory):
-   - Display target repo path, ask user to confirm benchmark execution.
-   - If declined: abort.
+4. **HOOK: Trust confirmation** (mandatory) via `vscode_askQuestions`:
+   ```
+   header: "self-improve-trust"
+   question: "Self-improve will run benchmarks and modify code in [repo path]. This includes running tests, builds, and git operations. Confirm?"
+   options: [
+     { label: "Yes, I trust this — proceed", recommended: true },
+     { label: "No, abort" }
+   ]
+   allowFreeformInput: false
+   ```
+   - If declined: abort immediately.
    - Record consent: `trust_confirmed: true`
-5. If goal not set → Run Socratic interview (Objective, Metric, Target, Scope). Write to `goal.md`.
+5. If goal not set → **HOOK: Socratic goal interview** via sequential `vscode_askQuestions`:
+   - Q1: Objective ("What do you want to improve?") with options: performance, test coverage, bundle size, code quality, accuracy, other
+   - Q2: Metric ("How should we measure it?") with context-derived options
+   - Q3: Target ("What's the target value?") with freeform
+   - Q4: Scope ("Which files/modules are in scope?") with codebase-derived options
+   - Write to `goal.md`.
 6. If benchmark not set → Survey repo, create/wrap benchmark, validate 3x, record baseline.
-7. If harness not set → Confirm default harness rules (H001/H002/H003).
+7. If harness not set → **HOOK: Confirm harness rules** via `vscode_askQuestions`:
+   ```
+   header: "self-improve-harness"
+   question: "Default harness rules: H001 (no test deletion), H002 (no benchmark tampering), H003 (sealed files untouched). Accept?"
+   options: [
+     { label: "Accept defaults", recommended: true },
+     { label: "Customize rules" },
+     { label: "Add sealed files" }
+   ]
+   ```
 8. **Gate**: All settings + trust must be true.
 9. Create improvement branch: `improve/{goal_slug}` from target branch.
 10. Write initial state via `omg_write_state`.

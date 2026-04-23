@@ -4,8 +4,8 @@ description: >
   Swift code review specialist with embedded style and safety rules.
   Use when: reviewing Swift code, Swift best practices, type safety,
   Swift-specific patterns, idiomatic Swift, concurrency review, SwiftUI patterns.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, codebase, problems, usages]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, codebase, problems, usages]
 user-invocable: true
 ---
 

@@ -4,8 +4,8 @@ description: >
   Go code review specialist with embedded style and safety rules.
   Use when: reviewing Go code, Go best practices, goroutine safety,
   Go-specific patterns, idiomatic Go, concurrency correctness.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, codebase, problems, usages]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, codebase, problems, usages]
 user-invocable: true
 ---
 

@@ -14,6 +14,7 @@ interface MemoryEntry {
   key: string;
   value: string;
   category: string;
+  tags: string[];
   created_at: string;
   updated_at: string;
 }
@@ -22,13 +23,16 @@ interface MemoryStore {
   entries: MemoryEntry[];
 }
 
-function readMemory(): MemoryStore {
+// Exported for checkpoint-tools
+export function readMemory(): MemoryStore {
   const memPath = getMemoryPath();
   const data = safeReadFile(memPath);
   if (!data) return { entries: [] };
   const result = safeJsonParse(data);
   if (!result.ok) return { entries: [] };
-  return result.data as unknown as MemoryStore;
+  const store = result.data as Record<string, unknown>;
+  if (!Array.isArray(store.entries)) return { entries: [] };
+  return { entries: store.entries } as MemoryStore;
 }
 
 function writeMemory(store: MemoryStore): void {
@@ -66,6 +70,57 @@ export function registerMemoryTools(server: McpServer): void {
                 key: e.key,
                 value: e.value,
                 category: e.category,
+                tags: e.tags ?? [],
+                updated_at: e.updated_at,
+              })),
+            }),
+          },
+        ],
+      };
+    }
+  );
+
+  server.tool(
+    "omg_search_memory",
+    "Search project memory by keyword. Matches against keys, values, categories, and tags (case-insensitive).",
+    {
+      query: z.string().describe("Search term (case-insensitive substring match)"),
+      category: z.string().optional().describe("Optionally restrict search to a category"),
+      limit: z.number().optional().default(20).describe("Max results to return (default 20)"),
+    },
+    async ({ query, category, limit }) => {
+      const store = readMemory();
+      const q = query.toLowerCase();
+      let results = store.entries.filter((e) => {
+        const haystack = [
+          e.key,
+          e.value,
+          e.category,
+          ...(e.tags ?? []),
+        ].join(" ").toLowerCase();
+        return haystack.includes(q);
+      });
+
+      if (category) {
+        results = results.filter((e) => e.category === category);
+      }
+
+      const totalMatches = results.length;
+      results = results.slice(0, limit);
+
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify({
+              query,
+              total: totalMatches,
+              returned: results.length,
+              entries: results.map((e) => ({
+                key: e.key,
+                value: e.value,
+                category: e.category,
+                tags: e.tags ?? [],
                 updated_at: e.updated_at,
               })),
             }),
@@ -85,8 +140,13 @@ export function registerMemoryTools(server: McpServer): void {
         .string()
         .default("project")
         .describe("Category: project, user, feedback, reference"),
+      tags: z
+        .array(z.string())
+        .optional()
+        .default([])
+        .describe("Tags for search (e.g., ['architecture', 'decision'])"),
     },
-    async ({ key, value, category }) => {
+    async ({ key, value, category, tags }) => {
       if (value.length > MAX_VALUE_LENGTH) {
         return errorResponse(`Value exceeds maximum length of ${MAX_VALUE_LENGTH} characters`);
       }
@@ -102,12 +162,14 @@ export function registerMemoryTools(server: McpServer): void {
       if (existing >= 0) {
         store.entries[existing].value = value;
         store.entries[existing].category = category;
+        store.entries[existing].tags = tags ?? [];
         store.entries[existing].updated_at = now;
       } else {
         store.entries.push({
           key,
           value,
           category,
+          tags: tags ?? [],
           created_at: now,
           updated_at: now,
         });

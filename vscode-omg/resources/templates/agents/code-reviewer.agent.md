@@ -4,8 +4,8 @@ description: >
   Expert code review specialist with severity-rated feedback (READ-ONLY).
   Use when: code review, logic defect detection, SOLID principle checks,
   style review, performance review, quality strategy, spec compliance verification.
-model: [claude-opus-4-7]
-tools: [readFile, search, codebase, problems, runInTerminal, usages]
+model: claude-opus-4-7
+tools: [readFile, read, search, codebase, problems, runInTerminal, shell, usages]
 user-invocable: true
 ---
 

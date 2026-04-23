@@ -24,6 +24,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Works%20with-GitHub%20Copilot-181717?logo=github" alt="Works with GitHub Copilot">
   <img src="https://img.shields.io/badge/IDE-VS%20Code-007ACC?logo=visualstudiocode" alt="VS Code">
+  <img src="https://img.shields.io/badge/CLI-Copilot%20CLI-181717?logo=github" alt="Copilot CLI">
   <img src="https://img.shields.io/badge/Workflow-omg--autopilot-00b894" alt="omg-autopilot">
   <img src="https://img.shields.io/badge/Workflow-ralph-0984e3" alt="ralph">
   <img src="https://img.shields.io/badge/Workflow-ultrawork-f39c12" alt="ultrawork">
@@ -74,7 +75,7 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
 
 ## Why OMG?
 
-- **Works inside VS Code** — No extra CLI tools, no external processes. Just Copilot agent mode.
+- **Works inside VS Code and Copilot CLI** — No extra CLI tools, no external processes. VS Code agent mode or the standalone `copilot` CLI.
 - **Specialized agents** — 28 purpose-built agents with scoped access (read-only analysts, full-access executors, 8 language reviewers)
 - **Workflow automation** — From autonomous `omg-autopilot` to persistent `ralph` loops to parallel `ultrawork`
 - **Safety guardrails** — Pre/post tool-use hooks prevent destructive operations automatically
@@ -139,6 +140,27 @@ Where OMC supercharges Claude Code with specialized agents and workflow automati
   ```
 5. OMG takes over — planning, implementing, reviewing, and verifying.
 
+### Option C: Copilot CLI
+
+OMG works with the standalone [Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli) (`copilot` binary). The CLI reads the same `.github/` convention files (agents, skills, hooks, prompts).
+
+1. Install the Copilot CLI binary.
+2. Clone OMG and build the MCP server:
+   ```bash
+   git clone https://github.com/jmstar85/oh-my-githubcopilot.git
+   cd oh-my-githubcopilot
+   cd mcp-server && npm install && npm run build && cd ..
+   ```
+3. Create a project-local `.copilot/mcp-config.json` (or use `--global-mcp` to install globally at `~/.copilot/`):
+   ```bash
+   scripts/omg-adopt.sh --target . --mode template --target-env cli
+   ```
+4. Run `copilot` from the project directory:
+   ```bash
+   copilot
+   ```
+5. Try `/status` or `@omg-coordinator` to verify OMG is loaded.
+
 ### Not Sure Where to Start?
 
 If your requirements are vague or you want structured clarification:
@@ -157,13 +179,18 @@ This repository now includes an adoption script:
 
 **macOS / Linux (Bash):**
 ```bash
-scripts/omg-adopt.sh --target <your-project-path> --mode <template|submodule|subtree>
+scripts/omg-adopt.sh --target <your-project-path> --mode <template|submodule|subtree> [--target-env vscode|cli|both]
 ```
 
 **Windows (PowerShell):**
 ```powershell
-scripts/omg-adopt.ps1 -Target <your-project-path> -Mode <template|submodule|subtree>
+scripts/omg-adopt.ps1 -Target <your-project-path> -Mode <template|submodule|subtree> [-TargetEnv vscode|cli|both]
 ```
+
+The `--target-env` flag (default: `both`) controls what gets set up:
+- `vscode` — VS Code only (`.vscode/mcp.json`)
+- `cli` — Copilot CLI only (`.copilot/mcp-config.json` + `hooks.json`)
+- `both` — Both environments (default)
 
 #### Tip 1: Template-style for new projects
 

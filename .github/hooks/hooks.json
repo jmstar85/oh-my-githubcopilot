@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/pre-tool-use.sh",
+        "powershell": ".github/hooks/pre-tool-use.ps1"
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": ".github/hooks/post-tool-use.sh",
+        "powershell": ".github/hooks/post-tool-use.ps1"
+      }
+    ]
+  }
+}

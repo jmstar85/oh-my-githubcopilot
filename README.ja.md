@@ -13,6 +13,11 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/IDE-VS%20Code-007ACC?logo=visualstudiocode" alt="VS Code">
+  <img src="https://img.shields.io/badge/CLI-Copilot%20CLI-181717?logo=github" alt="Copilot CLI">
+</p>
+
+<p align="center">
   <a href="#quick-start">Quick Start</a> •
   <a href="#agents">Agents</a> •
   <a href="#skills">Skills</a> •
@@ -52,7 +57,7 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 
 ## なぜ OMG なのか？
 
-- **VS Code 内でそのまま動作**。追加の CLI や外部ランタイムは不要
+- **VS Code および Copilot CLI で動作**。VS Code agent mode または独立した `copilot` CLI で利用可能
 - **役割分担された専門エージェント**。読み取り専用の分析役から実装担当まで明確に分離
 - **ワークフロー自動化**。自律実行の `omg-autopilot`、完了まで粘る `ralph`、並列処理の `ultrawork`
 - **安全ガードレール**。pre/post tool-use hooks による危険操作の防止
@@ -127,6 +132,27 @@ omg-autopilot: build a REST API for managing tasks
 
 以降は OMG が計画、実装、レビュー、検証を進めます。
 
+### 方法 C: Copilot CLI
+
+OMG は独立した [Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)（`copilot` バイナリ）でも動作します。CLI は同じ `.github/` コンベンションファイル（エージェント、スキル、hooks、prompts）を読み込みます。
+
+1. Copilot CLI バイナリをインストールします。
+2. OMG をクローンして MCP サーバーをビルドします:
+   ```bash
+   git clone https://github.com/jmstar85/oh-my-githubcopilot.git
+   cd oh-my-githubcopilot
+   cd mcp-server && npm install && npm run build && cd ..
+   ```
+3. プロジェクトローカルの `.copilot/mcp-config.json` を作成します（`--global-mcp` で `~/.copilot/` にグローバルインストールも可）:
+   ```bash
+   scripts/omg-adopt.sh --target . --mode template --target-env cli
+   ```
+4. プロジェクトディレクトリで `copilot` を実行します:
+   ```bash
+   copilot
+   ```
+5. `/status` や `@omg-coordinator` で OMG の読み込みを確認します。
+
 ### どこから始めるべきかわからない場合
 
 要件がまだ曖昧な場合や、設計の前に考えを整理したい場合は次を使えます。
@@ -136,6 +162,33 @@ deep-interview "I want to build a task management app"
 ```
 
 OMG はソクラテス式の質問で隠れた前提をあぶり出し、コードを書く前に問題を明確化します。
+
+### 他の VS Code プロジェクトで OMG を使う
+
+OMG はワークスペース単位で動作するため、プロジェクトごとに適用する方式を推奨します。
+
+このリポジトリには他プロジェクトへの適用スクリプトが含まれています。
+
+**macOS / Linux (Bash):**
+```bash
+scripts/omg-adopt.sh --target <対象プロジェクトパス> --mode <template|submodule|subtree> [--target-env vscode|cli|both]
+```
+
+**Windows (PowerShell):**
+```powershell
+scripts/omg-adopt.ps1 -Target <対象プロジェクトパス> -Mode <template|submodule|subtree> [-TargetEnv vscode|cli|both]
+```
+
+`--target-env` フラグ（デフォルト: `both`）で設定対象を指定します:
+- `vscode` — VS Code のみ（`.vscode/mcp.json`）
+- `cli` — Copilot CLI のみ（`.copilot/mcp-config.json` + `hooks.json`）
+- `both` — 両方の環境（デフォルト）
+
+適用後、対象プロジェクトを信頼済みワークスペースとして開き、Copilot Chat（agent mode）で以下を実行して動作確認してください。
+
+```text
+/status
+```
 
 ---
 

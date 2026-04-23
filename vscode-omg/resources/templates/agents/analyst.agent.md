@@ -4,8 +4,8 @@ description: >
   Pre-planning consultant for requirements analysis (READ-ONLY).
   Use when: requirements analysis, gap identification, acceptance criteria definition,
   scope risk assessment, assumption validation, edge case enumeration.
-model: [claude-opus-4-7]
-tools: [readFile, search, codebase, problems]
+model: claude-opus-4-7
+tools: [readFile, read, search, codebase, problems]
 agents: [planner, architect, critic]
 user-invocable: true
 ---

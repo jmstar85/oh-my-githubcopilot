@@ -5,8 +5,8 @@ description: >
   Use when: finding files, searching code patterns, locating implementations,
   mapping project structure, understanding code relationships, answering
   "where is X?" questions.
-model: [claude-haiku-4-5]
-tools: [readFile, search, codebase, problems, runInTerminal, usages]
+model: claude-haiku-4-5
+tools: [readFile, read, search, codebase, problems, runInTerminal, shell, usages]
 agents: [document-specialist]
 user-invocable: true
 ---

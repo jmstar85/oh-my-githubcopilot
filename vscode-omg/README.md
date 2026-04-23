@@ -24,6 +24,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Works%20with-GitHub%20Copilot-181717?logo=github" alt="Works with GitHub Copilot">
   <img src="https://img.shields.io/badge/IDE-VS%20Code-007ACC?logo=visualstudiocode" alt="VS Code">
+  <img src="https://img.shields.io/badge/CLI-Copilot%20CLI-181717?logo=github" alt="Copilot CLI">
   <img src="https://img.shields.io/badge/Workflow-omg--autopilot-00b894" alt="omg-autopilot">
   <img src="https://img.shields.io/badge/Workflow-ralph-0984e3" alt="ralph">
   <img src="https://img.shields.io/badge/Workflow-ultrawork-f39c12" alt="ultrawork">

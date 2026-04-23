@@ -1,15 +1,44 @@
 # OMG Pre-Tool-Use Hook (PowerShell)
-# Runs before any tool execution in VS Code Copilot Agent Mode
+# Runs before any tool execution in VS Code Copilot Agent Mode or Copilot CLI
 #
-# Environment variables available:
-#   TOOL_NAME    - Name of the tool being invoked
-#   TOOL_INPUT   - JSON string of tool input parameters
-#   WORKSPACE    - Workspace root path
+# Input sources (auto-detected):
+#   VS Code:  TOOL_NAME / TOOL_INPUT / WORKSPACE environment variables
+#   CLI:      JSON via stdin with toolName / toolInput / workspace fields
 #
 # Output JSON: {"decision": "approve"} or {"decision": "deny", "reason": "..."}
 
-$ToolName = if ($env:TOOL_NAME) { $env:TOOL_NAME } else { '' }
-$ToolInput = if ($env:TOOL_INPUT) { $env:TOOL_INPUT } else { '' }
+# --- Dual-mode input detection ---
+# Copilot CLI passes JSON via stdin; VS Code uses environment variables.
+$ToolName = ''
+$ToolInput = ''
+$WorkspacePath = ''
+
+if ([Console]::IsInputRedirected) {
+    $stdinData = [Console]::In.ReadToEnd()
+    if ($stdinData) {
+        try {
+            $parsed = $stdinData | ConvertFrom-Json -ErrorAction Stop
+            if ($parsed.toolName) { $ToolName = $parsed.toolName }
+            if ($parsed.toolInput) { $ToolInput = $parsed.toolInput | ConvertTo-Json -Compress }
+            if ($parsed.workspace) { $WorkspacePath = $parsed.workspace }
+        } catch {
+            # Not valid JSON, fall through to env vars
+        }
+    }
+}
+
+if (-not $ToolName) { $ToolName = if ($env:TOOL_NAME) { $env:TOOL_NAME } else { '' } }
+if (-not $ToolInput) { $ToolInput = if ($env:TOOL_INPUT) { $env:TOOL_INPUT } else { '' } }
+
+# --- Tool name normalization ---
+# Map Copilot CLI tool names to VS Code equivalents so guards work on both surfaces.
+switch ($ToolName) {
+    'edit'   { $ToolName = 'editFiles' }
+    'read'   { $ToolName = 'readFile' }
+    'shell'  { $ToolName = 'runInTerminal' }
+    'create' { $ToolName = 'createFile' }
+    'delete' { $ToolName = 'deleteFile' }
+}
 
 # Guard: prevent modifications to node_modules
 if ($ToolInput -match 'node_modules') {
@@ -52,8 +81,8 @@ if ($ToolName -eq 'runInTerminal') {
 }
 
 # Default: approve (with optional checkpoint advisory)
-$Workspace = if ($env:WORKSPACE) { $env:WORKSPACE } else { Get-Location }
-$CheckpointTrigger = Join-Path $Workspace '.omg' 'state' 'checkpoint-trigger.json'
+if (-not $WorkspacePath) { $WorkspacePath = if ($env:WORKSPACE) { $env:WORKSPACE } else { Get-Location } }
+$CheckpointTrigger = Join-Path $WorkspacePath '.omg' 'state' 'checkpoint-trigger.json'
 
 if (Test-Path $CheckpointTrigger) {
     Write-Output '{"decision": "approve", "advisory": "⚠️ Context threshold reached. Call omg_checkpoint to save session state before continuing."}'

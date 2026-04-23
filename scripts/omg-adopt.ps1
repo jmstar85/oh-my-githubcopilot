@@ -28,6 +28,11 @@ param(
     [ValidateSet('template', 'submodule', 'subtree')]
     [string]$Mode,
 
+    [ValidateSet('vscode', 'cli', 'both')]
+    [string]$TargetEnv = 'both',
+
+    [switch]$GlobalMcp,
+
     [string]$Remote = 'https://github.com/jmstar85/oh-my-githubcopilot.git',
 
     [string]$Branch = 'main',
@@ -126,6 +131,11 @@ $SrcRoot = Get-Upstream
 Write-Host "Using source: $SrcRoot"
 
 foreach ($rel in $Items) {
+    # Skip .vscode/mcp.json when CLI-only
+    if ($TargetEnv -eq 'cli' -and $rel -eq '.vscode/mcp.json') {
+        Write-Host "Skip (cli mode): $rel"
+        continue
+    }
     Backup-AndReplace -SrcRoot $SrcRoot -Rel $rel
 }
 
@@ -147,8 +157,49 @@ if (-not $SkipBuild) {
     Write-Host 'Skip build requested'
 }
 
+# --- Copilot CLI setup ---
+if ($TargetEnv -eq 'cli' -or $TargetEnv -eq 'both') {
+    Write-Host 'Configuring Copilot CLI support...'
+
+    $absTarget = (Resolve-Path $Target).Path
+    $mcpServerPath = Join-Path $absTarget 'mcp-server' 'dist' 'index.js'
+
+    $mcpConfig = @{
+        mcpServers = @{
+            'omg-workflow' = @{
+                command = 'node'
+                args    = @($mcpServerPath)
+                env     = @{
+                    WORKSPACE_ROOT = $absTarget
+                }
+            }
+        }
+    } | ConvertTo-Json -Depth 4
+
+    if ($GlobalMcp) {
+        $mcpDir = Join-Path $HOME '.copilot'
+        if (-not (Test-Path $mcpDir)) { New-Item -ItemType Directory -Path $mcpDir -Force | Out-Null }
+        $mcpConfig | Set-Content (Join-Path $mcpDir 'mcp-config.json') -Encoding utf8
+        Write-Host "MCP config written to: $mcpDir/mcp-config.json (global)"
+    } else {
+        $mcpDir = Join-Path $Target '.copilot'
+        if (-not (Test-Path $mcpDir)) { New-Item -ItemType Directory -Path $mcpDir -Force | Out-Null }
+        $mcpConfig | Set-Content (Join-Path $mcpDir 'mcp-config.json') -Encoding utf8
+        Write-Host "MCP config written to: $mcpDir/mcp-config.json (project-local)"
+    }
+}
+
 Write-Host ''
 Write-Host 'Done. Next steps:'
-Write-Host '1) Open target project in VS Code as a trusted workspace'
-Write-Host '2) In Copilot Chat (agent mode), run: /status'
+if ($TargetEnv -eq 'vscode') {
+    Write-Host '1) Open target project in VS Code as a trusted workspace'
+    Write-Host '2) In Copilot Chat (agent mode), run: /status'
+} elseif ($TargetEnv -eq 'cli') {
+    Write-Host '1) cd into the target project'
+    Write-Host '2) Run: copilot'
+    Write-Host '3) Try: /status or @omg-coordinator'
+} else {
+    Write-Host '1) VS Code: Open target project as a trusted workspace, run /status in Copilot Chat'
+    Write-Host '2) CLI: cd into target project, run "copilot", try /status or @omg-coordinator'
+}
 Write-Host '3) Commit changes in target project after verification'

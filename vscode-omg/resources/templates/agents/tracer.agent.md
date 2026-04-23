@@ -5,8 +5,8 @@ description: >
   Use when: causal analysis, root cause investigation, evidence tracing,
   hypothesis testing, uncertainty tracking, outcome explanation,
   incident investigation, why did X happen.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, codebase, problems, runInTerminal, usages]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, codebase, problems, runInTerminal, shell, usages]
 user-invocable: true
 ---
 

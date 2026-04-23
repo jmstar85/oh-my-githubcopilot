@@ -1,19 +1,37 @@
 #!/bin/bash
 # OMG Post-Tool-Use Hook
-# Runs after tool execution in VS Code Copilot Agent Mode
+# Runs after tool execution in VS Code Copilot Agent Mode or Copilot CLI
 #
-# Environment variables available:
-#   TOOL_NAME    - Name of the tool that was invoked
-#   TOOL_INPUT   - JSON string of tool input parameters
-#   TOOL_OUTPUT  - JSON string of tool output/result
-#   WORKSPACE    - Workspace root path
+# Input sources (auto-detected):
+#   VS Code:  TOOL_NAME / TOOL_INPUT / TOOL_OUTPUT / WORKSPACE environment variables
+#   CLI:      JSON via stdin with toolName / toolInput / toolOutput / workspace fields
 #
 # Use for: logging, state updates, completion checks
+
+# --- Dual-mode input detection ---
+if [ ! -t 0 ]; then
+  STDIN_DATA=$(cat)
+  if [ -n "$STDIN_DATA" ]; then
+    TOOL_NAME=$(printf '%s' "$STDIN_DATA" | grep -oE '"toolName"\s*:\s*"[^"]*"' | head -1 | sed 's/.*"toolName"\s*:\s*"//;s/".*//')
+    TOOL_INPUT=$(printf '%s' "$STDIN_DATA" | grep -oE '"toolInput"\s*:\s*\{[^}]*\}' | head -1 | sed 's/.*"toolInput"\s*:\s*//')
+    TOOL_OUTPUT=$(printf '%s' "$STDIN_DATA" | grep -oE '"toolOutput"\s*:\s*\{[^}]*\}' | head -1 | sed 's/.*"toolOutput"\s*:\s*//')
+    WORKSPACE=$(printf '%s' "$STDIN_DATA" | grep -oE '"workspace"\s*:\s*"[^"]*"' | head -1 | sed 's/.*"workspace"\s*:\s*"//;s/".*//')
+  fi
+fi
 
 TOOL_NAME="${TOOL_NAME:-}"
 TOOL_INPUT="${TOOL_INPUT:-}"
 TOOL_OUTPUT="${TOOL_OUTPUT:-}"
 WORKSPACE="${WORKSPACE:-$(pwd)}"
+
+# --- Tool name normalization ---
+case "$TOOL_NAME" in
+  edit)   TOOL_NAME="editFiles" ;;
+  read)   TOOL_NAME="readFile" ;;
+  shell)  TOOL_NAME="runInTerminal" ;;
+  create) TOOL_NAME="createFile" ;;
+  delete) TOOL_NAME="deleteFile" ;;
+esac
 
 OMG_STATE_DIR="$WORKSPACE/.omg/state"
 

@@ -1,16 +1,36 @@
 #!/bin/bash
 # OMG Pre-Tool-Use Hook
-# Runs before any tool execution in VS Code Copilot Agent Mode
+# Runs before any tool execution in VS Code Copilot Agent Mode or Copilot CLI
 #
-# Environment variables available:
-#   TOOL_NAME    - Name of the tool being invoked
-#   TOOL_INPUT   - JSON string of tool input parameters
-#   WORKSPACE    - Workspace root path
+# Input sources (auto-detected):
+#   VS Code:  TOOL_NAME / TOOL_INPUT / WORKSPACE environment variables
+#   CLI:      JSON via stdin with toolName / toolInput / workspace fields
 #
 # Output JSON: {"decision": "approve"} or {"decision": "deny", "reason": "..."}
 
+# --- Dual-mode input detection ---
+# Copilot CLI passes JSON via stdin; VS Code uses environment variables.
+if [ ! -t 0 ]; then
+  STDIN_DATA=$(cat)
+  if [ -n "$STDIN_DATA" ]; then
+    TOOL_NAME=$(printf '%s' "$STDIN_DATA" | grep -oE '"toolName"\s*:\s*"[^"]*"' | head -1 | sed 's/.*"toolName"\s*:\s*"//;s/".*//')
+    TOOL_INPUT=$(printf '%s' "$STDIN_DATA" | grep -oE '"toolInput"\s*:\s*\{[^}]*\}' | head -1 | sed 's/.*"toolInput"\s*:\s*//')
+    WORKSPACE=$(printf '%s' "$STDIN_DATA" | grep -oE '"workspace"\s*:\s*"[^"]*"' | head -1 | sed 's/.*"workspace"\s*:\s*"//;s/".*//')
+  fi
+fi
+
 TOOL_NAME="${TOOL_NAME:-}"
 TOOL_INPUT="${TOOL_INPUT:-}"
+
+# --- Tool name normalization ---
+# Map Copilot CLI tool names to VS Code equivalents so guards work on both surfaces.
+case "$TOOL_NAME" in
+  edit)   TOOL_NAME="editFiles" ;;
+  read)   TOOL_NAME="readFile" ;;
+  shell)  TOOL_NAME="runInTerminal" ;;
+  create) TOOL_NAME="createFile" ;;
+  delete) TOOL_NAME="deleteFile" ;;
+esac
 
 # Guard: prevent modifications to node_modules
 if echo "$TOOL_INPUT" | grep -q "node_modules"; then

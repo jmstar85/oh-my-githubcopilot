@@ -4,8 +4,8 @@ description: >
   Git expert for atomic commits, rebasing, and history management with style detection.
   Use when: creating commits, splitting commits, rebasing, branch management,
   git history cleanup, commit message formatting, git archaeology.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, runInTerminal]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, runInTerminal, shell]
 user-invocable: true
 ---
 

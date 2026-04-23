@@ -15,19 +15,24 @@ Usage:
 Options:
   --target <path>       Target project directory (must be a git repository)
   --mode <mode>         template | submodule | subtree
+  --target-env <env>    vscode | cli | both (default: both)
+  --global-mcp          Install MCP config globally (~/.copilot/) instead of project-local
   --remote <url>        OMG upstream URL (default: https://github.com/jmstar85/oh-my-githubcopilot.git)
   --branch <name>       Branch name (default: main)
   --skip-build          Skip npm install/build for mcp-server
   -h, --help            Show help
 
 Examples:
-  # Tip 1: template-style copy for a new project
+  # Template-style copy for a new project (both VS Code + CLI)
   scripts/omg-adopt.sh --target ~/work/my-new-app --mode template
 
-  # Tip 2: track OMG updates with submodule
+  # CLI-only setup
+  scripts/omg-adopt.sh --target ~/work/my-app --mode template --target-env cli
+
+  # Track OMG updates with submodule
   scripts/omg-adopt.sh --target ~/work/my-app --mode submodule
 
-  # Tip 2: track OMG updates with subtree
+  # Track OMG updates with subtree
   scripts/omg-adopt.sh --target ~/work/my-app --mode subtree
 EOF
 }
@@ -37,6 +42,8 @@ OMG_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 TARGET=""
 MODE=""
+TARGET_ENV="both"
+GLOBAL_MCP=0
 REMOTE="https://github.com/jmstar85/oh-my-githubcopilot.git"
 BRANCH="main"
 SKIP_BUILD=0
@@ -50,6 +57,14 @@ while [[ $# -gt 0 ]]; do
     --mode)
       MODE="${2:-}"
       shift 2
+      ;;
+    --target-env)
+      TARGET_ENV="${2:-}"
+      shift 2
+      ;;
+    --global-mcp)
+      GLOBAL_MCP=1
+      shift
       ;;
     --remote)
       REMOTE="${2:-}"
@@ -78,6 +93,11 @@ done
 if [[ -z "$TARGET" || -z "$MODE" ]]; then
   echo "--target and --mode are required." >&2
   usage
+  exit 1
+fi
+
+if [[ "$TARGET_ENV" != "vscode" && "$TARGET_ENV" != "cli" && "$TARGET_ENV" != "both" ]]; then
+  echo "Invalid --target-env: $TARGET_ENV (must be vscode, cli, or both)" >&2
   exit 1
 fi
 
@@ -166,6 +186,11 @@ SRC_ROOT="$(prepare_upstream)"
 echo "Using source: $SRC_ROOT"
 
 for rel in "${ITEMS[@]}"; do
+  # Skip .vscode/mcp.json when CLI-only
+  if [[ "$TARGET_ENV" == "cli" && "$rel" == ".vscode/mcp.json" ]]; then
+    echo "Skip (cli mode): $rel"
+    continue
+  fi
   backup_and_replace "$SRC_ROOT" "$rel"
 done
 
@@ -184,8 +209,53 @@ else
   echo "Skip build requested"
 fi
 
+# --- Copilot CLI setup ---
+if [[ "$TARGET_ENV" == "cli" || "$TARGET_ENV" == "both" ]]; then
+  echo "Configuring Copilot CLI support..."
+
+  # Determine MCP server path (absolute)
+  MCP_SERVER_PATH="$(cd "$TARGET" && pwd)/mcp-server/dist/index.js"
+
+  # Generate MCP config
+  MCP_CONFIG_CONTENT=$(cat <<MCPEOF
+{
+  "mcpServers": {
+    "omg-workflow": {
+      "command": "node",
+      "args": ["$MCP_SERVER_PATH"],
+      "env": {
+        "WORKSPACE_ROOT": "$(cd "$TARGET" && pwd)"
+      }
+    }
+  }
+}
+MCPEOF
+)
+
+  if [[ "$GLOBAL_MCP" -eq 1 ]]; then
+    MCP_DIR="$HOME/.copilot"
+    mkdir -p "$MCP_DIR"
+    echo "$MCP_CONFIG_CONTENT" > "$MCP_DIR/mcp-config.json"
+    echo "MCP config written to: $MCP_DIR/mcp-config.json (global)"
+  else
+    MCP_DIR="$TARGET/.copilot"
+    mkdir -p "$MCP_DIR"
+    echo "$MCP_CONFIG_CONTENT" > "$MCP_DIR/mcp-config.json"
+    echo "MCP config written to: $MCP_DIR/mcp-config.json (project-local)"
+  fi
+fi
+
 echo
 printf '%s\n' "Done. Next steps:"
-printf '%s\n' "1) Open target project in VS Code as a trusted workspace"
-printf '%s\n' "2) In Copilot Chat (agent mode), run: /status"
+if [[ "$TARGET_ENV" == "vscode" ]]; then
+  printf '%s\n' "1) Open target project in VS Code as a trusted workspace"
+  printf '%s\n' "2) In Copilot Chat (agent mode), run: /status"
+elif [[ "$TARGET_ENV" == "cli" ]]; then
+  printf '%s\n' "1) cd into the target project"
+  printf '%s\n' "2) Run: copilot"
+  printf '%s\n' "3) Try: /status or @omg-coordinator"
+else
+  printf '%s\n' "1) VS Code: Open target project as a trusted workspace, run /status in Copilot Chat"
+  printf '%s\n' "2) CLI: cd into target project, run 'copilot', try /status or @omg-coordinator"
+fi
 printf '%s\n' "3) Commit changes in target project after verification"

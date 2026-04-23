@@ -25,6 +25,44 @@ Ouroboros-inspired Socratic questioning with mathematical ambiguity scoring. Rep
 - Quick fix → delegate to @executor or `/ralph`
 - User says "just do it" → respect their intent
 
+## Interactive Hook Protocol
+
+**MANDATORY**: Use `vscode_askQuestions` for ALL user-facing questions in this skill.
+This ensures structured input collection with selectable options, consistent UX, and clear decision tracking.
+
+### When to Fire Hooks
+| Trigger Point | Question Type | Options Required |
+|---------------|---------------|------------------|
+| Phase 2 each round | Ambiguity-targeted question | 3-5 options + freeform |
+| Phase 3 challenges | Assumption validation | Yes/No + "It depends..." |
+| Phase 4 spec review | Confirm crystallized spec | Approve / Revise / Add constraints |
+| Phase 5 execution bridge | Choose next workflow | 5 predefined options |
+
+### Hook Format Rules
+- **header**: Short unique ID, e.g. `"interview-round-3"`, `"spec-approval"`
+- **question**: The Socratic question targeting the weakest clarity dimension
+- **options**: Provide 3-5 selectable answers that represent likely user intents
+  - First option: most common/expected answer (mark as `recommended`)
+  - Last option: always include an "Other / Let me explain..." escape hatch
+- **allowFreeformInput**: Always `true` — user can override any option with their own words
+- After receiving the answer, score ambiguity immediately and report progress
+
+### Example Hook Call
+```
+vscode_askQuestions([{
+  header: "goal-scope",
+  question: "What's the primary output you expect? (Ambiguity: 72% → targeting Goal Clarity)",
+  options: [
+    { label: "A working CLI tool", recommended: true },
+    { label: "A library/SDK for other developers" },
+    { label: "A web application with UI" },
+    { label: "A background service/daemon" },
+    { label: "Other / Let me explain..." }
+  ],
+  allowFreeformInput: true
+}])
+```
+
 ## Phases
 
 ### Phase 1: Initialize
@@ -37,8 +75,11 @@ Ouroboros-inspired Socratic questioning with mathematical ambiguity scoring. Rep
 Repeat until ambiguity <= 20% or user exits early:
 
 1. **Generate question** targeting the WEAKEST clarity dimension
-2. **Ask ONE question at a time** with current ambiguity context
-3. **Score ambiguity** across dimensions:
+2. **HOOK: Ask ONE question via `vscode_askQuestions`** with:
+   - Current ambiguity score in the question text
+   - 3-5 contextual options derived from codebase analysis and prior answers
+   - `allowFreeformInput: true` always
+3. **Score ambiguity** across dimensions after receiving answer:
    - Goal Clarity (40% weight for greenfield, 35% brownfield)
    - Constraint Clarity (30% / 25%)
    - Success Criteria (30% / 25%)
@@ -48,7 +89,9 @@ Repeat until ambiguity <= 20% or user exits early:
 
 ### Phase 3: Challenge Agents
 - Round 4+: **Contrarian** - challenge core assumptions
+  - **HOOK**: Present assumption + counter-argument, ask user to confirm/revise via `vscode_askQuestions`
 - Round 6+: **Simplifier** - probe for complexity removal
+  - **HOOK**: Present simplification options, ask user which can be dropped
 - Round 8+: **Ontologist** - find the essence (if ambiguity > 30%)
 
 ### Phase 4: Crystallize Spec
@@ -57,19 +100,33 @@ When ambiguity <= threshold, generate spec to `.omg/specs/deep-interview-{slug}.
 - Assumptions Exposed & Resolved
 - Ontology (Key Entities) with convergence tracking
 - Interview Transcript
+- **HOOK: Spec approval** — present spec summary via `vscode_askQuestions`:
+  ```
+  header: "spec-approval"
+  question: "Review the crystallized spec. Ready to proceed?"
+  options: [Approve & continue, Revise specific sections, Add more constraints, Restart interview]
+  ```
 
 ### Phase 5: Execution Bridge
-Present options:
-1. **Ralplan → OMG Autopilot** (Recommended): consensus-refine then execute
-2. **Execute with omg-autopilot** (skip ralplan)
-3. **Execute with ralph**: persistence loop
-4. **Execute with team**: parallel agents
-5. **Refine further**: continue interviewing
+**HOOK: Present execution options** via `vscode_askQuestions`:
+```
+header: "execution-bridge"
+question: "Spec is complete (ambiguity: X%). Choose execution path:"
+options: [
+  { label: "Ralplan → OMG Autopilot", description: "Consensus-refine then execute", recommended: true },
+  { label: "Execute with omg-autopilot", description: "Skip ralplan, direct execution" },
+  { label: "Execute with ralph", description: "Persistence loop" },
+  { label: "Execute with team", description: "Parallel agents" },
+  { label: "Refine further", description: "Continue interviewing" }
+]
+```
 
 ## Rules
 - Ask ONE question at a time
+- **ALWAYS use `vscode_askQuestions` for user-facing questions** — never ask via plain chat text
 - Target the WEAKEST clarity dimension each round
 - Gather codebase facts via @explore BEFORE asking user
 - Score ambiguity after every answer
 - Do not proceed until ambiguity <= threshold (default 20%)
 - Hard cap at 20 rounds, soft warning at 10
+- Include ambiguity % in every question's text so user sees progress

@@ -13,6 +13,11 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/IDE-VS%20Code-007ACC?logo=visualstudiocode" alt="VS Code">
+  <img src="https://img.shields.io/badge/CLI-Copilot%20CLI-181717?logo=github" alt="Copilot CLI">
+</p>
+
+<p align="center">
   <a href="#inicio-rápido">Comenzar</a> •
   <a href="#agentes">Agentes</a> •
   <a href="#habilidades">Habilidades</a> •
@@ -52,7 +57,7 @@ Si OMC potencia Claude Code mediante agentes especializados y automatización de
 
 ## ¿Por qué OMG?
 
-- **Funciona dentro de VS Code**, sin CLIs adicionales ni procesos externos
+- **Funciona en VS Code y Copilot CLI** — Sin procesos externos adicionales. VS Code agent mode o el CLI independiente `copilot`
 - **Agentes especializados**, con separación clara entre perfiles de análisis y ejecución
 - **Automatización de flujos**, desde `omg-autopilot` hasta `ralph` y `ultrawork`
 - **Barandillas de seguridad**, gracias a hooks pre/post tool-use
@@ -127,6 +132,27 @@ omg-autopilot: build a REST API for managing tasks
 
 Desde ese momento, OMG se encarga de planificar, implementar, revisar y verificar.
 
+### Opción C: Copilot CLI
+
+OMG funciona con el [Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli) independiente (binario `copilot`). El CLI lee los mismos archivos de convención `.github/` (agentes, habilidades, hooks, prompts).
+
+1. Instala el binario de Copilot CLI.
+2. Clona OMG y compila el servidor MCP:
+   ```bash
+   git clone https://github.com/jmstar85/oh-my-githubcopilot.git
+   cd oh-my-githubcopilot
+   cd mcp-server && npm install && npm run build && cd ..
+   ```
+3. Crea un `.copilot/mcp-config.json` local del proyecto (o usa `--global-mcp` para instalar globalmente en `~/.copilot/`):
+   ```bash
+   scripts/omg-adopt.sh --target . --mode template --target-env cli
+   ```
+4. Ejecuta `copilot` desde el directorio del proyecto:
+   ```bash
+   copilot
+   ```
+5. Usa `/status` o `@omg-coordinator` para verificar que OMG está cargado.
+
 ### ¿No sabes por dónde empezar?
 
 Si tus requisitos aún son difusos o quieres aclararlos primero:
@@ -136,6 +162,33 @@ deep-interview "I want to build a task management app"
 ```
 
 OMG utiliza preguntas socráticas para detectar supuestos ocultos y aclarar el problema antes de escribir código.
+
+### Usar OMG en otros proyectos de VS Code
+
+OMG funciona a nivel de workspace, así que se recomienda aplicarlo por proyecto.
+
+Este repositorio incluye un script de adopción:
+
+**macOS / Linux (Bash):**
+```bash
+scripts/omg-adopt.sh --target <ruta-del-proyecto> --mode <template|submodule|subtree> [--target-env vscode|cli|both]
+```
+
+**Windows (PowerShell):**
+```powershell
+scripts/omg-adopt.ps1 -Target <ruta-del-proyecto> -Mode <template|submodule|subtree> [-TargetEnv vscode|cli|both]
+```
+
+El flag `--target-env` (por defecto: `both`) controla qué entorno se configura:
+- `vscode` — Solo VS Code (`.vscode/mcp.json`)
+- `cli` — Solo Copilot CLI (`.copilot/mcp-config.json` + `hooks.json`)
+- `both` — Ambos entornos (por defecto)
+
+Después de aplicar, abre el proyecto destino como workspace confiable y valida en Copilot Chat (agent mode):
+
+```text
+/status
+```
 
 ---
 

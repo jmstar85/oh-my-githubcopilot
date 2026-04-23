@@ -4,8 +4,8 @@ description: >
   Verification strategy, evidence-based completion checks, test adequacy.
   Use when: verifying task completion, checking acceptance criteria, validating implementations,
   running verification suites, assessing regression risk, confirming work is done.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, codebase, problems, runInTerminal, findTestFiles, testFailures]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, codebase, problems, runInTerminal, shell, findTestFiles, testFailures]
 user-invocable: true
 ---
 

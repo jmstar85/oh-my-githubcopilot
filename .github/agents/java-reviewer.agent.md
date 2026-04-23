@@ -4,8 +4,8 @@ description: >
   Java code review specialist with embedded style and safety rules.
   Use when: reviewing Java code, Java best practices, type safety,
   Java-specific patterns, idiomatic Java, Spring framework review.
-model: [claude-sonnet-4-6]
-tools: [readFile, search, codebase, problems, usages]
+model: claude-sonnet-4-6
+tools: [readFile, read, search, codebase, problems, usages]
 user-invocable: true
 ---
 
