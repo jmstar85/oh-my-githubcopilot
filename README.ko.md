@@ -336,7 +336,7 @@ OMG는 `.github/hooks/`에 pre/post tool-use 훅을 포함하여 안전장치를
 
 > 모든 수치는 실제 git 이력, 테스트 스위트, `npm audit` 결과에서 추출한 것입니다. 합성 데이터가 아닙니다.
 
-### 프로젝트 스냅샷 (v1.2.0 기준)
+### 프로젝트 스냅샷 (v1.3.0 기준)
 
 | 지표 | 값 |
 |------|----| 
@@ -349,7 +349,7 @@ OMG는 `.github/hooks/`에 pre/post tool-use 훅을 포함하여 안전장치를
 
 ### 품질 지표
 
-| 지표 | v1.0 (초기) | v1.2.0 (OMG 파이프라인 후) |
+| 지표 | v1.0 (초기) | v1.3.0 (OMG 파이프라인 후) |
 |------|:-:|:-:|
 | 테스트 통과율 | 없음 | **46 / 46 (100%)** |
 | TypeScript 오류 | 미검사 | **0개** |
@@ -476,6 +476,14 @@ Scope-risk: narrow
 ---
 
 ## What's New
+
+### v1.3.0 (2026-04-23) — Windows 지원, MIT 라이선스 & 비파괴 초기화
+
+**커뮤니티 요청 개선 3건 (Issues #5, #6, #7)**
+
+- **Windows PowerShell 지원** (Fixes #5): 모든 셸 스크립트의 `.ps1` 등가물 추가 — `pre-tool-use.ps1`, `post-tool-use.ps1`, `omg-adopt.ps1`. 훅 템플릿 번들링 포함. README에 PowerShell 예제 추가.
+- **copilot-instructions.md 비파괴 처리** (Fixes #6): `initWorkspace`가 기존 파일을 덮어쓰지 않고 OMG 내용을 추가(append). 마커 기반 섹션 감지로 재초기화 시 업데이트 지원.
+- **MIT 라이선스 명확화** (Fixes #7): GitHub API 감지용 루트 `LICENSE` 파일 추가. 모든 README에서 "All rights reserved" 모순 제거.
 
 ### v1.2.0 (2026-04-17) — 에이전트 모델 Claude Opus 4.7 업그레이드
 

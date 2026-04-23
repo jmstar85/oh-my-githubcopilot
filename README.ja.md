@@ -272,7 +272,7 @@ OMG は `.github/hooks/` 内の pre/post tool-use hooks により安全性を確
 
 > すべての数値は実際の git 履歴、テストスイート、`npm audit` の結果から抽出したものです。合成データは含みません。
 
-### プロジェクトスナップショット（v1.2.0 時点）
+### プロジェクトスナップショット（v1.3.0 時点）
 
 | 指標 | 値 |
 |------|----| 
@@ -285,7 +285,7 @@ OMG は `.github/hooks/` 内の pre/post tool-use hooks により安全性を確
 
 ### 品質指標
 
-| 指標 | v1.0（初期） | v1.2.0（OMG パイプライン後） |
+| 指標 | v1.0（初期） | v1.3.0（OMG パイプライン後） |
 |------|:-:|:-:|
 | テスト通過率 | なし | **46 / 46（100%）** |
 | TypeScript エラー | 未確認 | **0** |
@@ -414,6 +414,14 @@ Scope-risk: narrow
 ---
 
 ## What's New
+
+### v1.3.0 (2026-04-23) — Windows サポート、MIT ライセンス & 非破壊初期化
+
+**コミュニティリクエスト 3件の改善 (Issues #5, #6, #7)**
+
+- **Windows PowerShell サポート** (Fixes #5): 全シェルスクリプトの `.ps1` 版を追加 — `pre-tool-use.ps1`, `post-tool-use.ps1`, `omg-adopt.ps1`。フックテンプレートもバンドル。README に PowerShell 例を追加。
+- **copilot-instructions.md 非破壊処理** (Fixes #6): `initWorkspace` が既存ファイルを上書きせず OMG 内容を追記。マーカーベースのセクション検出で再初期化時の更新に対応。
+- **MIT ライセンス明確化** (Fixes #7): GitHub API 検出用のルート `LICENSE` ファイルを追加。全 README から「All rights reserved」の矛盾を解消。
 
 ### v1.2.0 (2026-04-17) — エージェントモデル Claude Opus 4.7 へアップグレード
 

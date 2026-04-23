@@ -268,7 +268,7 @@ OMG incorpora hooks en `.github/hooks/` para actuar como red de seguridad.
 
 > Todos los números provienen del historial git real, la suite de tests y los resultados de `npm audit`. Sin datos sintéticos.
 
-### Instantánea del proyecto (v1.2.0)
+### Instantánea del proyecto (v1.3.0)
 
 | Métrica | Valor |
 |---------|-------|
@@ -281,7 +281,7 @@ OMG incorpora hooks en `.github/hooks/` para actuar como red de seguridad.
 
 ### Métricas de calidad
 
-| Métrica | v1.0 (inicial) | v1.2.0 (tras pipeline OMG) |
+| Métrica | v1.0 (inicial) | v1.3.0 (tras pipeline OMG) |
 |---------|:-:|:-:|
 | Tasa de tests pasados | N/A | **46 / 46 (100%)** |
 | Errores TypeScript | Sin verificar | **0** |
@@ -408,6 +408,14 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 ---
 
 ## What's New
+
+### v1.3.0 (2026-04-23) — Soporte Windows, Licencia MIT e Inicialización No Destructiva
+
+**Tres mejoras solicitadas por la comunidad (Issues #5, #6, #7)**
+
+- **Soporte Windows PowerShell** (Fixes #5): Añadidos equivalentes `.ps1` para todos los scripts shell — `pre-tool-use.ps1`, `post-tool-use.ps1`, `omg-adopt.ps1`. Hooks incluidos en plantillas de extensión. READMEs actualizados con ejemplos PowerShell.
+- **copilot-instructions.md no destructivo** (Fixes #6): `initWorkspace` ahora añade instrucciones OMG al archivo existente en lugar de sobrescribirlo. Detección basada en marcadores para actualizaciones en reinicialización.
+- **Clarificación de licencia MIT** (Fixes #7): Añadido archivo `LICENSE` raíz para detección por API de GitHub. Eliminadas contradicciones "All rights reserved" de todos los READMEs.
 
 ### v1.2.0 (2026-04-17) — Actualización del modelo de agentes a Claude Opus 4.7
 

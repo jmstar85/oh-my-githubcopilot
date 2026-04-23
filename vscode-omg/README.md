@@ -345,7 +345,7 @@ OMG includes pre/post tool-use hooks (`.github/hooks/`) that act as safety nets:
 
 > All numbers are derived from the actual `oh-my-githubcopilot` git history, test suite, and `npm audit` results. No synthetic data.
 
-### Project Snapshot (as of v1.2.0)
+### Project Snapshot (as of v1.3.0)
 
 | Metric | Value |
 |--------|-------|
@@ -358,7 +358,7 @@ OMG includes pre/post tool-use hooks (`.github/hooks/`) that act as safety nets:
 
 ### Quality Metrics
 
-| Metric | v1.0 (initial) | v1.2.0 (after OMG pipeline) |
+| Metric | v1.0 (initial) | v1.3.0 (after OMG pipeline) |
 |--------|:-:|:-:|
 | Test pass rate | N/A | **46 / 46 (100%)** |
 | TypeScript errors | Not checked | **0** |
@@ -485,6 +485,14 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 ---
 
 ## What's New
+
+### v1.3.0 (2026-04-23) — Windows Support, MIT License & Non-Destructive Init
+
+**Three community-requested improvements (Issues #5, #6, #7)**
+
+- **Windows PowerShell support** (Fixes #5): Added `.ps1` equivalents for all shell scripts — `pre-tool-use.ps1`, `post-tool-use.ps1`, `omg-adopt.ps1`. Hooks bundled in extension templates. READMEs updated with PowerShell examples.
+- **Non-destructive copilot-instructions.md** (Fixes #6): `initWorkspace` now appends OMG instructions to existing files instead of overwriting. Marker-based section detection supports re-init updates.
+- **MIT License clarification** (Fixes #7): Added root `LICENSE` file for GitHub API detection. Removed "All rights reserved" contradictions from all READMEs.
 
 ### v1.2.0 (2026-04-17) — Agent Model Upgrade to Claude Opus 4.7
 
