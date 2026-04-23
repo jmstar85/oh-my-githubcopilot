@@ -19,12 +19,17 @@ async function initWorkspace(context: vscode.ExtensionContext, outputChannel: vs
   // Check if already initialized
   const copilotInstructions = path.join(ws.uri.fsPath, '.github', 'copilot-instructions.md');
   if (fs.existsSync(copilotInstructions)) {
+    const existing = fs.readFileSync(copilotInstructions, 'utf-8');
+    const hasOmg = existing.includes('# oh-my-githubcopilot (OMG) - Intelligent Multi-Agent Orchestration');
+    const message = hasOmg
+      ? 'OMG: This workspace already has OMG instructions. Update to latest version?'
+      : 'OMG: Existing copilot-instructions.md found. OMG instructions will be appended (your existing content is preserved). Continue?';
     const answer = await vscode.window.showWarningMessage(
-      'OMG: This workspace already has OMG convention files. Overwrite?',
-      'Overwrite',
+      message,
+      hasOmg ? 'Update' : 'Append',
       'Cancel',
     );
-    if (answer !== 'Overwrite') {
+    if (!answer || answer === 'Cancel') {
       return;
     }
   }
@@ -111,6 +116,8 @@ async function copyTemplates(templatesDir: string, targetDir: string, outputChan
     { src: 'mcp-server', dest: 'mcp-server' },
   ];
 
+  const OMG_MARKER = '# oh-my-githubcopilot (OMG) - Intelligent Multi-Agent Orchestration';
+
   for (const item of items) {
     const srcPath = path.join(templatesDir, item.src);
     const destPath = path.join(targetDir, item.dest);
@@ -125,6 +132,22 @@ async function copyTemplates(templatesDir: string, targetDir: string, outputChan
 
     if (fs.statSync(srcPath).isDirectory()) {
       copyDirRecursive(srcPath, destPath);
+    } else if (item.src === 'copilot-instructions.md' && fs.existsSync(destPath)) {
+      // Append OMG instructions to existing copilot-instructions.md
+      const existing = fs.readFileSync(destPath, 'utf-8');
+      if (existing.includes(OMG_MARKER)) {
+        // Already contains OMG instructions — replace the OMG section
+        const markerIndex = existing.indexOf(OMG_MARKER);
+        const before = existing.substring(0, markerIndex).trimEnd();
+        const omgContent = fs.readFileSync(srcPath, 'utf-8');
+        fs.writeFileSync(destPath, before + '\n\n' + omgContent, 'utf-8');
+        outputChannel.appendLine(`OMG: Updated OMG section in existing ${item.dest}`);
+      } else {
+        // Append OMG instructions after existing content
+        const omgContent = fs.readFileSync(srcPath, 'utf-8');
+        fs.appendFileSync(destPath, '\n\n' + omgContent, 'utf-8');
+        outputChannel.appendLine(`OMG: Appended OMG instructions to existing ${item.dest}`);
+      }
     } else {
       fs.copyFileSync(srcPath, destPath);
     }
