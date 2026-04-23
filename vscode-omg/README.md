@@ -155,8 +155,14 @@ OMG is workspace-scoped, so the recommended way is to apply it per project.
 
 This repository now includes an adoption script:
 
+**macOS / Linux (Bash):**
 ```bash
 scripts/omg-adopt.sh --target <your-project-path> --mode <template|submodule|subtree>
+```
+
+**Windows (PowerShell):**
+```powershell
+scripts/omg-adopt.ps1 -Target <your-project-path> -Mode <template|submodule|subtree>
 ```
 
 #### Tip 1: Template-style for new projects
@@ -164,7 +170,12 @@ scripts/omg-adopt.sh --target <your-project-path> --mode <template|submodule|sub
 Use this for greenfield projects where you want OMG files copied directly into the project.
 
 ```bash
+# macOS / Linux
 scripts/omg-adopt.sh --target ~/work/my-new-app --mode template
+```
+```powershell
+# Windows
+scripts/omg-adopt.ps1 -Target ~/work/my-new-app -Mode template
 ```
 
 #### Tip 2: Track updates with submodule or subtree
@@ -172,11 +183,18 @@ scripts/omg-adopt.sh --target ~/work/my-new-app --mode template
 Use one of these when you want a sync strategy for future OMG updates.
 
 ```bash
-# Submodule strategy
+# macOS / Linux — Submodule strategy
 scripts/omg-adopt.sh --target ~/work/my-app --mode submodule
 
-# Subtree strategy
+# macOS / Linux — Subtree strategy
 scripts/omg-adopt.sh --target ~/work/my-app --mode subtree
+```
+```powershell
+# Windows — Submodule strategy
+scripts/omg-adopt.ps1 -Target ~/work/my-app -Mode submodule
+
+# Windows — Subtree strategy
+scripts/omg-adopt.ps1 -Target ~/work/my-app -Mode subtree
 ```
 
 What the script applies to the target project:
