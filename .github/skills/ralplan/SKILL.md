@@ -15,7 +15,8 @@ Shorthand for `/plan --consensus`. Triggers iterative planning with Planner, Arc
 
 ## Interactive Hook Protocol
 
-**MANDATORY**: Use `vscode_askQuestions` at every decision gate in this skill.
+**MANDATORY**: Use `vscode_askQuestions` at every decision gate in this skill (when available).
+If `vscode_askQuestions` is NOT available (e.g., Copilot CLI), present numbered options in markdown and ask the user to respond with a number or freeform text.
 
 ### When to Fire Hooks
 | Trigger Point | Question Type |

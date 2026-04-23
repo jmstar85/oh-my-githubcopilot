@@ -462,6 +462,17 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 
 ## What's New
 
+### v1.3.1 (2026-04-23) — Soporte Copilot CLI
+
+**Compatibilidad dual para el modo agente de VS Code y Copilot CLI independiente** (Issue #4)
+
+- **Normalización de frontmatter de agentes**: Campo `model:` cambiado de array a string en los 28 agentes. Equivalentes CLI (`read`, `edit`, `shell`, `create`, `delete`) añadidos a listas `tools:`.
+- **Entrada dual de hooks**: Los hooks pre/post tool-use ahora aceptan variables de entorno VS Code y JSON stdin CLI. Normalización de nombres de herramientas mapea nombres CLI a equivalentes VS Code.
+- **Registro `hooks.json`**: Nuevo archivo wrapper CLI para descubrimiento de `preToolUse` / `postToolUse`.
+- **Script adopt `--target-env`**: Nueva flag `--target-env vscode|cli|both` (predeterminado: `both`). Modo CLI genera `.copilot/mcp-config.json` y omite `.vscode/mcp.json`. `--global-mcp` instala en `~/.copilot/`.
+- **Fallback CLI de skills**: 5 skills interactivos (`deep-interview`, `omg-autopilot`, `ralplan`, `plan`, `self-improve`) actualizados con fallback CLI — opciones numeradas markdown cuando `vscode_askQuestions` no está disponible.
+- **Documentación**: Badge CLI, "Opción C: Copilot CLI" inicio rápido, uso de `--target-env` añadidos a todos los READMEs.
+
 ### v1.3.0 (2026-04-23) — Soporte Windows, Licencia MIT e Inicialización No Destructiva
 
 **Tres mejoras solicitadas por la comunidad (Issues #5, #6, #7)**

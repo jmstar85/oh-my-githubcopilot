@@ -22,7 +22,8 @@ Creates comprehensive, actionable work plans through intelligent interaction. Au
 
 ## Interactive Hook Protocol
 
-**MANDATORY**: Use `vscode_askQuestions` for ALL user-facing decision points in this skill.
+**MANDATORY**: Use `vscode_askQuestions` for ALL user-facing decision points in this skill (when available).
+If `vscode_askQuestions` is NOT available (e.g., Copilot CLI), present numbered options in markdown and ask the user to respond with a number or freeform text.
 
 ### When to Fire Hooks
 | Trigger Point | Question Type |

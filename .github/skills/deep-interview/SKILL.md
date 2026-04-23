@@ -27,7 +27,8 @@ Ouroboros-inspired Socratic questioning with mathematical ambiguity scoring. Rep
 
 ## Interactive Hook Protocol
 
-**MANDATORY**: Use `vscode_askQuestions` for ALL user-facing questions in this skill.
+**MANDATORY**: Use `vscode_askQuestions` for ALL user-facing questions in this skill (when available).
+If `vscode_askQuestions` is NOT available (e.g., Copilot CLI), present numbered options in markdown and ask the user to respond with a number or freeform text.
 This ensures structured input collection with selectable options, consistent UX, and clear decision tracking.
 
 ### When to Fire Hooks
@@ -123,7 +124,7 @@ options: [
 
 ## Rules
 - Ask ONE question at a time
-- **ALWAYS use `vscode_askQuestions` for user-facing questions** — never ask via plain chat text
+- **Use `vscode_askQuestions` for user-facing questions** when available; in CLI, present numbered markdown options
 - Target the WEAKEST clarity dimension each round
 - Gather codebase facts via @explore BEFORE asking user
 - Score ambiguity after every answer

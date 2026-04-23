@@ -508,6 +508,17 @@ Scope-risk: narrow
 
 ## What's New
 
+### v1.3.1 (2026-04-23) — Copilot CLI 지원
+
+**VS Code 에이전트 모드와 독립형 Copilot CLI 이중 호환** (Issue #4)
+
+- **에이전트 프론트매터 정규화**: 전체 28개 에이전트의 `model:` 필드를 배열에서 문자열로 변경. CLI 도구 등가물(`read`, `edit`, `shell`, `create`, `delete`)을 `tools:` 목록에 추가.
+- **훅 이중 모드 입력**: pre/post tool-use 훅이 VS Code 환경변수와 CLI stdin JSON 모두 수용. 도구명 정규화로 CLI 이름을 VS Code 등가물로 매핑 후 가드 로직 적용.
+- **`hooks.json` 등록**: CLI 훅 래퍼 파일로 `preToolUse` / `postToolUse` 탐색 지원.
+- **Adopt 스크립트 `--target-env`**: `--target-env vscode|cli|both` 플래그 추가(기본값: `both`). CLI 모드에서 `.copilot/mcp-config.json` 생성, `.vscode/mcp.json` 건너뜀. `--global-mcp`으로 `~/.copilot/`에 전역 설치 가능.
+- **스킬 CLI 폴백**: 대화형 스킬 5개(`deep-interview`, `omg-autopilot`, `ralplan`, `plan`, `self-improve`)에 CLI 폴백 추가 — `vscode_askQuestions` 미사용 시 마크다운 번호 옵션 제시.
+- **문서화**: CLI 배지, "방법 C: Copilot CLI" 빠른 시작, `--target-env` 사용법을 모든 README에 추가.
+
 ### v1.3.0 (2026-04-23) — Windows 지원, MIT 라이선스 & 비파괴 초기화
 
 **커뮤니티 요청 개선 3건 (Issues #5, #6, #7)**

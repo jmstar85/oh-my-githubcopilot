@@ -24,7 +24,8 @@ OMG Autopilot takes a brief product idea and autonomously handles the full lifec
 
 ## Interactive Hook Protocol
 
-Use `vscode_askQuestions` at critical decision gates during autopilot execution.
+Use `vscode_askQuestions` at critical decision gates during autopilot execution (when available).
+If `vscode_askQuestions` is NOT available (e.g., Copilot CLI), present numbered options in markdown.
 Autopilot is designed to be mostly autonomous, but hooks fire at ambiguity points and failure recovery.
 
 ### When to Fire Hooks

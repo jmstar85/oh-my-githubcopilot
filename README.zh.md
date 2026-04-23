@@ -464,6 +464,17 @@ Scope-risk: narrow
 
 ## What's New
 
+### v1.3.1 (2026-04-23) — Copilot CLI 支持
+
+**VS Code 代理模式和独立 Copilot CLI 双兼容** (Issue #4)
+
+- **代理前置元数据规范化**: 全部28个代理的 `model:` 字段从数组改为字符串格式。CLI 工具等价物（`read`、`edit`、`shell`、`create`、`delete`）添加到 `tools:` 列表。
+- **Hook 双模式输入**: pre/post tool-use hook 同时接受 VS Code 环境变量和 CLI stdin JSON。工具名规范化将 CLI 名称映射为 VS Code 等价物后执行防护逻辑。
+- **`hooks.json` 注册**: CLI hook 包装器文件，用于 `preToolUse` / `postToolUse` 发现。
+- **Adopt 脚本 `--target-env`**: 新增 `--target-env vscode|cli|both` 标志（默认：`both`）。CLI 模式生成 `.copilot/mcp-config.json`，跳过 `.vscode/mcp.json`。`--global-mcp` 在 `~/.copilot/` 全局安装。
+- **技能 CLI 回退**: 5个交互技能（`deep-interview`、`omg-autopilot`、`ralplan`、`plan`、`self-improve`）添加 CLI 回退 — `vscode_askQuestions` 不可用时显示 Markdown 编号选项。
+- **文档更新**: CLI 徽章、"方法 C: Copilot CLI" 快速开始、`--target-env` 用法添加到所有 README。
+
 ### v1.3.0 (2026-04-23) — Windows 支持、MIT 许可证 & 非破坏性初始化
 
 **三项社区请求改进 (Issues #5, #6, #7)**

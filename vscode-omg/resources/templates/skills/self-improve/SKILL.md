@@ -70,7 +70,8 @@ All state lives under `.omg/self-improve/`:
 
 ### Interactive Hook Protocol (Setup Only)
 
-**MANDATORY**: Use `vscode_askQuestions` for all user decisions during setup.
+**MANDATORY**: Use `vscode_askQuestions` for all user decisions during setup (when available).
+If `vscode_askQuestions` is NOT available (e.g., Copilot CLI), present numbered options in markdown and ask the user to respond with a number or freeform text.
 Once the improvement loop begins (after gate passes), run fully autonomously — no hooks.
 
 ### When to Fire Hooks

@@ -468,6 +468,17 @@ Scope-risk: narrow
 
 ## What's New
 
+### v1.3.1 (2026-04-23) — Copilot CLI サポート
+
+**VS Code エージェントモードとスタンドアロン Copilot CLI のデュアル互換性** (Issue #4)
+
+- **エージェントフロントマター正規化**: 全28エージェントの `model:` フィールドを配列から文字列に変更。CLI ツール等価物（`read`, `edit`, `shell`, `create`, `delete`）を `tools:` リストに追加。
+- **フックデュアルモード入力**: pre/post tool-use フックが VS Code 環境変数と CLI stdin JSON の両方を受け入れ。ツール名正規化で CLI 名を VS Code 等価物にマッピング。
+- **`hooks.json` 登録**: CLI フック検出用の `preToolUse` / `postToolUse` ラッパーファイル。
+- **Adopt スクリプト `--target-env`**: `--target-env vscode|cli|both` フラグ追加（デフォルト: `both`）。CLI モードで `.copilot/mcp-config.json` を生成、`.vscode/mcp.json` をスキップ。`--global-mcp` で `~/.copilot/` にグローバルインストール。
+- **スキル CLI フォールバック**: 対話型スキル5つ（`deep-interview`, `omg-autopilot`, `ralplan`, `plan`, `self-improve`）に CLI フォールバック追加 — `vscode_askQuestions` 未使用時は Markdown 番号オプションを提示。
+- **ドキュメント**: CLI バッジ、「方法 C: Copilot CLI」クイックスタート、`--target-env` 使用法を全 README に追加。
+
 ### v1.3.0 (2026-04-23) — Windows サポート、MIT ライセンス & 非破壊初期化
 
 **コミュニティリクエスト 3件の改善 (Issues #5, #6, #7)**
