@@ -472,7 +472,7 @@ Scope-risk: narrow
 - **OMC 导入器**: 将 `.omc/` 状态目录（PRD、工作流状态、检查点、项目记忆）映射到 `.omg/` 等价物，基于 mtime 解决冲突。
 - **3 个新 MCP 工具**: `omg_detect_external_session`（只读检测）、`omg_import_external_session`（备份后导入）、`omg_compare_checkpoints`（时间戳对比）。
 - **VS Code 自动检测**: 激活时检测外部会话并显示通知（"继续 / 忽略 / 始终忽略"）。OMG 检查点在 30 分钟内则跳过。
-- **`/resume-claude` 技能**: 6 步工作流 — 检测 → 对比 → 确认 → 导入 → 摘要 → 继续。关键词触发："resume claude"、"claude 이어받기"（韩语：继续接手）、"이어서 작업"（韩语：继续工作）。
+- **`/resume-claude` 技能**: 6 步工作流 — 检测 → 对比 → 确认 → 导入 → 摘要 → 继续。关键词触发："resume claude"、"继续接手"、"继续工作"。
 - **安全**: 导入的检查点文件设置为 `chmod 0600`。现有检查点在导入前备份为 `.previous.json`。
 - **检查点模式扩展**: 4 个新可选字段 — `source_tool`、`source_session_id`、`imported_at`、`imported_summary`（向后兼容）。
 
