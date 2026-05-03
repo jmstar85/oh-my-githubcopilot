@@ -470,7 +470,7 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 - **Importador OMC**: Mapea el directorio de estado `.omc/` (PRD, estado de workflow, checkpoint, memoria de proyecto) a equivalentes `.omg/` con resolución de conflictos basada en mtime.
 - **3 nuevas herramientas MCP**: `omg_detect_external_session` (detección de solo lectura), `omg_import_external_session` (importación con respaldo), `omg_compare_checkpoints` (comparación de timestamps).
 - **Auto-detección en VS Code**: Al activarse, detecta sesiones externas y muestra notificación ("Reanudar / Ignorar / Siempre ignorar"). Se omite si el checkpoint OMG tiene menos de 30 min.
-- **Skill `/resume-claude`**: Flujo de 6 pasos — detectar → comparar → confirmar → importar → resumir → continuar. Palabras clave: "resume claude", "claude 이어받기", "이어서 작업".
+- **Skill `/resume-claude`**: Flujo de 6 pasos — detectar → comparar → confirmar → importar → resumir → continuar. Palabras clave: "resume claude", "claude 이어받기" (coreano: retomar), "이어서 작업" (coreano: continuar trabajo).
 - **Seguridad**: Archivos de checkpoint importados con `chmod 0600`. Checkpoints existentes respaldados como `.previous.json` antes de importar.
 - **Extensión del esquema de checkpoint**: 4 nuevos campos opcionales — `source_tool`, `source_session_id`, `imported_at`, `imported_summary` (retrocompatible).
 
