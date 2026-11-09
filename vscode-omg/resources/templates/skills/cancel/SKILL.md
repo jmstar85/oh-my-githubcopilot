@@ -2,7 +2,7 @@
 name: cancel
 description: >
   Cancel any active OMG mode and clean up state.
-  Activate when user says: cancel, stop, cancelomg, stopomg,
+  Activate when user says: cancel, stop, cancel omg, cancelomg, cancelomc, stopomg,
   abort, kill it, stop everything.
 argument-hint: "[--force|--all]"
 ---

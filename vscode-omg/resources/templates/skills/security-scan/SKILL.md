@@ -2,8 +2,8 @@
 name: security-scan
 description: >
   Rapid security scanning workflow for code changes. Activates a focused security sweep.
-  Activate when: security scan, scan for vulnerabilities, check for secrets,
-  security check, run security audit, check deps.
+  Activate when: security scan, scan for vulnerabilities, check for secrets, check secrets,
+  security check, run security audit, check deps, audit deps.
 argument-hint: "[path or scope to scan — defaults to recent git changes]"
 ---
 

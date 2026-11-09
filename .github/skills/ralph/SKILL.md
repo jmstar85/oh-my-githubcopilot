@@ -3,7 +3,7 @@ name: ralph
 description: >
   PRD-driven persistence loop until task completion with verification.
   Activate when user says: ralph, don't stop, must complete, finish this,
-  keep going until done.
+  keep going until done, prd loop, story loop.
 argument-hint: "[--no-prd] [--no-deslop] <task description>"
 ---
 

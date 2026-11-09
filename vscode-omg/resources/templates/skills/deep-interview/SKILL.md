@@ -2,7 +2,7 @@
 name: deep-interview
 description: >
   Socratic deep interview with mathematical ambiguity gating.
-  Activate when user says: deep interview, interview me, ask me everything,
+  Activate when user says: deep interview, stakeholder interview, interview me, ask me everything,
   don't assume, make sure you understand, ouroboros, socratic,
   I have a vague idea, not sure exactly what I want.
 argument-hint: "[--quick|--standard|--deep] <idea or vague description>"
