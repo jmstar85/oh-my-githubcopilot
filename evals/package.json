@@ -1,0 +1,13 @@
+{
+  "name": "omg-evals",
+  "private": true,
+  "type": "module",
+  "description": "Measurement and evaluation tooling for OMG (context footprint, activation checks)",
+  "scripts": {
+    "baseline": "node context-baseline.mjs"
+  },
+  "dependencies": {
+    "gpt-tokenizer": "^4.1.0",
+    "yaml": "^2.9.1"
+  }
+}
