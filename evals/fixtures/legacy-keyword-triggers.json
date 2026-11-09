@@ -1,0 +1,32 @@
+{
+  "$comment": "Keyword → skill mappings that lived in .github/copilot-instructions.md up to v1.4.4 and were removed in v1.5. Each phrase must now be discoverable from the owning SKILL.md description (or be a hard route in copilot-instructions.md). Deprecated entries are reported but do not fail the check.",
+  "source": "v1.4.4:.github/copilot-instructions.md (## Keyword Triggers)",
+  "mappings": [
+    { "skill": "omg-autopilot", "phrases": ["autopilot", "auto-pilot", "autonomous", "build me", "create me"] },
+    { "skill": "ralph", "phrases": ["ralph", "prd loop", "story loop"] },
+    { "skill": "ultrawork", "phrases": ["ulw", "parallel", "ultrawork"] },
+    { "skill": "ultragoal", "phrases": ["ultragoal", "goal loop", "durable goal", "persistent goal"] },
+    { "skill": "ralplan", "phrases": ["ralplan", "consensus plan"] },
+    { "skill": "deep-interview", "phrases": ["deep interview", "stakeholder interview"] },
+    { "skill": "visual-verdict", "phrases": ["visual verdict", "screenshot compare", "visual QA"] },
+    { "skill": "release", "phrases": ["release", "publish version", "cut release", "changelog"] },
+    { "skill": "deepinit", "phrases": ["deepinit", "repo init docs", "agent docs"] },
+    { "skill": "skillify", "phrases": ["skillify", "make a skill", "create skill"] },
+    { "skill": "writer-memory", "phrases": ["writer memory", "character memory", "story bible"] },
+    { "skill": "configure-notifications", "phrases": ["configure notifications", "notifications setup", "alert me"] },
+    { "skill": "wiki", "phrases": ["wiki", "knowledge base", "project wiki"] },
+    { "skill": "autoresearch", "phrases": ["autoresearch", "research loop", "evaluate research"] },
+    { "skill": "hud", "phrases": ["hud", "status display", "workflow dashboard"] },
+    { "skill": "external-context", "phrases": ["external context", "docs research", "external docs"] },
+    { "skill": "sciomc", "phrases": ["sciomc", "scientist research", "research swarm"] },
+    { "skill": "ask", "phrases": ["ask", "multi-model ask", "ask models"] },
+    { "skill": "ai-slop-cleaner", "phrases": ["deslop", "anti-slop", "cleanup slop"] },
+    { "skill": "tdd", "phrases": ["tdd", "test driven"] },
+    { "skill": "security-scan", "phrases": ["security scan", "check secrets", "audit deps"] },
+    { "skill": "skill-stocktake", "phrases": ["stocktake", "skill audit"] },
+    { "skill": "coding-standards", "phrases": ["coding standards", "style guide", "naming rules"] },
+    { "skill": "cancel", "phrases": ["cancelomc", "cancel omg"] },
+    { "skill": "resume-claude", "deprecated": true, "phrases": ["resume claude", "claude 이어받기", "이어서 작업", "rate limit"] },
+    { "skill": "push-omc", "deprecated": true, "phrases": ["push omc", "omc 푸시", "omc로 보내기", "sync to omc", "export to omc"] }
+  ]
+}

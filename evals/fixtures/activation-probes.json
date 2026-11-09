@@ -1,0 +1,13 @@
+{
+  "$comment": "Live activation probes for Copilot CLI. Each prompt uses a trigger phrase that was removed from copilot-instructions.md in v1.5 (or a control). `expect` is the skill that must be loaded via the `skill` tool; null means no skill should load. Run with `npm run activation:live` (requires an authenticated Copilot CLI; not a CI gate).",
+  "probes": [
+    { "id": "p1", "expect": "deep-interview", "lang": "en", "prompt": "I need a stakeholder interview for a small CLI tool idea: a markdown link checker. Start the interview." },
+    { "id": "p2", "expect": "security-scan", "lang": "en", "prompt": "Check secrets and audit deps in this repo." },
+    { "id": "p3", "expect": "ralplan", "lang": "en", "prompt": "I want a consensus plan for adding a CHANGELOG generator script to this repo." },
+    { "id": "p4", "expect": "ralph", "lang": "en", "prompt": "Story loop: write a README for the evals folder and do not stop until it is verified." },
+    { "id": "p5", "expect": "cancel", "lang": "en", "prompt": "cancel omg" },
+    { "id": "p6", "expect": "visual-verdict", "lang": "en", "prompt": "Visual QA please: compare screenshots before.png and after.png of the settings page." },
+    { "id": "p7", "expect": null, "lang": "en", "prompt": "Which files are in the evals folder? Just list them." },
+    { "id": "p8", "expect": "security-scan", "lang": "ko", "prompt": "이 저장소 보안 스캔 해줘. 시크릿 체크랑 의존성 취약점도 봐줘." }
+  ]
+}

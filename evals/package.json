@@ -4,7 +4,9 @@
   "type": "module",
   "description": "Measurement and evaluation tooling for OMG (context footprint, activation checks)",
   "scripts": {
-    "baseline": "node context-baseline.mjs"
+    "baseline": "node context-baseline.mjs",
+    "activation": "node activation-coverage.mjs",
+    "activation:live": "node activation-live.mjs"
   },
   "dependencies": {
     "gpt-tokenizer": "^4.1.0",
