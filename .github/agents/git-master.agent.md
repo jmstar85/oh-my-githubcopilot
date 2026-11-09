@@ -59,6 +59,28 @@ Git history is documentation for the future. A single monolithic commit with 15 
 [git log --oneline output]
 ```
 
+## OMG Commit Trailers
+OMG preserves decision context in commit messages with structured git trailers. Use a conventional subject, an optional body, then trailers. Include trailers when applicable; skip them for trivial commits.
+
+- `Constraint:` active constraint that shaped this decision
+- `Rejected:` alternative considered | reason for rejection
+- `Directive:` warning or instruction for future modifiers
+- `Confidence:` high | medium | low
+- `Scope-risk:` narrow | moderate | broad
+- `Not-tested:` edge case or scenario not covered by tests
+
+```
+fix(auth): prevent silent session drops during long-running ops
+
+Auth service returns inconsistent status codes on token expiry,
+so the interceptor catches all 4xx and triggers inline refresh.
+
+Constraint: Auth service does not support token introspection
+Rejected: Extend token TTL to 24h | security policy violation
+Confidence: high
+Scope-risk: narrow
+```
+
 ## Failure Modes To Avoid
 - **Monolithic commits:** Putting 15 files in one commit. Split by concern.
 - **Style mismatch:** Using "feat: add X" when project uses plain English. Detect and match.
