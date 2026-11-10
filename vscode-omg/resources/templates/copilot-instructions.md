@@ -1,6 +1,6 @@
 # oh-my-githubcopilot (OMG) - Intelligent Multi-Agent Orchestration
 
-OMG is a multi-agent orchestration layer for GitHub Copilot. Agents, skills, and MCP tools self-describe; only the always-on rules live here.
+OMG is a multi-agent orchestration layer for GitHub Copilot; only the always-on rules live here.
 
 ## Principles
 - Delegate specialized work (multi-file, refactor, debug, review, plan, research, verify); do trivial single-step work directly.
@@ -14,7 +14,7 @@ Always route: `autopilot` → `/omg-autopilot`, `ralph` → `/ralph`, `ulw` → 
 - Never stop while tasks remain. Claim completion only with fresh evidence (test/build output) for every acceptance criterion.
 - Never self-approve: a separate `@verifier` or `@code-reviewer` pass approves.
 - With OMG MCP tools: call `omg_check_completion` before stopping; if `.omg/ultragoal/` exists, call `omg_ultragoal_status` first and keep the goal in the plan.
-- On a checkpoint advisory, call `omg_checkpoint` and continue. At session start, if `.omg/state/session-checkpoint.json` exists, call `omg_restore_checkpoint`.
+- On a checkpoint advisory, call `omg_checkpoint` and continue. At 50% of the context window (500K of 1M): finish or revert the in-flight edit, commit verified work, checkpoint, and end with a self-contained handoff prompt for a new session. At session start, if `.omg/state/session-checkpoint.json` exists, call `omg_restore_checkpoint`.
 
 ## Boundaries
 - Hooks block destructive operations. Never bypass a block; explain and ask.
