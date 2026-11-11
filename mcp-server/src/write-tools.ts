@@ -140,7 +140,7 @@ export function writeScope(scope: WriteScope, op: WriteOp, key?: string, value?:
 export function registerWriteTools(server: McpServer): void {
   server.tool(
     "omg_write",
-    "Write .omg/ state. scope op: state set (key=mode, value merged) | state clear (key; omit=all) | prd set (value={title,description?,stories[]}) | prd clear | story set (key=id, value={title?,description?,acceptance_criteria?,priority?,passes:false}; creates if missing; passes:true only via omg_verify) | story clear (key) | phase advance (autopilot; value={current_phase?,skip_reason?}) | ultragoal set (value={objective}) | ultragoal advance (key=goal id, value={evidence,note?}).",
+    "Write .omg/ state. scope op: state set (key=mode, value merged) | state clear (key; omit=all) | prd set (value={title,description?,stories[]}) | prd clear | story set (key=id, value={title?,description?,acceptance_criteria?,priority?,passes:false}; upserts; passes:true only via omg_verify) | story clear (key) | phase advance (value={current_phase?,skip_reason?}) | ultragoal set (value={objective}) | ultragoal advance (key=goal id, value={evidence,note?}).",
     {
       scope: z.enum(WRITE_SCOPES),
       op: z.enum(WRITE_OPS),

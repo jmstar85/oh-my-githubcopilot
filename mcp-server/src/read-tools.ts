@@ -118,7 +118,7 @@ export function readScope(scope: ReadScope, key?: string) {
 export function registerReadTools(server: McpServer): void {
   server.tool(
     "omg_read",
-    "Read .omg/ state. scope: state (key=mode; omit=active modes), prd (key=story id; else summary + next open story), phase (key=phase number; else all), ultragoal (key=goal id; else active goal + handoff), checkpoint (last checkpoint + context pressure), all (compact summary).",
+    "Read .omg/ state. scope: state (key=mode; omit=active modes) | prd (key=story id; else summary + next open story) | phase (key=number; else all) | ultragoal (key=goal id; else active goal + handoff) | checkpoint (last checkpoint + context pressure) | all (compact summary).",
     {
       scope: z.enum(READ_SCOPES),
       key: z.string().optional(),

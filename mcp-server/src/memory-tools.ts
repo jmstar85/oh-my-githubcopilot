@@ -106,7 +106,7 @@ export function deleteMemory(key: string) {
 export function registerMemoryTools(server: McpServer): void {
   server.tool(
     "omg_memory",
-    "Project memory (.omg/project-memory.json). op: get (key; omit for all) | search (query, case-insensitive) | set (key, value, tags?) | delete (key).",
+    "Project memory (.omg/project-memory.json). op: get (key?; omit=all) | search (query) | set (key, value, tags?) | delete (key).",
     {
       op: z.enum(["get", "search", "set", "delete"]),
       key: z.string().optional(),

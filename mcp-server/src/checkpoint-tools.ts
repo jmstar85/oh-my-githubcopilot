@@ -127,7 +127,7 @@ function buildHandoffText(cp: { summary: string | null; key_decisions: string[];
 
 export function registerCheckpointTools(server: McpServer, legacy = false): void {
   const description =
-    "Save a session checkpoint (.omg/state/session-checkpoint.json: active modes, recent memory, modified files); returns handoff_text for the next session. Call on a checkpoint advisory, before phase transitions, or at 50% context. Restore: omg_read scope=checkpoint.";
+    "Save a session checkpoint; returns handoff_text for the next session. Call on a checkpoint advisory, before phase transitions, or at 50% context. Restore: omg_read scope=checkpoint.";
 
   if (legacy) {
     // Lenient schema: accepts the 1.4 parameters (optional summary, key_decisions) as well as the 1.5 ones.

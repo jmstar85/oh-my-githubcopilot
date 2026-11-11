@@ -113,9 +113,9 @@ export function checkCompletion(mode?: string) {
 export function registerWorkflowTools(server: McpServer): void {
   server.tool(
     "omg_check_completion",
-    "Completion gate. Reports active OMG workflows (allow_stop=false while any remain), unverified PRD stories and the active ultragoal. Call before stopping.",
+    "Completion gate: active workflows (allow_stop=false while any remain), unverified PRD stories, active ultragoal. Call before stopping.",
     {
-      mode: z.string().optional().describe("Mode to check; defaults to all active modes."),
+      mode: z.string().optional().describe("Mode to check; default: all active modes."),
     },
     async ({ mode }) => {
       try {

@@ -52,7 +52,7 @@ export function verifyUltragoal(id: string, evidence: EvidenceItem[]) {
 export function registerVerifyTools(server: McpServer): void {
   server.tool(
     "omg_verify",
-    "Record verification evidence (fail-closed). story: marks the PRD story passes=true; ultragoal: completes the active goal. Rejected without writing unless evidence is non-empty and every item passed with non-blank command/output_excerpt.",
+    "Record verification evidence (fail-closed). story: sets PRD story passes=true; ultragoal: completes the active goal. Rejected unless evidence is non-empty and every item passed with non-blank command/output_excerpt.",
     {
       target: z.enum(["story", "ultragoal"]),
       id: z.string(),
