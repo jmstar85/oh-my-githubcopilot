@@ -80,10 +80,11 @@ OMC が専門エージェントとワークフロー自動化によって Claude
 
 1. 拡張機能をインストール（以下のいずれか）:
    - **方法 1 — VSIX (CLI)**
+     [最新リリース](https://github.com/jmstar85/oh-my-githubcopilot/releases/latest) から `oh-my-githubcopilot-1.5.0.vsix` をダウンロードし、次を実行します:
      ```bash
-    code --install-extension ./vscode-omg/oh-my-githubcopilot-1.4.4.vsix
+     code --install-extension ./oh-my-githubcopilot-1.5.0.vsix
      ```
-     > VSIX を別の場所にダウンロードした場合は、ローカルパスに置き換えて実行してください。
+     > パスはファイルを保存した場所に置き換えてください。
    - **方法 2 — VS Code の拡張機能タブ (UI)**
      VS Code の **Extensions** (`⇧⌘X` / `Ctrl+Shift+X`) で **`oh-my-githubcopilot`** を検索してインストール。
 
@@ -284,15 +285,18 @@ OMG now includes 37 skills, including OMG-adapted OMC-inspired workflows such as
 
 ## MCP Server
 
-OMG にはワークフロー状態を永続管理する TypeScript 製 MCP サーバーが含まれています。.vscode/mcp.json 経由で登録され、以下のツール群を提供します。
+OMG にはワークフロー状態を永続管理する TypeScript 製 MCP サーバーが含まれています。.vscode/mcp.json 経由で登録され、以下の 6 つのツールを提供します。
 
-| ツールグループ | ツール | 目的 |
-|-----------|-------|---------|
-| **State** | `omg_read_state`, `omg_write_state`, `omg_clear_state`, `omg_list_active` | ワークフロー状態 CRUD とアクティブモード一覧 |
-| **PRD** | `omg_create_prd`, `omg_read_prd`, `omg_update_story`, `omg_verify_story` | PRD 作成、ストーリー追跡、検証 |
-| **Workflow** | `omg_check_completion`, `omg_next_phase`, `omg_get_phase_info` | フェーズ遷移、完了確認、フェーズ状態照会 |
-| **Memory** | `omg_read_memory`, `omg_write_memory`, `omg_delete_memory` | プロジェクトスコープの知識永続化 |
-| **Model Router** | `omg_select_model` | タスク複雑度に応じたモデル推奨 |
+| ツール | 目的 |
+|------|---------|
+| `omg_read` | `scope` を指定してワークフロー状態を読み取り: `state`, `prd`, `phase`, `ultragoal`, `checkpoint`, または `all`（コンパクトな要約） |
+| `omg_write` | 状態の書き込み、PRD とストーリーの作成、autopilot フェーズの進行、ultragoal マイルストーンの記録（`scope` + `op`: `set`, `clear`, `advance`） |
+| `omg_verify` | PRD ストーリーを合格としてマーク、または ultragoal を完了 — fail-closed: エビデンスが空でなく、かつ全項目が合格していない限り拒否 |
+| `omg_check_completion` | 完了ゲート: アクティブなワークフロー、未検証のストーリー、アクティブな ultragoal |
+| `omg_checkpoint` | セッションチェックポイントを保存し、次のセッション向けの引き継ぎテキストを返す（復元は `omg_read scope:"checkpoint"`） |
+| `omg_memory` | プロジェクトスコープの知識: `get`, `search`, `set`, `delete` |
+
+> **1.4.x からの移行ですか？** 以前のバージョンの 27 個のツールは、v1.5.0 でこの 6 つに統合されました（[対応表](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md#42-target-surface-6-tools)）。旧名称を 2.0 まで非推奨アダプターとして残すには、`.vscode/mcp.json` のサーバーの `env` に `OMG_LEGACY_TOOLS=1` を設定してください。
 
 状態データはワークスペース内の `.omg/` に保存されます。
 
@@ -326,6 +330,21 @@ OMG は `.github/hooks/` 内の pre/post tool-use hooks により安全性を確
 ## ベンチマーク
 
 > すべての数値は実際の git 履歴、テストスイート、`npm audit` の結果から抽出したものです。合成データは含みません。
+
+### コンテキストフットプリント（v1.5.0）
+
+タスクが始まる前に、OMG が **すべての** Copilot リクエストに追加するトークン数です（o200k トークナイザー。MCP ツールは実際の `tools/list` 応答から計測）。`cd evals && npm install && npm run baseline` で再現できます。
+
+| 常時注入されるコンテキスト | v1.4.4 | v1.5.0 | 変化 |
+|-------------------------|-------:|-------:|:------:|
+| `copilot-instructions.md` | 3,594 | 549 | −85% |
+| MCP ツール定義 | 2,585（27 ツール） | 863（6 ツール） | −67% |
+| スキルの説明文（37） | 1,308 | 1,331 | +2% |
+| エージェントの説明文（28） | 1,213 | 1,213 | — |
+| プロンプトファイル（3） | 38 | 38 | — |
+| **合計** | **8,738** | **3,994** | **−54%** |
+
+> 下限値です: ツール一覧を包むホスト側のラッパーテキストや、hooks が発火時に注入する内容は含みません。エージェントとスキルの本文は必要なときにのみ読み込まれます。削除したキーワードテーブルのすべてのフレーズは、引き続き担当スキルの説明文と照合して検証されます（`npm run activation`: 80 フレーズ、欠落 0）。
 
 ### プロジェクトスナップショット（v1.3.0 時点）
 
@@ -469,6 +488,33 @@ Scope-risk: narrow
 ---
 
 ## What's New
+
+### v1.5.0 (2026-11-11) — コンテキストダイエット
+
+**OMG がリクエストごとに消費するコンテキストは半分以下になりました。** 常時注入されるトークンは 8,738 から 3,994 へ減少し（−54%）、呼び出すワークフローに変更はありません。詳細は「ベンチマーク」セクションのコンテキストフットプリント表を参照してください。
+
+- **`copilot-instructions.md`: 3,594 → 549 トークン。** エージェント、スキル、キーワード、ツールのカタログは、Copilot が frontmatter とツールスキーマからすでに公開している内容と重複していました。残したのは常時適用される義務のみです（完了前のエビデンス、独立したレビューパス、コミットトレーラー、hook の境界、graceful degradation）。
+- **MCP ツール: 27 → 6**（`omg_read`, `omg_write`, `omg_verify`, `omg_check_completion`, `omg_checkpoint`, `omg_memory`）、2,585 → 863 トークン。`.omg/` 配下のオンディスク形式は変更なし — 1.4.x の状態はマイグレーションなしで読み込めます。
+- **Fail-closed 検証**: PRD ストーリーを合格としてマークする、または ultragoal を完了するには、全項目が合格した空でないエビデンスを添えて `omg_verify` を通す必要があります。
+- **トリガーフレーズを維持**: キーワードテーブルはなくなりましたが、そこに記載されていたすべてのフレーズは、スキルの説明文から引き続き該当スキルを起動します（80 フレーズを確認、7 個を復元 — `prd loop`, `story loop`, `stakeholder interview`, `check secrets`, `audit deps`, `cancel omg`, `cancelomc`）。
+- **セッション予算ルール**: コンテキストウィンドウの 50% に達すると、エージェントは進行中の編集を完了し、検証済みの作業をコミットし、チェックポイントを保存して、自己完結したプロンプトで引き継ぎます。`omg_checkpoint` が引き継ぎテキストを返します。
+- **修正**: `OMG: Update Convention Files` が MCP サーバーを再ビルドするようになりました（従来は Initialize のみ）。PowerShell hooks: force-push ガードがツール入力末尾の `--force` / `-f` を見逃しており、また両方の hook が Windows PowerShell 5.1 で失敗していました — 修正済みで、bash hooks と同じ挙動になりました。
+- **計測可能**: `evals/` にフットプリントのベースライン（`npm run baseline`）、静的なアクティベーションチェック（`npm run activation`）、任意のライブ CLI プローブを追加。
+- **ドキュメント**: [ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md)（v2 の方向性）、[脅威モデルのドラフト](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md)、[v1.5 設計](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md)。
+
+**1.4.x からのアップグレード**
+
+1. 1.5.0 の VSIX をインストールし、`OMG: Update Convention Files` を実行してからウィンドウを再読み込みします。手動インストールの場合: `.github/` と `mcp-server/` をコピーし、`cd mcp-server && npm install && npm run build` を実行します。
+2. 独自のプロンプトやエージェントが旧ツール名を呼び出している場合は、新しい 6 つのツールへ移行するか、サーバーの `env`（`.vscode/mcp.json`）に `OMG_LEGACY_TOOLS=1` を設定して、1.4 の名称を非推奨アダプターとして残してください。
+
+**非推奨 — 2.0 で削除**
+
+- 1.4 の MCP ツール名（`OMG_LEGACY_TOOLS=1` 設定時のみ利用可能）。
+- `/resume-claude`, `/push-omc` および OMC ブリッジツール（1.5 ではこれらも `OMG_LEGACY_TOOLS=1` が必要）。
+- `omg_select_model`（エージェントは frontmatter で `model:` を宣言します）。
+
+- **検証**: MCP サーバーのビルドと 51 tests（50 pass。symlink テストは Windows で symlink 権限が必要）、VS Code extension 29 unit tests、フットプリント 3,994 トークン、アクティベーション 80/80。
+- VSIX: `oh-my-githubcopilot-1.5.0.vsix`。GitHub Release に添付されます（リポジトリにはコミットされなくなりました）。
 
 ### v1.4.4 (2026-05-16) — OMC スキル適応移植 + Ultragoal MCP
 

@@ -363,7 +363,7 @@ Phase 5: COMPLETE      모든 기준 통과 확인 후 완료
 ```
 
 - 각 스토리에 acceptance criteria 부여
-- 완료 주장은 `omg_verify_story`로 증거 기반 검증
+- 완료 주장은 `omg_verify`로 증거 기반 검증 (증거가 비었거나 실패 항목이 있으면 거부)
 
 ---
 
@@ -394,16 +394,18 @@ Phase 5: COMPLETE      모든 기준 통과 확인 후 완료
 
 ---
 
-# MCP 서버 — 15개 도구
+# MCP 서버 — 6개 도구 (v1.5)
 
-| 도구 그룹 | 도구 | 목적 |
-|-----------|------|------|
-| **State** | `omg_read_state` `omg_write_state` `omg_clear_state` `omg_list_active` | 워크플로 CRUD |
-| **PRD** | `omg_create_prd` `omg_read_prd` `omg_update_story` `omg_verify_story` | PRD·스토리 관리 |
-| **Workflow** | `omg_check_completion` `omg_next_phase` `omg_get_phase_info` | 단계 전환·완료 검증 |
-| **Memory** | `omg_read_memory` `omg_write_memory` `omg_search_memory` `omg_delete_memory` | 프로젝트 지식 저장 |
-| **Context** | `omg_checkpoint` `omg_restore_checkpoint` `omg_context_status` | 세션 체크포인트 |
-| **Router** | `omg_select_model` | 복잡도 기반 모델 추천 |
+| 도구 | 목적 |
+|------|------|
+| `omg_read` | `.omg/` 상태 조회 — scope: `state` `prd` `phase` `ultragoal` `checkpoint` `all` |
+| `omg_write` | 상태·PRD·스토리 기록, 단계 전환, ultragoal 마일스톤 (`scope` + `op`: `set` `clear` `advance`) |
+| `omg_verify` | 스토리 통과·ultragoal 완료 처리 — 증거 기반, fail-closed |
+| `omg_check_completion` | 완료 게이트: 활성 워크플로·미검증 스토리·활성 ultragoal |
+| `omg_checkpoint` | 세션 체크포인트 저장 + 다음 세션용 핸드오프 텍스트 |
+| `omg_memory` | 프로젝트 지식 저장: `get` `search` `set` `delete` |
+
+> v1.4의 27개 도구를 6개로 통합 (도구 정의 2,585 → 863 토큰). 이전 이름은 `OMG_LEGACY_TOOLS=1`로 2.0 전까지 사용 가능.
 
 ---
 

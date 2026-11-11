@@ -80,10 +80,11 @@ Si OMC potencia Claude Code mediante agentes especializados y automatización de
 
 1. Instalar la extensión (cualquiera de estos métodos):
    - **Método 1 — VSIX (CLI)**
+     Descarga `oh-my-githubcopilot-1.5.0.vsix` desde la [última versión publicada](https://github.com/jmstar85/oh-my-githubcopilot/releases/latest) y luego ejecuta:
      ```bash
-    code --install-extension ./vscode-omg/oh-my-githubcopilot-1.4.4.vsix
+    code --install-extension ./oh-my-githubcopilot-1.5.0.vsix
      ```
-     > Si descargaste el VSIX en otra ubicación, reemplaza la ruta por tu ruta local.
+     > Reemplaza la ruta por la ubicación donde hayas guardado el archivo.
    - **Método 2 — Pestaña Extensions de VS Code (UI)**
      En VS Code, abre **Extensions** (`⇧⌘X` / `Ctrl+Shift+X`), busca **`oh-my-githubcopilot`** e instala.
 
@@ -280,16 +281,18 @@ OMG ahora incluye 37 habilidades, incluidas adaptaciones para VS Code/Copilot in
 
 ## Servidor MCP
 
-OMG incluye un servidor MCP en TypeScript para gestionar estado persistente del workflow. Está registrado mediante `.vscode/mcp.json` y expone los siguientes grupos de herramientas:
+OMG incluye un servidor MCP en TypeScript para gestionar estado persistente del workflow. Está registrado mediante `.vscode/mcp.json` y expone seis herramientas:
 
-| Grupo | Herramientas | Propósito |
-|-----------|-------|---------|
-| **State** | `omg_read_state`, `omg_write_state`, `omg_clear_state`, `omg_list_active` | CRUD de estado de workflow y listado de modos activos |
-| **PRD** | `omg_create_prd`, `omg_read_prd`, `omg_update_story`, `omg_verify_story` | Creación de PRD, seguimiento de historias y verificación |
-| **Workflow** | `omg_check_completion`, `omg_next_phase`, `omg_get_phase_info` | Transiciones de fase, verificación de completitud, consulta de estado |
-| **Memory** | `omg_read_memory`, `omg_write_memory`, `omg_delete_memory` | Persistencia de conocimiento a nivel de proyecto |
-| **Model Router** | `omg_select_model` | Recomendación de modelo según complejidad |
+| Herramienta | Propósito |
+|------|---------|
+| `omg_read` | Lee el estado del workflow según `scope`: `state`, `prd`, `phase`, `ultragoal`, `checkpoint` o `all` (resumen compacto) |
+| `omg_write` | Escribe estado, crea PRD e historias, avanza las fases de autopilot y registra hitos de ultragoal (`scope` + `op`: `set`, `clear`, `advance`) |
+| `omg_verify` | Marca una historia del PRD como aprobada o completa un ultragoal — fail-closed: se rechaza salvo que la evidencia no esté vacía y todos los ítems hayan pasado |
+| `omg_check_completion` | Puerta de completitud: workflows activos, historias sin verificar, ultragoal activo |
+| `omg_checkpoint` | Guarda un checkpoint de sesión y devuelve el texto de traspaso para la siguiente sesión (se restaura con `omg_read scope:"checkpoint"`) |
+| `omg_memory` | Conocimiento a nivel de proyecto: `get`, `search`, `set`, `delete` |
 
+> **¿Vienes de 1.4.x?** Las 27 herramientas de las versiones anteriores se consolidaron en estas seis en v1.5.0 ([correspondencia](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md#42-target-surface-6-tools)). Para conservar los nombres antiguos como adaptadores obsoletos hasta la 2.0, define `OMG_LEGACY_TOOLS=1` en el `env` del servidor en `.vscode/mcp.json`.
 El estado se guarda en `.omg/` dentro del workspace.
 
 ```text
@@ -322,6 +325,21 @@ OMG incorpora hooks en `.github/hooks/` para actuar como red de seguridad.
 ## Benchmark
 
 > Todos los números provienen del historial git real, la suite de tests y los resultados de `npm audit`. Sin datos sintéticos.
+
+### Huella de contexto (v1.5.0)
+
+Tokens que OMG añade a **cada** solicitud de Copilot antes de que empiece tu tarea (tokenizador o200k; herramientas MCP medidas a partir de un `tools/list` real). Para reproducirlo: `cd evals && npm install && npm run baseline`.
+
+| Contexto siempre inyectado | v1.4.4 | v1.5.0 | Cambio |
+|-------------------------|-------:|-------:|:------:|
+| `copilot-instructions.md` | 3,594 | 549 | −85% |
+| Definiciones de herramientas MCP | 2,585 (27 herramientas) | 863 (6 herramientas) | −67% |
+| Descripciones de skills (37) | 1,308 | 1,331 | +2% |
+| Descripciones de agentes (28) | 1,213 | 1,213 | — |
+| Archivos de prompt (3) | 38 | 38 | — |
+| **Total** | **8,738** | **3,994** | **−54%** |
+
+> Cota inferior: no se cuentan el texto envoltorio que el host añade alrededor de las listas de herramientas ni lo que inyecten los hooks cuando se disparan. Los cuerpos de agentes y skills se cargan bajo demanda. Cada frase de la tabla de palabras clave eliminada se sigue comprobando contra la descripción de la skill correspondiente (`npm run activation`: 80 frases, 0 faltantes).
 
 ### Instantánea del proyecto (v1.3.0)
 
@@ -463,6 +481,33 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 ---
 
 ## What's New
+
+### v1.5.0 (2026-11-11) — Dieta de contexto
+
+**OMG ahora consume menos de la mitad de contexto por solicitud.** Los tokens siempre inyectados bajan de 8,738 a 3,994 (−54%) sin ningún cambio en los workflows que invocas. Consulta la tabla de huella de contexto en la sección Benchmark.
+
+- **`copilot-instructions.md`: 3,594 → 549 tokens.** Los catálogos de agentes, skills, palabras clave y herramientas duplicaban lo que Copilot ya expone a partir del frontmatter y de los esquemas de herramientas; solo quedan las obligaciones siempre activas (evidencia antes de dar algo por completado, pasada de revisión independiente, trailers de commit, límites de los hooks, degradación elegante).
+- **Herramientas MCP: 27 → 6** (`omg_read`, `omg_write`, `omg_verify`, `omg_check_completion`, `omg_checkpoint`, `omg_memory`), 2,585 → 863 tokens. Los formatos en disco bajo `.omg/` no cambian — el estado de 1.4.x se lee sin migración.
+- **Verificación fail-closed**: una historia del PRD solo puede marcarse como aprobada, y un ultragoal como completado, mediante `omg_verify` con evidencia no vacía en la que todos los ítems hayan pasado.
+- **Frases de activación preservadas**: la tabla de palabras clave desaparece, pero cada frase que listaba sigue activando su skill desde la descripción de la skill (80 frases comprobadas; 7 restauradas — `prd loop`, `story loop`, `stakeholder interview`, `check secrets`, `audit deps`, `cancel omg`, `cancelomc`).
+- **Regla de presupuesto de sesión**: al 50% de la ventana de contexto, el agente termina la edición en curso, hace commit del trabajo verificado, crea un checkpoint y hace el traspaso con un prompt autocontenido; `omg_checkpoint` devuelve el texto de traspaso.
+- **Correcciones**: `OMG: Update Convention Files` ahora recompila el servidor MCP (antes solo lo hacía Initialize). Hooks de PowerShell: la guarda de force-push no detectaba `--force` / `-f` al final de la entrada de la herramienta, y ambos hooks fallaban en Windows PowerShell 5.1 — corregido; ahora se comportan igual que los hooks de bash.
+- **Medible**: `evals/` añade una línea base de huella (`npm run baseline`), una comprobación estática de activación (`npm run activation`) y sondas opcionales en vivo con la CLI.
+- **Docs**: [ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md) (la dirección de v2), un [borrador de modelo de amenazas](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md) y el [diseño de v1.5](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md).
+
+**Actualización desde 1.4.x**
+
+1. Instala el VSIX 1.5.0, ejecuta `OMG: Update Convention Files` y luego recarga la ventana. Instalaciones manuales: copia `.github/` y `mcp-server/`, y luego ejecuta `cd mcp-server && npm install && npm run build`.
+2. Si tus propios prompts o agentes llaman a los nombres de herramientas antiguos, pásalos a las seis herramientas nuevas, o define `OMG_LEGACY_TOOLS=1` en el `env` del servidor (`.vscode/mcp.json`) para conservar los nombres de 1.4 como adaptadores obsoletos.
+
+**Obsoleto — se eliminará en 2.0**
+
+- Los nombres de herramientas MCP de 1.4 (disponibles solo con `OMG_LEGACY_TOOLS=1`).
+- `/resume-claude`, `/push-omc` y las herramientas del puente OMC (en 1.5 también requieren `OMG_LEGACY_TOOLS=1`).
+- `omg_select_model` (los agentes declaran `model:` en el frontmatter).
+
+- **Verificación**: build del servidor MCP y 51 tests (50 pasan; el test de symlinks requiere el privilegio de symlink en Windows), 29 tests unitarios de la extensión de VS Code, huella de 3,994 tokens, activación 80/80.
+- VSIX: `oh-my-githubcopilot-1.5.0.vsix`, adjunto al GitHub Release (ya no se incluye en el repositorio).
 
 ### v1.4.4 (2026-05-16) — Port adaptado de skills OMC + Ultragoal MCP
 
