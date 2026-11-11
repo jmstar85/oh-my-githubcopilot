@@ -1,6 +1,6 @@
 {
   "name": "omg-mcp-server",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "OMG (oh-my-githubcopilot) MCP server for workflow state, PRD, and memory management",
   "type": "module",
   "main": "dist/index.js",

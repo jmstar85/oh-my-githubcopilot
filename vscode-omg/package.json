@@ -2,7 +2,7 @@
   "name": "oh-my-githubcopilot",
   "displayName": "oh-my-githubcopilot (OMG)",
   "description": "Multi-agent orchestration for GitHub Copilot — install, manage, and monitor OMG workflows",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "publisher": "jmstar85",
   "license": "MIT",
   "repository": {
