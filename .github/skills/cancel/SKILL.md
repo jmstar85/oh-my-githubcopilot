@@ -46,12 +46,13 @@ Reads `.omg/state/` to discover which mode is active. Cancels in dependency orde
 Check for `--force` or `--all` flags.
 
 ### 2. Detect Active Modes
-Use `omg_read_state` to check each mode's state file.
+Use `omg_read scope:"state"` (no key) to list active modes, or `omg_read scope:"state" key:<mode>` for one mode's state file.
 
 ### 3A. Force Mode (--force or --all)
-Clear ALL state files in `.omg/state/`. Nuclear option.
+Clear ALL state files in `.omg/state/` via `omg_write scope:"state" op:"clear"` (no key). Nuclear option.
 
 ### 3B. Smart Cancellation (default)
+Clear a single mode with `omg_write scope:"state" op:"clear" key:<mode>`; mark a mode inactive without deleting it with `omg_write scope:"state" op:"set" key:<mode> value:{active:false}`.
 
 #### If OMG Autopilot Active
 1. Check for linked ralph → clear ultrawork if linked → clear ralph

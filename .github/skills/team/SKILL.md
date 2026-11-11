@@ -106,7 +106,7 @@ Use @explore or @architect to analyze the codebase and break the task into N sub
 - Each needs a concise subject and detailed description
 
 ### Phase 3: Create Team
-Write team state via `omg_write_state`:
+Write team state via `omg_write scope:"state" op:"set" key:"team" value:`:
 ```json
 {
   "mode": "team",
@@ -142,7 +142,7 @@ Monitor via two channels:
 - Worker fails 2+ tasks → stop assigning to it
 
 ### Phase 7: Stage Transitions
-Update state on every stage transition via `omg_write_state`.
+Update state on every stage transition via `omg_write scope:"state" op:"set" key:"team"`.
 
 ### Phase 8: Completion
 1. Signal shutdown to all workers
@@ -176,7 +176,7 @@ When `ralph` modifier is present:
 
 ## State Tracking
 
-Track in `.omg/state/team-state.json` via `omg_write_state`/`omg_read_state`.
+Track in `.omg/state/team-state.json` via `omg_write scope:"state" op:"set" key:"team"` / `omg_read scope:"state" key:"team"`.
 
 ## Resume and Cancel
 

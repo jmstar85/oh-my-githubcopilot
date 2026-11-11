@@ -66,20 +66,20 @@ Turn the user's idea into a detailed spec.
   allowFreeformInput: true
   ```
 - Output: `.omg/autopilot/spec.md`
-- Track phase: `omg_write_state(phase="expansion_done")`
+- Track phase: `omg_write scope:"state" op:"set" key:"omg-autopilot" value:{phase:"expansion_done"}`
 
 ### Phase 1 - Planning
 Create an implementation plan from the spec.
 - @architect creates plan (direct mode)
 - @critic validates plan
 - Output: `.omg/plans/autopilot-impl.md`
-- Track: `omg_write_state(phase="planning_done")`
+- Track: `omg_write scope:"state" op:"set" key:"omg-autopilot" value:{phase:"planning_done"}`
 
 ### Phase 2 - Execution
 Implement the plan using parallel execution.
 - Route tasks by complexity to @executor
 - Run independent tasks in parallel
-- Track: `omg_write_state(phase="execution_done")`
+- Track: `omg_write scope:"state" op:"set" key:"omg-autopilot" value:{phase:"execution_done"}`
 
 ### Phase 3 - QA
 Cycle until all tests pass (max 5 cycles).
@@ -97,7 +97,7 @@ Cycle until all tests pass (max 5 cycles).
   ]
   allowFreeformInput: true
   ```
-- Track: `omg_write_state(phase="qa_done")`
+- Track: `omg_write scope:"state" op:"set" key:"omg-autopilot" value:{phase:"qa_done"}`
 
 ### Phase 4 - Validation
 Multi-perspective review in parallel.
@@ -117,7 +117,7 @@ Multi-perspective review in parallel.
   allowFreeformInput: true
   ```
 - Fix and re-validate on rejection
-- Track: `omg_write_state(phase="validation_done")`
+- Track: `omg_write scope:"state" op:"set" key:"omg-autopilot" value:{phase:"validation_done"}`
 
 ### Phase 5 - Cleanup
 Delete all state files on successful completion.

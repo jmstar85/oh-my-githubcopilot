@@ -28,18 +28,17 @@ Ralph is a PRD-driven persistence loop that keeps working on a task until ALL us
 ## Steps
 
 ### 1. PRD Setup (first iteration)
-- Check if `.omg/prd.json` exists via `omg_read_prd`
-- If none exists, generate a PRD scaffold with task-specific acceptance criteria
+- Check if `.omg/prd.json` exists via `omg_read scope:"prd"`
+- If none exists, create one via `omg_write scope:"prd" op:"set" value:{title, description, stories:[{title, acceptance_criteria, priority}]}` with task-specific acceptance criteria
 - **CRITICAL**: Replace generic criteria with specific, testable ones
 - Initialize progress tracking
 
 ### 2. Pick Next Story
-- Read PRD via `omg_read_prd`
-- Select highest-priority story with `passes: false`
+- Read PRD via `omg_read scope:"prd"` — `next_story` is the highest-priority story with `passes: false`
 
 ### 3. Implement Current Story
 - Delegate to @executor at appropriate complexity level
-- If sub-tasks are discovered, add as new stories to PRD
+- If sub-tasks are discovered, add them as new stories via `omg_write scope:"story" op:"set" key:<new-id> value:{title, acceptance_criteria, priority}`
 
 ### 4. Verify Acceptance Criteria
 - For EACH criterion, verify with fresh evidence
@@ -47,7 +46,7 @@ Ralph is a PRD-driven persistence loop that keeps working on a task until ALL us
 - If any criterion NOT met, continue working
 
 ### 5. Mark Story Complete
-- Set `passes: true` via `omg_update_story`
+- Record the evidence via `omg_verify target:"story" id:<story-id> evidence:[{command, output_excerpt, passed:true}, ...]` — this is the only way to set `passes: true`; the call is rejected if evidence is empty or any item did not pass
 - Record progress in `progress.txt`
 
 ### 6. Check PRD Completion

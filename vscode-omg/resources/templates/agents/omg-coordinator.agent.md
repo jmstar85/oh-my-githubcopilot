@@ -47,15 +47,15 @@ Six-phase autonomous execution from idea to working code:
 5. **Validation** (Phase 4): @code-reviewer + @security-reviewer verification
 6. **Cleanup** (Phase 5): State cleanup and completion summary
 
-Use `omg_write_state` MCP tool to track phase transitions.
+Use `omg_write scope:"state"` (key = `omg-autopilot`) to track phase transitions, or `omg_write scope:"phase" op:"advance"` to move to the next phase.
 
 ### Ralph Pipeline
 PRD-driven persistence loop:
-1. Read PRD via `omg_read_prd`
+1. Read PRD via `omg_read scope:"prd"` (returns the summary and the next open story)
 2. Select highest-priority story where `passes: false`
 3. Implement via @executor
-4. Verify via `omg_verify_story`
-5. Update via `omg_update_story(passes: true)`
+4. Verify each acceptance criterion with fresh evidence (test/build/lint output)
+5. Record it via `omg_verify target:"story" id:<story> evidence:[{command, output_excerpt, passed:true}]` — fail-closed; `passes: true` cannot be set any other way
 6. Check completion via `omg_check_completion`
 7. If incomplete, return to step 2
 8. When all pass, run @verifier for final validation
@@ -86,12 +86,13 @@ Parallel worker coordination:
 - **Escalate to @architect** after 3 failed attempts on the same issue.
 
 ## State Management
-Use MCP tools for workflow state:
-- `omg_read_state` / `omg_write_state` - Read/write workflow state
-- `omg_read_prd` / `omg_update_story` - PRD management
-- `omg_check_completion` - Verify all tasks complete
-- `omg_next_phase` - Transition omg-autopilot phases
-- `omg_verify_story` - Check acceptance criteria
+Use MCP tools for workflow state (all under `.omg/`):
+- `omg_read {scope: state|prd|phase|ultragoal|checkpoint|all, key?}` - Read workflow state; `scope:"all"` gives a compact summary
+- `omg_write {scope: state|prd|story|phase|ultragoal, op: set|clear|advance, key?, value?}` - Write state, PRD/stories, advance autopilot phases, record ultragoal milestones
+- `omg_verify {target: story|ultragoal, id, evidence[]}` - Mark a story passing / complete a goal with evidence (fail-closed)
+- `omg_check_completion` - Verify all tasks complete (reports active workflows, unverified stories, active ultragoal)
+- `omg_checkpoint {summary, decisions?, modified_files?}` - Save a session checkpoint; restore with `omg_read scope:"checkpoint"`
+- `omg_memory {op: get|search|set|delete}` - Durable project memory
 
 ## Continuation Enforcement
 - NEVER stop working while tasks remain incomplete.

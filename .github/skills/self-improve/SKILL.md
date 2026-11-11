@@ -126,7 +126,7 @@ Once the improvement loop begins (after gate passes), run fully autonomously —
    ```
 8. **Gate**: All settings + trust must be true.
 9. Create improvement branch: `improve/{goal_slug}` from target branch.
-10. Write initial state via `omg_write_state`.
+10. Write initial state via `omg_write scope:"state" op:"set" key:"self-improve"`.
 
 ## Improvement Loop
 
