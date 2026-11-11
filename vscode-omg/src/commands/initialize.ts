@@ -99,11 +99,38 @@ async function updateFiles(context: vscode.ExtensionContext, outputChannel: vsco
   const templatesDir = path.join(context.extensionPath, 'resources', 'templates');
   try {
     await copyTemplates(templatesDir, ws.uri.fsPath, outputChannel);
-    vscode.window.showInformationMessage('OMG: Convention files updated to latest version.');
   } catch (err) {
     outputChannel.appendLine(`OMG Update Error: ${err}`);
     vscode.window.showErrorMessage('OMG: Update failed. Check Output > OMG for details.');
+    return;
   }
+
+  // The copied skills and agents call the tools of the bundled MCP server, so a dist/ built
+  // from the previous sources must not be left in place.
+  try {
+    await vscode.window.withProgress(
+      { location: vscode.ProgressLocation.Notification, title: 'OMG: Rebuilding MCP server...', cancellable: false },
+      () => buildMcpServer(ws.uri.fsPath, outputChannel),
+    );
+  } catch (err) {
+    outputChannel.appendLine(`OMG Update Error (MCP build): ${err}`);
+    vscode.window.showWarningMessage(
+      'OMG: Convention files updated, but the MCP server rebuild failed. Run "cd mcp-server && npm install && npm run build", then reload the window.',
+      'Open Output',
+    ).then((choice) => {
+      if (choice === 'Open Output') outputChannel.show();
+    });
+    return;
+  }
+
+  vscode.window.showInformationMessage(
+    'OMG: Convention files updated and MCP server rebuilt. Reload window to load the new tools.',
+    'Reload Window',
+  ).then((choice) => {
+    if (choice === 'Reload Window') {
+      vscode.commands.executeCommand('workbench.action.reloadWindow');
+    }
+  });
 }
 
 async function copyTemplates(templatesDir: string, targetDir: string, outputChannel: vscode.OutputChannel) {
