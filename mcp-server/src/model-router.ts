@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import { deprecated } from "./utils.js";
 
 interface ModelRecommendation {
   recommended_model: string;
@@ -145,7 +146,7 @@ function recommend(tier: "high" | "medium" | "low"): ModelRecommendation {
 export function registerModelRouter(server: McpServer): void {
   server.tool(
     "omg_select_model",
-    "Recommend the best model for a task based on complexity analysis. Maps OMC model tiers (HIGH/MEDIUM/LOW) to available VS Code Copilot models.",
+    "[deprecated, removed in 1.5 — agents declare model: in frontmatter] Recommend a model for a task based on complexity analysis.",
     {
       task: z.string().describe("Description of the task to route"),
       file_count: z
@@ -157,7 +158,7 @@ export function registerModelRouter(server: McpServer): void {
         .optional()
         .describe("The agent type that will execute (e.g., architect, executor)"),
     },
-    async ({ task, file_count, agent_type }) => {
+    deprecated("omg_select_model", async ({ task, file_count, agent_type }: { task: string; file_count?: number; agent_type?: string }) => {
       const complexity = assessComplexity(task, file_count);
       const normalizedAgentType = agent_type?.replace(/^@/, "").toLowerCase();
 
@@ -191,6 +192,6 @@ export function registerModelRouter(server: McpServer): void {
           },
         ],
       };
-    }
+    })
   );
 }

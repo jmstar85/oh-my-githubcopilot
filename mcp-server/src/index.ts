@@ -1,35 +1,15 @@
 #!/usr/bin/env node
 
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { registerStateTools } from "./state-tools.js";
-import { registerPrdTools } from "./prd-tools.js";
-import { registerWorkflowTools } from "./workflow-tools.js";
-import { registerMemoryTools } from "./memory-tools.js";
-import { registerCheckpointTools } from "./checkpoint-tools.js";
-import { registerModelRouter } from "./model-router.js";
-import { registerBridgeTools } from "./bridge/tools.js";
-import { registerUltragoalTools } from "./ultragoal-tools.js";
+import { createServer, isLegacyEnabled } from "./server.js";
 
-const server = new McpServer({
-  name: "omg-workflow",
-  version: "1.0.0",
-});
-
-// Register all tool groups
-registerStateTools(server);
-registerPrdTools(server);
-registerWorkflowTools(server);
-registerMemoryTools(server);
-registerCheckpointTools(server);
-registerModelRouter(server);
-registerBridgeTools(server);
-registerUltragoalTools(server);
-
-// Start server
 async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
+  const legacy = isLegacyEnabled();
+  const server = createServer({ legacy });
+  if (legacy) {
+    console.error("OMG: OMG_LEGACY_TOOLS is set — 1.4 tool names are registered as deprecated adapters (removed in 2.0).");
+  }
+  await server.connect(new StdioServerTransport());
 }
 
 main().catch((error) => {

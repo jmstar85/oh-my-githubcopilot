@@ -66,8 +66,35 @@ export function generateId(): string {
   return randomUUID().slice(0, 8);
 }
 
+export function jsonResponse(payload: unknown) {
+  return {
+    content: [{ type: "text" as const, text: JSON.stringify(payload, null, 2) }],
+  };
+}
+
 export function errorResponse(message: string) {
   return {
+    isError: true,
     content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: message }) }],
   };
+}
+
+let deprecationLogged = false;
+
+/** Wraps a legacy tool handler so the first legacy call in a session logs a deprecation notice to stderr. */
+export function deprecated<A extends unknown[], R>(name: string, handler: (...args: A) => R): (...args: A) => R {
+  return (...args: A) => {
+    if (!deprecationLogged) {
+      deprecationLogged = true;
+      console.error(
+        `OMG: legacy MCP tool "${name}" called. Legacy tool names (OMG_LEGACY_TOOLS=1) are deprecated and will be removed in 2.0; ` +
+          "use omg_read, omg_write, omg_verify, omg_check_completion, omg_checkpoint, omg_memory."
+      );
+    }
+    return handler(...args);
+  };
+}
+
+export function resetDeprecationNotice(): void {
+  deprecationLogged = false;
 }

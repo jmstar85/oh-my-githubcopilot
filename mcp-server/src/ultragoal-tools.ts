@@ -1,6 +1,3 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
-import * as fs from "node:fs";
 import * as path from "node:path";
 import { getWorkspaceRoot, ensureDir, safeReadFile, safeWriteFile, generateId } from "./utils.js";
 
@@ -149,13 +146,13 @@ function writeUltragoalLedger(ledger: UltragoalLedger): void {
 
 function buildHandoffText(activeGoal: UltragoalGoal | null): string {
   if (!activeGoal) {
-    return "No active ultragoal. Start one with omg_ultragoal_create before using durable goal checkpoints.";
+    return 'No active ultragoal. Start one with omg_write scope:"ultragoal" op:"set" value:{objective} before using durable goal checkpoints.';
   }
   return [
     `Active ultragoal: ${activeGoal.objective}`,
     `Goal id: ${activeGoal.id}`,
-    "Before stopping, call omg_ultragoal_status and preserve this goal in the task plan/TODO state.",
-    "Use omg_ultragoal_checkpoint with concrete evidence after each meaningful milestone.",
+    'Before stopping, call omg_read scope:"ultragoal" and preserve this goal in the task plan/TODO state.',
+    'Record milestones with omg_write scope:"ultragoal" op:"advance" (concrete evidence); complete only via omg_verify target:"ultragoal".',
   ].join("\n");
 }
 
@@ -270,80 +267,4 @@ export function completeUltragoal(goalId: string, evidence: string): UltragoalSt
 
   writeUltragoalLedger(ledger);
   return getUltragoalStatus();
-}
-
-function successResponse(payload: Record<string, unknown>) {
-  return {
-    content: [{ type: "text" as const, text: JSON.stringify({ success: true, ...payload }, null, 2) }],
-  };
-}
-
-function ultragoalErrorResponse(message: string) {
-  return {
-    isError: true,
-    content: [{ type: "text" as const, text: JSON.stringify({ success: false, error: message }) }],
-  };
-}
-
-export function registerUltragoalTools(server: McpServer): void {
-  server.tool(
-    "omg_ultragoal_create",
-    "Create a durable OMG ultragoal and make it the active goal. Stores artifacts under .omg/ultragoal/.",
-    {
-      objective: z.string().describe("Durable goal objective to keep active across checkpoints"),
-    },
-    async ({ objective }) => {
-      try {
-        return successResponse({ ultragoal: createUltragoalGoal(objective) });
-      } catch (err) {
-        return ultragoalErrorResponse((err as Error).message);
-      }
-    }
-  );
-
-  server.tool(
-    "omg_ultragoal_status",
-    "Return active ultragoal context and model-facing handoff text for preserving TODO/task-plan state.",
-    {},
-    async () => {
-      try {
-        return successResponse({ ultragoal: getUltragoalStatus() });
-      } catch (err) {
-        return ultragoalErrorResponse((err as Error).message);
-      }
-    }
-  );
-
-  server.tool(
-    "omg_ultragoal_checkpoint",
-    "Record checkpoint evidence for the active ultragoal. Fails closed for invalid goal ids or missing evidence.",
-    {
-      goal_id: z.string().describe("Active ultragoal id"),
-      evidence: z.string().describe("Concrete evidence for this checkpoint"),
-      note: z.string().optional().describe("Optional checkpoint note"),
-    },
-    async ({ goal_id, evidence, note }) => {
-      try {
-        return successResponse({ ultragoal: checkpointUltragoal(goal_id, evidence, note) });
-      } catch (err) {
-        return ultragoalErrorResponse((err as Error).message);
-      }
-    }
-  );
-
-  server.tool(
-    "omg_ultragoal_complete",
-    "Complete the active ultragoal with final evidence. Fails closed for invalid goal ids or missing evidence.",
-    {
-      goal_id: z.string().describe("Active ultragoal id"),
-      evidence: z.string().describe("Final completion evidence"),
-    },
-    async ({ goal_id, evidence }) => {
-      try {
-        return successResponse({ ultragoal: completeUltragoal(goal_id, evidence) });
-      } catch (err) {
-        return ultragoalErrorResponse((err as Error).message);
-      }
-    }
-  );
 }
