@@ -498,6 +498,7 @@ Scope-risk: narrow
 - **Fail-closed 検証**: PRD ストーリーを合格としてマークする、または ultragoal を完了するには、全項目が合格した空でないエビデンスを添えて `omg_verify` を通す必要があります。
 - **トリガーフレーズを維持**: キーワードテーブルはなくなりましたが、そこに記載されていたすべてのフレーズは、スキルの説明文から引き続き該当スキルを起動します（80 フレーズを確認、7 個を復元 — `prd loop`, `story loop`, `stakeholder interview`, `check secrets`, `audit deps`, `cancel omg`, `cancelomc`）。
 - **セッション予算ルール**: コンテキストウィンドウの 50% に達すると、エージェントは進行中の編集を完了し、検証済みの作業をコミットし、チェックポイントを保存して、自己完結したプロンプトで引き継ぎます。`omg_checkpoint` が引き継ぎテキストを返します。
+- **終了報告ルール**: すべての作業報告は、残りタスク数と完了したタスクの要約で締めくくります。
 - **修正**: `OMG: Update Convention Files` が MCP サーバーを再ビルドするようになりました（従来は Initialize のみ）。PowerShell hooks: force-push ガードがツール入力末尾の `--force` / `-f` を見逃しており、また両方の hook が Windows PowerShell 5.1 で失敗していました — 修正済みで、bash hooks と同じ挙動になりました。
 - **計測可能**: `evals/` にフットプリントのベースライン（`npm run baseline`）、静的なアクティベーションチェック（`npm run activation`）、任意のライブ CLI プローブを追加。
 - **ドキュメント**: [ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md)（v2 の方向性）、[脅威モデルのドラフト](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md)、[v1.5 設計](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md)。

@@ -494,6 +494,7 @@ Scope-risk: narrow
 - **Fail-closed 验证**：只有通过 `omg_verify` 并提供每一项均已通过的非空证据，才能将 PRD 故事标记为通过，或将 ultragoal 标记为完成。
 - **触发短语保留**：关键字表已移除，但其中列出的每个短语仍会通过技能描述激活对应技能（已核对 80 个短语；恢复 7 个 — `prd loop`、`story loop`、`stakeholder interview`、`check secrets`、`audit deps`、`cancel omg`、`cancelomc`）。
 - **会话预算规则**：上下文窗口用到 50% 时，代理会完成正在进行的编辑、提交已验证的工作、创建检查点，并以自包含的提示词完成交接；`omg_checkpoint` 会返回交接文本。
+- **收尾报告规则**：每次工作报告都以剩余任务数量和已完成任务的摘要结尾。
 - **修复**：`OMG: Update Convention Files` 现在会重新构建 MCP 服务器（此前只有 Initialize 会这样做）。PowerShell hooks：force-push 守卫会漏掉位于工具输入末尾的 `--force` / `-f`，且两个 hook 在 Windows PowerShell 5.1 上都会失败 — 现已修复，行为与 bash hooks 一致。
 - **可度量**：`evals/` 新增占用基线（`npm run baseline`）、静态激活检查（`npm run activation`）以及可选的实时 CLI 探测。
 - **文档**：[ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md)（v2 方向）、[威胁模型草案](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md)以及 [v1.5 设计文档](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md)。
