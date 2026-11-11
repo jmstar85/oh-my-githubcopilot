@@ -8,13 +8,14 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
-    "test": "node --test test/run-tests.mjs"
+    "test": "node --test test/run-tests.mjs test/tool-surface-tests.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "gpt-tokenizer": "^4.1.0",
     "typescript": "^5.7.0"
   }
 }
