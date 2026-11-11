@@ -66,7 +66,7 @@ if ($ToolInput -match '(package\.json|tsconfig\.json|\.gitignore)') {
 
 # Guard: prevent force push
 if ($ToolName -eq 'runInTerminal') {
-    if ($ToolInput -match 'git\s+push\s+.*(--force(\s|$)|-f(\s|$))' -and $ToolInput -notmatch '--force-with-lease') {
+    if ($ToolInput -match 'git\s+push\s+.*(--force([^a-zA-Z0-9_-]|$)|-f([^a-zA-Z0-9_-]|$))' -and $ToolInput -notmatch '--force-with-lease') {
         Write-Output '{"decision": "deny", "reason": "Force push is not allowed. Use --force-with-lease if necessary."}'
         exit 0
     }
@@ -82,7 +82,8 @@ if ($ToolName -eq 'runInTerminal') {
 
 # Default: approve (with optional checkpoint advisory)
 if (-not $WorkspacePath) { $WorkspacePath = if ($env:WORKSPACE) { $env:WORKSPACE } else { Get-Location } }
-$CheckpointTrigger = Join-Path $WorkspacePath '.omg' 'state' 'checkpoint-trigger.json'
+# Nested Join-Path: the multi-segment form needs PowerShell 7, hooks must also run on Windows PowerShell 5.1.
+$CheckpointTrigger = Join-Path (Join-Path (Join-Path $WorkspacePath '.omg') 'state') 'checkpoint-trigger.json'
 
 if (Test-Path $CheckpointTrigger) {
     Write-Output '{"decision": "approve", "advisory": "⚠️ Context threshold reached. Call omg_checkpoint to save session state before continuing."}'

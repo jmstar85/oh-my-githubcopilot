@@ -42,7 +42,8 @@ switch ($ToolName) {
     'delete' { $ToolName = 'deleteFile' }
 }
 
-$OmgStateDir = Join-Path $Workspace '.omg' 'state'
+# Nested Join-Path: the multi-segment form needs PowerShell 7, hooks must also run on Windows PowerShell 5.1.
+$OmgStateDir = Join-Path (Join-Path $Workspace '.omg') 'state'
 
 # Ensure state directory exists
 if (-not (Test-Path $OmgStateDir)) {
