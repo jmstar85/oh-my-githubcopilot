@@ -520,7 +520,7 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 
 ## What's New
 
-### v1.5.0 (2026-11-11) — Context Diet
+### v1.5.0 (2026-11-12) — Context Diet
 
 **OMG now costs less than half as much context per request.** Always-injected tokens drop from 8,738 to 3,994 (−54%) with no change to the workflows you invoke. See [Benchmark → Context Footprint](#context-footprint-v150).
 

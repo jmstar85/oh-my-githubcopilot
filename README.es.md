@@ -482,7 +482,7 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 
 ## What's New
 
-### v1.5.0 (2026-11-11) — Dieta de contexto
+### v1.5.0 (2026-11-12) — Dieta de contexto
 
 **OMG ahora consume menos de la mitad de contexto por solicitud.** Los tokens siempre inyectados bajan de 8,738 a 3,994 (−54%) sin ningún cambio en los workflows que invocas. Consulta la tabla de huella de contexto en la sección Benchmark.
 
