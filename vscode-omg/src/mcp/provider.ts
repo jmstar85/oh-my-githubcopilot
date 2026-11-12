@@ -1,59 +1,67 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
+import { MCP_PROVIDER_ID, isOmgWorkspace, staticConfigDefinesOmgServer } from '../utils/mcp-config';
 
 export function registerMcpProvider(
   context: vscode.ExtensionContext,
   ws: vscode.WorkspaceFolder,
   outputChannel: vscode.OutputChannel,
 ) {
+  // The static mcp.json comes first: the provider below defers to it, and it is where users set
+  // the server's env (e.g. OMG_LEGACY_TOOLS).
+  ensureStaticMcpConfig(ws, outputChannel);
+
   // Check if the registerMcpServerDefinitionProvider API is available
   if (typeof vscode.lm?.registerMcpServerDefinitionProvider !== 'function') {
     outputChannel.appendLine('OMG: MCP server definition provider API not available. Falling back to static configuration.');
-    ensureStaticMcpConfig(ws, outputChannel);
     return;
   }
 
-  const disposable = vscode.lm.registerMcpServerDefinitionProvider('omgMcpProvider', {
-    provideMcpServerDefinitions() {
-      if (!vscode.workspace.isTrusted) {
-        return [];
-      }
+  try {
+    const disposable = vscode.lm.registerMcpServerDefinitionProvider(MCP_PROVIDER_ID, {
+      provideMcpServerDefinitions() {
+        if (!vscode.workspace.isTrusted) {
+          return [];
+        }
 
-      const serverDist = path.join(ws.uri.fsPath, 'mcp-server', 'dist', 'index.js');
-      if (!fs.existsSync(serverDist)) {
-        // Trigger auto-build asynchronously
-        autoBuildMcpServer(ws, outputChannel);
-        return [];
-      }
+        const serverDist = path.join(ws.uri.fsPath, 'mcp-server', 'dist', 'index.js');
+        if (!fs.existsSync(serverDist)) {
+          // Trigger auto-build asynchronously
+          autoBuildMcpServer(ws, outputChannel);
+          return [];
+        }
 
-      return [
-        new vscode.McpStdioServerDefinition(
-          'OMG Workflow',
-          'node',
-          [serverDist],
-          { WORKSPACE_ROOT: ws.uri.fsPath },
-        ),
-      ];
-    },
-  });
+        // mcp.json already supplies this server. Providing it again could give the model a
+        // second copy of every tool definition, and that copy would not carry the env set there.
+        if (staticConfigDefinesOmgServer(ws.uri.fsPath)) {
+          return [];
+        }
 
-  context.subscriptions.push(disposable);
-  outputChannel.appendLine('OMG: MCP server provider registered');
+        return [
+          new vscode.McpStdioServerDefinition(
+            'OMG Workflow',
+            'node',
+            [serverDist],
+            { WORKSPACE_ROOT: ws.uri.fsPath },
+          ),
+        ];
+      },
+    });
 
-  // Always ensure a static mcp.json exists as a safety net.
-  // The dynamic provider and static config coexist fine; VS Code deduplicates them.
-  // This prevents tools from disappearing due to extension activation race conditions
-  // where Copilot Chat finishes MCP enumeration before the dynamic provider registers.
-  ensureStaticMcpConfig(ws, outputChannel);
+    context.subscriptions.push(disposable);
+    outputChannel.appendLine('OMG: MCP server provider registered');
+  } catch (err) {
+    // A rejected registration must not abort activation; the static configuration still applies.
+    outputChannel.appendLine(`OMG: MCP server provider not registered (${err}). Falling back to static configuration.`);
+  }
 }
 
 async function autoBuildMcpServer(ws: vscode.WorkspaceFolder, outputChannel: vscode.OutputChannel) {
   const mcpDir = path.join(ws.uri.fsPath, 'mcp-server');
-  const packageJson = path.join(mcpDir, 'package.json');
 
-  if (!fs.existsSync(packageJson)) {
-    outputChannel.appendLine('OMG: mcp-server/package.json not found, cannot auto-build');
+  if (!isOmgWorkspace(ws.uri.fsPath)) {
+    outputChannel.appendLine('OMG: No OMG mcp-server package in this workspace, skipping auto-build');
     return;
   }
 
@@ -100,6 +108,9 @@ function ensureStaticMcpConfig(ws: vscode.WorkspaceFolder, outputChannel: vscode
   if (fs.existsSync(mcpConfigPath)) {
     return; // Don't overwrite existing config
   }
+  if (!isOmgWorkspace(ws.uri.fsPath)) {
+    return;
+  }
 
   // Write mcp.json regardless of whether dist/index.js exists yet.
   // VS Code will simply not start the server until the file appears after the build.
@@ -116,7 +127,11 @@ function ensureStaticMcpConfig(ws: vscode.WorkspaceFolder, outputChannel: vscode
     },
   };
 
-  fs.mkdirSync(path.dirname(mcpConfigPath), { recursive: true });
-  fs.writeFileSync(mcpConfigPath, JSON.stringify(mcpConfig, null, 2));
-  outputChannel.appendLine('OMG: Generated .vscode/mcp.json (fallback mode)');
+  try {
+    fs.mkdirSync(path.dirname(mcpConfigPath), { recursive: true });
+    fs.writeFileSync(mcpConfigPath, JSON.stringify(mcpConfig, null, 2));
+    outputChannel.appendLine('OMG: Generated .vscode/mcp.json (fallback mode)');
+  } catch (err) {
+    outputChannel.appendLine(`OMG: Could not write .vscode/mcp.json (${err})`);
+  }
 }

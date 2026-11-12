@@ -499,7 +499,7 @@ Scope-risk: narrow
 - **トリガーフレーズを維持**: キーワードテーブルはなくなりましたが、そこに記載されていたすべてのフレーズは、スキルの説明文から引き続き該当スキルを起動します（80 フレーズを確認、7 個を復元 — `prd loop`, `story loop`, `stakeholder interview`, `check secrets`, `audit deps`, `cancel omg`, `cancelomc`）。
 - **セッション予算ルール**: コンテキストウィンドウの 50% に達すると、エージェントは進行中の編集を完了し、検証済みの作業をコミットし、チェックポイントを保存して、自己完結したプロンプトで引き継ぎます。`omg_checkpoint` が引き継ぎテキストを返します。
 - **終了報告ルール**: すべての作業報告は、残りタスク数と完了したタスクの要約で締めくくります。
-- **修正**: `OMG: Update Convention Files` が MCP サーバーを再ビルドするようになりました（従来は Initialize のみ）。PowerShell hooks: force-push ガードがツール入力末尾の `--force` / `-f` を見逃しており、また両方の hook が Windows PowerShell 5.1 で失敗していました — 修正済みで、bash hooks と同じ挙動になりました。
+- **修正**: `OMG: Update Convention Files` が MCP サーバーを再ビルドするようになりました（従来は Initialize のみ）。現行の VS Code で拡張機能のアクティベーションが失敗していた問題を修正しました。MCP provider の id が `package.json` に宣言されておらず、登録時に例外が発生し、ステータスバーと外部セッション検出が開始されていませんでした。provider は `.vscode/mcp.json` にサーバーが定義されている場合、そちらを優先します。PowerShell hooks: force-push ガードがツール入力末尾の `--force` / `-f` を見逃しており、また両方の hook が Windows PowerShell 5.1 で失敗していました — 修正済みで、bash hooks と同じ挙動になりました。
 - **計測可能**: `evals/` にフットプリントのベースライン（`npm run baseline`）、静的なアクティベーションチェック（`npm run activation`）、任意のライブ CLI プローブを追加。
 - **ドキュメント**: [ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md)（v2 の方向性）、[脅威モデルのドラフト](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md)、[v1.5 設計](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md)。
 
@@ -514,7 +514,7 @@ Scope-risk: narrow
 - `/resume-claude`, `/push-omc` および OMC ブリッジツール（1.5 ではこれらも `OMG_LEGACY_TOOLS=1` が必要）。
 - `omg_select_model`（エージェントは frontmatter で `model:` を宣言します）。
 
-- **検証**: MCP サーバーのビルドと 51 tests（50 pass。symlink テストは Windows で symlink 権限が必要）、VS Code extension 29 unit tests、フットプリント 3,994 トークン、アクティベーション 80/80。
+- **検証**: MCP サーバーのビルドと 51 tests（50 pass。symlink テストは Windows で symlink 権限が必要）、VS Code extension 41 unit tests、フットプリント 3,994 トークン、アクティベーション 80/80。
 - VSIX: `oh-my-githubcopilot-1.5.0.vsix`。GitHub Release に添付されます（リポジトリにはコミットされなくなりました）。
 
 ### v1.4.4 (2026-05-16) — OMC スキル適応移植 + Ultragoal MCP

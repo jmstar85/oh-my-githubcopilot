@@ -98,7 +98,13 @@
           "description": "Show OMG workflow status in the status bar"
         }
       }
-    }
+    },
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "omgMcpProvider",
+        "label": "OMG Workflow"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

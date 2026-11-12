@@ -492,7 +492,7 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 - **Frases de activación preservadas**: la tabla de palabras clave desaparece, pero cada frase que listaba sigue activando su skill desde la descripción de la skill (80 frases comprobadas; 7 restauradas — `prd loop`, `story loop`, `stakeholder interview`, `check secrets`, `audit deps`, `cancel omg`, `cancelomc`).
 - **Regla de presupuesto de sesión**: al 50% de la ventana de contexto, el agente termina la edición en curso, hace commit del trabajo verificado, crea un checkpoint y hace el traspaso con un prompt autocontenido; `omg_checkpoint` devuelve el texto de traspaso.
 - **Regla de informe de cierre**: cada informe de trabajo termina con el número de tareas pendientes y un resumen de las completadas.
-- **Correcciones**: `OMG: Update Convention Files` ahora recompila el servidor MCP (antes solo lo hacía Initialize). Hooks de PowerShell: la guarda de force-push no detectaba `--force` / `-f` al final de la entrada de la herramienta, y ambos hooks fallaban en Windows PowerShell 5.1 — corregido; ahora se comportan igual que los hooks de bash.
+- **Correcciones**: `OMG: Update Convention Files` ahora recompila el servidor MCP (antes solo lo hacía Initialize). La extensión ya no falla al activarse en las versiones actuales de VS Code: el id de su provider MCP no estaba declarado en `package.json`, por lo que el registro lanzaba una excepción y la barra de estado y la detección de sesiones externas nunca se iniciaban. Ahora el provider cede ante el servidor definido en `.vscode/mcp.json`. Hooks de PowerShell: la guarda de force-push no detectaba `--force` / `-f` al final de la entrada de la herramienta, y ambos hooks fallaban en Windows PowerShell 5.1 — corregido; ahora se comportan igual que los hooks de bash.
 - **Medible**: `evals/` añade una línea base de huella (`npm run baseline`), una comprobación estática de activación (`npm run activation`) y sondas opcionales en vivo con la CLI.
 - **Docs**: [ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md) (la dirección de v2), un [borrador de modelo de amenazas](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md) y el [diseño de v1.5](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md).
 
@@ -507,7 +507,7 @@ Trailers disponibles: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scop
 - `/resume-claude`, `/push-omc` y las herramientas del puente OMC (en 1.5 también requieren `OMG_LEGACY_TOOLS=1`).
 - `omg_select_model` (los agentes declaran `model:` en el frontmatter).
 
-- **Verificación**: build del servidor MCP y 51 tests (50 pasan; el test de symlinks requiere el privilegio de symlink en Windows), 29 tests unitarios de la extensión de VS Code, huella de 3,994 tokens, activación 80/80.
+- **Verificación**: build del servidor MCP y 51 tests (50 pasan; el test de symlinks requiere el privilegio de symlink en Windows), 41 tests unitarios de la extensión de VS Code, huella de 3,994 tokens, activación 80/80.
 - VSIX: `oh-my-githubcopilot-1.5.0.vsix`, adjunto al GitHub Release (ya no se incluye en el repositorio).
 
 ### v1.4.4 (2026-05-16) — Port adaptado de skills OMC + Ultragoal MCP

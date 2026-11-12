@@ -539,7 +539,7 @@ Scope-risk: narrow
 - **트리거 문구 유지**: 키워드 표는 없어졌지만, 표에 있던 모든 문구는 스킬 description을 통해 여전히 해당 스킬을 활성화합니다(80개 문구 확인, 7개 복원 — `prd loop`, `story loop`, `stakeholder interview`, `check secrets`, `audit deps`, `cancel omg`, `cancelomc`).
 - **세션 예산 규칙**: 컨텍스트 윈도우의 50%에 도달하면 에이전트는 진행 중인 편집을 마무리하고, 검증된 작업을 커밋하고, 체크포인트를 남긴 뒤 자기완결적인 프롬프트로 핸드오프합니다. `omg_checkpoint`가 핸드오프 텍스트를 반환합니다.
 - **종료 보고 규칙**: 모든 작업 보고는 남은 과업 수와 완료된 과업 요약으로 끝납니다.
-- **수정 사항**: `OMG: Update Convention Files`가 이제 MCP 서버를 다시 빌드합니다(이전에는 Initialize만 빌드했습니다). PowerShell 훅: force-push 가드가 도구 입력 끝에 오는 `--force` / `-f`를 놓쳤고, 두 훅 모두 Windows PowerShell 5.1에서 실패했습니다 — 수정되어 이제 bash 훅과 동일하게 동작합니다.
+- **수정 사항**: `OMG: Update Convention Files`가 이제 MCP 서버를 다시 빌드합니다(이전에는 Initialize만 빌드했습니다). 최신 VS Code에서 확장 활성화가 실패하던 문제를 고쳤습니다: MCP provider id가 `package.json`에 선언되어 있지 않아 등록 시 예외가 발생했고, 그 결과 상태 표시줄과 외부 세션 감지가 시작되지 않았습니다. 이제 provider는 `.vscode/mcp.json`에 정의된 서버가 있으면 그것을 우선합니다. PowerShell 훅: force-push 가드가 도구 입력 끝에 오는 `--force` / `-f`를 놓쳤고, 두 훅 모두 Windows PowerShell 5.1에서 실패했습니다 — 수정되어 이제 bash 훅과 동일하게 동작합니다.
 - **측정 가능**: `evals/`에 풋프린트 베이스라인(`npm run baseline`), 정적 활성화 검사(`npm run activation`), 선택적 라이브 CLI 프로브가 추가되었습니다.
 - **문서**: [ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md)(v2 방향), [위협 모델 초안](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md), [v1.5 설계 문서](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md).
 
@@ -554,7 +554,7 @@ Scope-risk: narrow
 - `/resume-claude`, `/push-omc` 및 OMC 브리지 도구 (1.5에서는 이들도 `OMG_LEGACY_TOOLS=1`이 필요합니다).
 - `omg_select_model` (에이전트가 프론트매터에 `model:`을 선언합니다).
 
-- **검증**: MCP 서버 빌드 및 테스트 51개(50개 통과; symlink 테스트는 Windows에서 symlink 권한이 필요), VS Code extension unit test 29개, 풋프린트 3,994 토큰, 활성화 80/80.
+- **검증**: MCP 서버 빌드 및 테스트 51개(50개 통과; symlink 테스트는 Windows에서 symlink 권한이 필요), VS Code extension unit test 41개, 풋프린트 3,994 토큰, 활성화 80/80.
 - VSIX: `oh-my-githubcopilot-1.5.0.vsix` — GitHub Release에 첨부됩니다(더 이상 저장소에 커밋하지 않습니다).
 
 ### v1.4.4 (2026-05-16) — OMC 스킬 적응 포팅 + Ultragoal MCP

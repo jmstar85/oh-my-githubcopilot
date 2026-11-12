@@ -530,7 +530,7 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 - **Trigger phrases preserved**: the keyword table is gone, but every phrase it listed still activates its skill from the skill description (80 phrases checked; 7 restored — `prd loop`, `story loop`, `stakeholder interview`, `check secrets`, `audit deps`, `cancel omg`, `cancelomc`).
 - **Session budget rule**: at 50% of the context window the agent finishes the in-flight edit, commits verified work, checkpoints, and hands off with a self-contained prompt; `omg_checkpoint` returns the handoff text.
 - **Closing report rule**: every work report ends with the number of remaining tasks and a summary of what was completed.
-- **Fixes**: `OMG: Update Convention Files` now rebuilds the MCP server (previously only Initialize did). PowerShell hooks: the force-push guard missed `--force` / `-f` at the end of the tool input, and both hooks failed on Windows PowerShell 5.1 — fixed, now matching the bash hooks.
+- **Fixes**: `OMG: Update Convention Files` now rebuilds the MCP server (previously only Initialize did). The extension no longer fails to activate on current VS Code: its MCP provider id was missing from `package.json`, so registration threw and the status bar and external-session detection never started. The provider now defers to the server defined in `.vscode/mcp.json`. PowerShell hooks: the force-push guard missed `--force` / `-f` at the end of the tool input, and both hooks failed on Windows PowerShell 5.1 — fixed, now matching the bash hooks.
 - **Measurable**: `evals/` adds a footprint baseline (`npm run baseline`), a static activation check (`npm run activation`) and optional live CLI probes.
 - **Docs**: [ADR-0001](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/adr/0001-replatform.md) (the v2 direction), a [threat model draft](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/security/threat-model.md), and the [v1.5 design](https://github.com/jmstar85/oh-my-githubcopilot/blob/main/docs/design/v1.5-context-diet.md).
 
@@ -545,7 +545,7 @@ Available trailers: `Constraint`, `Rejected`, `Directive`, `Confidence`, `Scope-
 - `/resume-claude`, `/push-omc` and the OMC bridge tools (in 1.5 they also need `OMG_LEGACY_TOOLS=1`).
 - `omg_select_model` (agents declare `model:` in frontmatter).
 
-- **Verification**: MCP server build and 51 tests (50 pass; the symlink test needs symlink privilege on Windows), VS Code extension 29 unit tests, footprint 3,994 tokens, activation 80/80.
+- **Verification**: MCP server build and 51 tests (50 pass; the symlink test needs symlink privilege on Windows), VS Code extension 41 unit tests, footprint 3,994 tokens, activation 80/80.
 - VSIX: `oh-my-githubcopilot-1.5.0.vsix`, attached to the GitHub Release (no longer committed to the repository).
 
 ### v1.4.4 (2026-05-16) — Adapted OMC Skill Port + Ultragoal MCP
